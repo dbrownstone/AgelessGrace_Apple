@@ -1,0 +1,133 @@
+/* 
+  Localizable.strings
+  AgelessGrace
+
+  Created by David Brownstone on 21/12/2018.
+  Copyright © 2018 David Brownstone. All rights reserved.
+*/
+
+/*   */
+"Available Tools" = "Available Tools";
+
+/*   */
+"Body Parts To Move" = "Body Parts To Move";
+
+/*   */
+"Cancel" = " Cancel ";
+
+/*   */
+"Congratulations on doing your 10 minutes of Ageless Grace Brain. See you tomorrow!" = "Congratulations on doing your 10 minutes of Ageless Grace Brain. See you tomorrow!";
+
+/*  */
+"Wow! You have done your Ageless Grace Brain Health tools every day for a week now!" = "Wow! You have done your Ageless Grace Brain Health tools every day for a week now!";
+
+/*   */
+"You are a champion! Your brain is getting stronger every day -- you did your Ageless Grace tools for 21 days in a row!" = "You are a champion! Your brain is getting stronger every day -- you did your Ageless Grace tools for 21 days in a row!";
+
+/*   */
+"Manual" = "Manual";
+
+/*   */
+"OK" = "OK";
+
+/*   */
+"Random" = "Random";
+
+/*   */
+"Select" = "Select";
+
+/*   */
+"Reselect" = "Reselect";
+
+/*   */
+"Select 3 songs" = "Select three songs";
+
+/*   */
+"Select Type of Session" = "Select Type of Session";
+
+/*   */
+"Selected Tools" = "Selected Tools";
+
+/*   */
+"Tool" = "Tool";
+
+/*   */
+"Tool Description" = "Tool Description";
+
+/*   */
+"Touch 'OK' to randomly select %d days worth of 10 minute sessions." = "Touch 'OK' to randomly select %d days worth of 10 minute sessions.";
+
+/*   */
+"Ways To Move Them" = "Ways To Move Them";
+
+/*   */
+"Well Done!" = "Well Done!";
+
+/*   */
+"Cancel" = " Cancel ";
+
+/*   */
+"Continue" = "Continue";
+
+/*   */
+"Later" = "Later";
+
+/*   */
+"Pause" = "Pause";
+
+/*   */
+"Postpone" = "Postpone";
+
+/*   */
+"Session Incomplete" = "Session Incomplete";
+
+/*   */
+"Tomorrow" = "Tomorrow";
+
+/*   */
+"Touch 'Later' to restart later on today,\n'Tomorrow' to restart tomorrow or\n'Postpone' to the last of the 10 minute sessions" = "Touch 'Later' to restart later on today,\n'Tomorrow' to restart tomorrow or\n'Postpone' to the last of the 10 minute sessions";
+
+/*   */
+"Available Tools" = "Available Tools";
+
+/*   */
+"Body Parts To Move" = "Body Parts To Move";
+
+/*   */
+"Cancel" = "Cancel";
+
+/*   */
+"Hope you enjoyed your exercise today. See you tomorrow!" = "Hope you enjoyed your exercise today. See you tomorrow!";
+
+/*   */
+"Manual" = "Manual";
+
+/*   */
+"OK" = "OK";
+
+/*   */
+"Random" = "Random";
+
+/*   */
+"Select" = " Select ";
+
+/*   */
+"Select 3 or more songs or a playlist" = "Select 3 or more songs or a playlist";
+
+/*   */
+"Select Type of Session" = "Select Type of Session";
+
+/*   */
+"Selected Tools" = "Selected Tools";
+
+/*   */
+"Tool Description" = "Tool Description";
+
+/*   */
+"Touch 'Continue' to randomly select 7 days worth of 10 minute sessions, or 'Manual' to use tools you have already selected for today" = "Touch 'Continue' to randomly select 7 days worth of 10 minute sessions, or 'Manual' to use tools you have already selected for today";
+
+/*   */
+"Ways To Move Them" = "Ways To Move Them";
+
+/*   */
+"Well Done!" = "Well Done!";
