@@ -16,6 +16,7 @@ let toolControl:ToolProtocol = ToolManipulations()
 class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var theTableView: UITableView!
+    @IBOutlet weak var completedNotice: UIView!
     
     var selectedGroup:Array<String>!
     var completedManualTools:Array<String>!
@@ -132,7 +133,6 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     @objc func showActionSheet() {
         var title = NSLocalizedString("Select Type of Session", comment:"")
-        //TODO: change number (7 or less) below according to manually selected completions
         let noOfDaysRemaining = 7 - (completedManualTools.count / 3)
         let message = String( format: NSLocalizedString("Touch 'OK' to randomly select %d days worth of 10 minute sessions.", comment:""),noOfDaysRemaining)
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -142,8 +142,17 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             toolControl.setToolCount(3)
             toolControl.setSessionPeriod(SESSIONPERIOD)
             toolControl.setSelectionType(self.selectionTypeIsManual)
-            if (self.selectionTypeIsManual) {
-                toolControl.setManuallyCompletedToolIds(self.completedManualToolIds)
+            self.completedManualToolIds = toolControl.getManuallyCompletedToolIds()
+            if self.completedManualToolIds.count == 0 && self.completedManualTools.count > 0 {
+                self.completedManualToolIds = [Int]()
+                for i in 0..<self.completedManualTools!.count {
+                    let tool = self.completedManualTools[i]
+                    let index = (appDelegate.getRequiredArray("AGToolNames")).index(of: tool)!
+                    self.completedManualToolIds.append(index)
+                }
+                if self.completedManualToolIds.count > 0 {
+                    toolControl.setManuallyCompletedToolIds(self.completedManualToolIds)
+                }
             }
             toolControl.randomlySelectRemainingArrayOfTools()
             let selectedGroups = datastore.loadArray("SelectedGroups")
@@ -252,13 +261,20 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         if selectedGroups.count == 7 {
             let index = datastore.daysBetweenDate(datastore.loadDate("StartingDate"),endDate: Date())
             selectedGroup = self.selectedGroups?[index]
-        } else {
-            var date = 7 - self.completedManualTools.count / 3
         }
         if selectedGroup != nil && selectedGroup.count >= 3 {
+            var startDate: Date!
             if selectedGroups.contains(selectedGroup) {
-                let exerciseDay = String(format: "Day %d", (calculateDaysBetweenTwoDates(start: datastore.loadDate("StartingDate"), end: Date()) + 1))
+                if let theDate = userDefaults.object(forKey: "StartingDate") {
+                    startDate = theDate as? Date
+                } else {
+                    startDate = Date()
+                }
+                let exerciseDay = String(format: "Day %d", (calculateDaysBetweenTwoDates(start: startDate!, end: Date()) + 1))
                 self.title = exerciseDay
+                if toolControl.getLastCompletedGroup() == selectedGroup {
+                    self.completedNotice.isHidden = false
+                }
             } else {
                 self.title = NSLocalizedString("Selected Tools", comment:"")
             }
@@ -269,6 +285,7 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             }
             if self.toolGroupHasBeenCompleted {
                 self.navigationItem.rightBarButtonItem = nil
+                self.completedNotice.isHidden = false
             }
         } else {
             self.title = NSLocalizedString("Available Tools", comment:"")
@@ -316,6 +333,7 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         if self.completedManualTools == nil {
             self.completedManualTools = []
         }
+        
         let theTool = toolsDescr[indexPath.row]
         if self.completedManualTools.contains(theTool) {
             selectorBtn.isHidden = true
@@ -358,6 +376,7 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     @IBAction func unwindToMainMenu(_ sender: UIStoryboardSegue) {
         self.toolGroupHasBeenCompleted = true
+        toolControl.saveLastCompletedGroup(self.selectedGroup)
         if self.selectionTypeIsManual {
             // save to datastore
             selectedGroup = nil
@@ -366,7 +385,6 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         } else {
             self.selectedGroup = nil
         }
-        
     }
     
     @IBAction func unwindForLaterPlay(_ sender: UIStoryboardSegue) {

@@ -338,6 +338,7 @@ class PlayMusicViewController: UIViewController, AVAudioPlayerDelegate {
                 cMTIds.append(getToolId((cMT![i])))
             }
             controller.completedManualToolIds = cMTIds
+            toolControl.saveLastCompletedGroup(selectedGroup)
         }
     }
 }

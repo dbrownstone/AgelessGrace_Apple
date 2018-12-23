@@ -8,6 +8,8 @@
 
 import UIKit
 
+let userDefaults = UserDefaults(suiteName: "group.com.brownstone.AgelessGrace")!
+
 protocol DatastoreProtocol {
     func save(_ key: String, value: NSObject)
     func loadString(_ key: String) -> String
@@ -23,7 +25,7 @@ protocol DatastoreProtocol {
 
 class SharedUserDefaultsDatastore: NSObject, DatastoreProtocol {
     
-    let userDefaults = UserDefaults(suiteName: "group.com.brownstone.AgelessGrace")!
+    
     
     func save(_ key: String, value: NSObject) {
         userDefaults.set(value, forKey: key)
@@ -60,6 +62,10 @@ class SharedUserDefaultsDatastore: NSObject, DatastoreProtocol {
         return (cal as NSCalendar).date(byAdding: NSCalendar.Unit.day, value: -1, to: Date(), options: NSCalendar.Options(rawValue: 0))!
     }
     
+    func computeDateBefore(_ noDays:Int) -> Date {
+        let toDate = Date()
+        return Calendar.current.date(byAdding: .day, value: -noDays, to: toDate)!
+    }
     
     func daysBetweenDate(_ startDate: Date, endDate: Date) -> Int
     {

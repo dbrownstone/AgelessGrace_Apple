@@ -13,8 +13,11 @@ protocol ToolProtocol {
     func reset()
     func setSelectionType(_ selectionType:Bool)
     func setManuallyCompletedToolIds(_ ids:Array<Int>)
+    func getManuallyCompletedToolIds() -> [Int]
     func saveManuallySelectedTools(_ tools:Array<String>)
     func getManuallySelectedTools() -> Array<String>
+    func saveLastCompletedGroup(_ group:Array<String>)
+    func getLastCompletedGroup() ->Array<String>
     func selectTools() -> Array<AnyObject>
     func setupArrayForRandomSelection()
     func randomlySelectRemainingArrayOfTools()
@@ -64,9 +67,21 @@ class ToolManipulations: NSObject, ToolProtocol {
     }
     
     func setManuallyCompletedToolIds(_ ids: [Int]) {
-        completedManualToolIds = ids;
+        completedManualToolIds = ids
     }
     
+    func getManuallyCompletedToolIds() -> [Int] {
+        return self.completedManualToolIds ?? [Int]()
+    }
+    
+    func saveLastCompletedGroup(_ group:Array<String>) {
+        datastore.save("LastCompletedToolsGroup", value: group as NSObject)
+    }
+    
+    func getLastCompletedGroup() ->Array<String> {
+        return datastore.loadArray("LastCompletedToolsGroup") as? Array<String> ?? Array<String>()
+    }
+
     func setTheDatesInTheDatastore() {
         var noOfManualDays = 0
         let manuallySelectedTools = getManuallySelectedTools()
@@ -100,7 +115,8 @@ class ToolManipulations: NSObject, ToolProtocol {
         if completedManualToolIds == nil {
             completedManualToolIds = Array<Int>()
         }
-        for id in completedManualToolIds {
+        for id in completedManualToolIds.reversed() {
+            print(id)
             nums.remove(at: (id))
         }
         
@@ -115,7 +131,7 @@ class ToolManipulations: NSObject, ToolProtocol {
         }
         var theGroup = [String]()
         var startId = 0
-        if self.selectionTypeIsManual {
+        if self.completedManualToolIds.count > 0 {
             startId = completedManualToolIds.count - 1
             for indx in 0..<completedManualToolIds.count  {
                 let id = completedManualToolIds[indx]
