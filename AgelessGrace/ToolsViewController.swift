@@ -223,13 +223,26 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     func endOfSession() {
+        var message = ""
         let endingDate = datastore.loadDate("EndingDate")
         let calendar = NSCalendar.current
         if calendar.isDateInToday(endingDate) {
             selectedGroup = nil
+            var completedWeekCount = datastore.getCompletedWeeks()
+            switch completedWeekCount {
+            case 2:
+                message = NSLocalizedString("You are a champion! Your brain is getting stronger every day -- you did your Ageless Grace tools for 21 days in a row!", comment: "")
+                datastore.resetCompletedWeeks()
+                break
+            default:
+                message = NSLocalizedString("Wow! You have done your Ageless Grace Brain Health tools every day for a week now!", comment: "")
+                datastore.setCompletedWeeks()
+                break
+            }
             toolsDescr = appDelegate.getRequiredArray("AGToolNames")
+        } else  {
+            message =  NSLocalizedString("Congratulations on doing your 10 minutes of Ageless Grace Brain. See you tomorrow!", comment:"")
         }
-        let message =  NSLocalizedString("Congratulations on doing your 10 minutes of Ageless Grace Brain. See you tomorrow!", comment:"")
         var theTitle = NSLocalizedString("Well Done!", comment:"")
         let alert = UIAlertController(title: theTitle, message: message, preferredStyle: .alert)
         theTitle =  NSLocalizedString("OK", comment:"")
@@ -274,13 +287,14 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 self.title = exerciseDay
                 if toolControl.getLastCompletedGroup() == selectedGroup {
                     self.completedNotice.isHidden = false
+                    self.navigationItem.rightBarButtonItem = nil
                 }
             } else {
                 self.title = NSLocalizedString("Selected Tools", comment:"")
             }
             toolsDescr = selectedGroup
             self.toolsHaveBeenSelected = true
-            if selectedPlaylist == nil {
+            if selectedPlaylist == nil && self.completedNotice.isHidden == true {
                 self.replaceButtonWithMusicSelector()
             }
             if self.toolGroupHasBeenCompleted {
@@ -347,11 +361,6 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             subTitleRow.text = (appDelegate.getRequiredArray("AGToolPrimaryBenefits"))[indx!]
             selectorBtn.isHidden = true
         }
-        //        else {
-        //            if self.returnedFromExercise == false {
-        //                selectorBtn.isHidden =  false
-        //            }
-        //        }
         return cell
     }
     

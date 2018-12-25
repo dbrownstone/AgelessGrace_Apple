@@ -90,7 +90,7 @@ class ToolManipulations: NSObject, ToolProtocol {
         }
         let firstDay = Date().addingTimeInterval(TimeInterval(-noOfManualDays*24*60*60))
         datastore.save("StartingDate", value:firstDay as NSObject)
-        datastore.save("EndingDate", value:datastore.sevenDaysFrom(firstDay) as NSObject)
+        datastore.save("EndingDate", value:datastore.sevenDaysFrom(firstDay) as NSObject)        
     }
     
     func setupArrayForRandomSelection() {

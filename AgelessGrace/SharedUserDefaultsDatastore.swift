@@ -20,12 +20,34 @@ protocol DatastoreProtocol {
     func computeYesterdaysDate() -> Date
     func updateDate(_ theDate: Date, byDays: Int) -> Date
     func isToday(_ date:Date) -> Bool
+    func getCompletedWeeks() -> Int
+    func setCompletedWeeks()
+    func resetCompletedWeeks()
     func commitToDisk()
 }
 
 class SharedUserDefaultsDatastore: NSObject, DatastoreProtocol {
     
+    func getCompletedWeeks() -> Int {
+        if  let count = userDefaults.object(forKey: "Completed Weeks") {
+            return count as! Int
+        }
+        return 0
+    }
     
+    func setCompletedWeeks() {
+        var result = 0
+        if  let count = userDefaults.object(forKey: "Completed Weeks") {
+            result = (count as! Int) + 1
+        } else {
+            result = 1
+        }
+        userDefaults.set(result, forKey: "CompletedWeeks")
+    }
+    
+    func resetCompletedWeeks() {
+        userDefaults.removeObject(forKey:"CompletedWeeks")
+    }
     
     func save(_ key: String, value: NSObject) {
         userDefaults.set(value, forKey: key)
@@ -51,10 +73,17 @@ class SharedUserDefaultsDatastore: NSObject, DatastoreProtocol {
         }
     }
     
-    
     func sevenDaysFrom(_ date:Date) -> Date {
         let cal = Calendar(identifier: Calendar.Identifier.gregorian)
         return (cal as NSCalendar).date(byAdding: NSCalendar.Unit.day, value: 7, to: date, options: NSCalendar.Options(rawValue: 0))!
+    }
+    
+    func fourteenDaysFrom(cal:Calendar, date:Date) -> Date {
+        return (cal as NSCalendar).date(byAdding: NSCalendar.Unit.day, value: 14, to: date, options: NSCalendar.Options(rawValue: 0))!
+    }
+    
+    func twentyoneDaysFrom(cal:Calendar, date:Date) -> Date {
+        return (cal as NSCalendar).date(byAdding: NSCalendar.Unit.day, value: 21, to: date, options: NSCalendar.Options(rawValue: 0))!
     }
     
     func computeYesterdaysDate() -> Date {
@@ -67,8 +96,7 @@ class SharedUserDefaultsDatastore: NSObject, DatastoreProtocol {
         return Calendar.current.date(byAdding: .day, value: -noDays, to: toDate)!
     }
     
-    func daysBetweenDate(_ startDate: Date, endDate: Date) -> Int
-    {
+    func daysBetweenDate(_ startDate: Date, endDate: Date) -> Int {
         let calendar = Calendar.current
         let startDay = calendar.startOfDay(for: startDate)
         let endDay = calendar.startOfDay(for: endDate)
