@@ -113,7 +113,7 @@ class PlayMusicViewController: UIViewController, AVAudioPlayerDelegate {
             }
             let title = selectedGroup[i]
             let idx = (appDelegate.getRequiredArray("AGToolNames")).index(of: title)
-            let partialStr = "\(NSLocalizedString("Tool", comment:""))#" + "\(idx! + 1)" + ": " + title + indivToolTimeReqd
+            let partialStr = "\(NSLocalizedString("Tool", comment:""))#" + "\(idx! + 1)" + ": " + title// + indivToolTimeReqd
             switch (i - startingIndex) {
             case 0:
                 tool1Name.textColor = .red

@@ -51,7 +51,11 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             if returningFromDescriptionVC || returningFromPlayMusicVC {
                 self.returningFromDescriptionVC = false
                 self.returningFromPlayMusicVC = false
-                replaceButtonWithMusicSelector()
+                if self.completedNotice.isHidden == false {
+                    self.navigationItem.rightBarButtonItem = nil
+                } else {
+                    replaceButtonWithMusicSelector()
+                }
             } else {
                 selectBtn.addTarget(self, action: #selector(self.showActionSheet), for: UIControl.Event.touchUpInside)
                 var title = NSLocalizedString("Select", comment:"")
@@ -73,9 +77,11 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 //            continueBtn.layer.borderWidth = 1
                 //            continueBtn.layer.borderColor = UIColor.gray.cgColor
                 continueBtn.addTarget(self, action: #selector(self.updateDisplayList(_:)), for: .touchDown)
-                let rightBarSelectButtonItem: UIBarButtonItem = UIBarButtonItem(customView: selectBtn)
-                self.navigationItem.setRightBarButton(
-                    rightBarSelectButtonItem, animated: false)
+                if self.completedNotice.isHidden == true {
+                    let rightBarSelectButtonItem: UIBarButtonItem = UIBarButtonItem(customView: selectBtn)
+                    self.navigationItem.setRightBarButton(
+                        rightBarSelectButtonItem, animated: false)
+                }
             }
         } else {
             if toolGroupHasBeenCompleted {
@@ -435,9 +441,9 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             let indexPath = self.theTableView.indexPath(for: cell)
             let controller = segue.destination as! ToolDescriptionViewController
             let selectedTool = self.toolsDescr[indexPath!.row]
-            if self.title == NSLocalizedString("Selected Tools", comment:"") {
+//            if self.title == NSLocalizedString("Selected Tools", comment:"") {
                 self.returningFromDescriptionVC = true
-            }
+//            }
             controller.selectedToolIndex = (appDelegate.getRequiredArray("AGToolNames")).index(of:selectedTool)
         }
     }
@@ -470,7 +476,7 @@ extension ToolsViewController: MPMediaPickerControllerDelegate {
             let title = thisItem.value(forProperty: MPMediaItemPropertyTitle) as! String
             let album = thisItem.albumTitle!
             let artist = thisItem.artist!
-            let genre = thisItem.genre!
+            let genre = thisItem.genre
             //            let itemUrl = thisItem.value(forProperty: MPMediaItemPropertyAssetURL) as? NSURL
             musicForSelectedGroup.append(["ID": persistentID as Any,
                                           "title": title as Any,
