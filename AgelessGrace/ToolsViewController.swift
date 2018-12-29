@@ -234,15 +234,14 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         let calendar = NSCalendar.current
         if calendar.isDateInToday(endingDate) {
             selectedGroup = nil
-            var completedWeekCount = datastore.getCompletedWeeks()
+            let completedWeekCount = datastore.setCompletedWeeks()
             switch completedWeekCount {
-            case 2:
+            case 3:
                 message = NSLocalizedString("You are a champion! Your brain is getting stronger every day -- you did your Ageless Grace tools for 21 days in a row!", comment: "")
                 datastore.resetCompletedWeeks()
                 break
             default:
                 message = NSLocalizedString("Wow! You have done your Ageless Grace Brain Health tools every day for a week now!", comment: "")
-                datastore.setCompletedWeeks()
                 break
             }
             toolsDescr = appDelegate.getRequiredArray("AGToolNames")

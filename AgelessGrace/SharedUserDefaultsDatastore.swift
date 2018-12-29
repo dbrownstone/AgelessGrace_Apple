@@ -21,7 +21,7 @@ protocol DatastoreProtocol {
     func updateDate(_ theDate: Date, byDays: Int) -> Date
     func isToday(_ date:Date) -> Bool
     func getCompletedWeeks() -> Int
-    func setCompletedWeeks()
+    func setCompletedWeeks() -> Int
     func resetCompletedWeeks()
     func commitToDisk()
 }
@@ -35,7 +35,7 @@ class SharedUserDefaultsDatastore: NSObject, DatastoreProtocol {
         return 0
     }
     
-    func setCompletedWeeks() {
+    func setCompletedWeeks() -> Int {
         var result = 0
         if  let count = userDefaults.object(forKey: "Completed Weeks") {
             result = (count as! Int) + 1
@@ -43,6 +43,7 @@ class SharedUserDefaultsDatastore: NSObject, DatastoreProtocol {
             result = 1
         }
         userDefaults.set(result, forKey: "CompletedWeeks")
+        return result
     }
     
     func resetCompletedWeeks() {
