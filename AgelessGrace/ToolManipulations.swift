@@ -140,13 +140,17 @@ class ToolManipulations: NSObject, ToolProtocol {
                 }
                 if indx < completedManualToolIds.count {
                     let id = completedManualToolIds[indx]
-                    theGroup.append((appDelegate.getRequiredArray("AGToolNames"))[id])
-                    completedTools.append(theGroup.last!)
+                    let tool = (appDelegate.getRequiredArray("AGToolNames"))[id]
+                    theGroup.append(tool)
+                    if completedTools == nil {
+                        completedTools = Array<String>()
+                    }
+                    completedTools.append(tool)
                 }
             }
         }
         
-        for indx in 0..<randomizedList.count + startId {
+        for indx in 0..<randomizedList.count {
             if theGroup.count == theToolCount {
                 sevenDayToolSelection.append(theGroup)
                 theGroup = [String]()
@@ -156,6 +160,11 @@ class ToolManipulations: NSObject, ToolProtocol {
             }
             
         }
+        if theGroup.count == theToolCount {
+            sevenDayToolSelection.append(theGroup)
+            theGroup = [String]()
+        }
+        setTheDatesInTheDatastore()
         datastore.save("SelectedGroups", value:(sevenDayToolSelection as NSObject?)!)
     }
     

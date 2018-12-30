@@ -134,7 +134,10 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     @objc func updateDisplayList(_ sender: UIButton) {
         self.toolsHaveBeenSelected = true
         self.selectionTypeIsManual = true
+        self.selectedPlaylist = nil
         self.theTableView.reloadData()
+        let topIndex = IndexPath(row: 0, section: 0)
+        self.theTableView.scrollToRow(at: topIndex, at: .top, animated: true)
     }
     
     @objc func showActionSheet() {
@@ -396,7 +399,7 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             selectedGroup = nil
             self.returnedFromExercise = true
             toolControl.saveManuallySelectedTools(completedManualTools)
-            self.completedNotice.isHidden = false
+//            self.completedNotice.isHidden = false
         } else {
             self.selectedGroup = nil
         }

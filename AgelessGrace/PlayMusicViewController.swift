@@ -39,6 +39,8 @@ class PlayMusicViewController: UIViewController, AVAudioPlayerDelegate {
     var selectedPlayList: MPMediaItemCollection!
     var initialSong: MPMediaItem!
     
+    var audioPlayerJustStarted = false
+    
     //    var musicPlayer = MPMusicPlayerController.applicationMusicPlayer
     var timer:Timer!
     var sessionDuration = Double(SESSIONPERIOD)
@@ -141,7 +143,7 @@ class PlayMusicViewController: UIViewController, AVAudioPlayerDelegate {
         //        audioPlayer.shuffleTheMusic(true) //self.preselected == true ? false : true)
         //        audioPlayer.repeatTheMusic(false)
         audioPlayer.playMusic(selectedPlayList!)
-        
+        audioPlayerJustStarted = true
         sessionCount(sessionDuration)
         timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(timerAction(_:)), userInfo: nil, repeats: true)
         if audioPlayer.isCurrentlyPlaying {
@@ -177,9 +179,10 @@ class PlayMusicViewController: UIViewController, AVAudioPlayerDelegate {
     // MARK: - Timer Action
     
     @objc func timerAction(_ sender: UIBarButtonItem) {
-        if audioPlayer.isCurrentlyPlaying == false {
+        if audioPlayerJustStarted == false && audioPlayer.isCurrentlyPlaying == false {
             return
         }
+        audioPlayerJustStarted = false
         if toolTimeRemaining <= 0 {
             selectTheNextTool()
             toolTimeRemaining = (SESSIONPERIOD / 3) * 60
