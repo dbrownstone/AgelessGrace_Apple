@@ -106,7 +106,7 @@ class PlayMusicViewController: UIViewController, AVAudioPlayerDelegate {
     
     func loadTheToolLabels(_ startingIndex:Int) {
         let toolTime = sessionDuration / 3
-        let indivToolTimeReqd = " (" + (NSString(format: "%01.0f:%02.0f",toolTime/60,toolTime.truncatingRemainder(dividingBy: 60)) as String) as String + ")"
+//        let indivToolTimeReqd = " (" + (NSString(format: "%01.0f:%02.0f",toolTime/60,toolTime.truncatingRemainder(dividingBy: 60)) as String) as String + ")"
         for var i in startingIndex..<startingIndex+3 {
             if i >= selectedGroup.count {
                 i = selectedGroup.count - 1

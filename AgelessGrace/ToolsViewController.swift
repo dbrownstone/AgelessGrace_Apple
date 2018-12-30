@@ -396,6 +396,7 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             selectedGroup = nil
             self.returnedFromExercise = true
             toolControl.saveManuallySelectedTools(completedManualTools)
+            self.completedNotice.isHidden = false
         } else {
             self.selectedGroup = nil
         }

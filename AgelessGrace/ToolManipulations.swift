@@ -138,7 +138,7 @@ class ToolManipulations: NSObject, ToolProtocol {
                 theGroup.append((appDelegate.getRequiredArray("AGToolNames"))[id])
             }
         }
-        for indx in startId...randomizedList.count {
+        for indx in 0..<randomizedList.count {
             if indx == randomizedList.count {
                 sevenDayToolSelection.append(theGroup)
                 break
