@@ -31,47 +31,45 @@
             <key>AGToolPrimaryBenefits</key>
             <array>
                 <string>Joint Mobility.
-                    Also Ligament Flexibility, Circulation</string>
+Also Ligament Flexibility, Circulation</string>
                 <string>Upper Body Strength.
-                    Also Upper/Lower Body, Psoas, Right/Left Brain Coordination, Hip Flexors</string>
+Also Upper/Lower Body, Psoas, Right/Left Brain Coordination, Hip Flexors</string>
                 <string>All five areas of the brain.
-                    Also Cognitive Function, Kinesthetic Learning, Range of Motion</string>
+Also Cognitive Function, Kinesthetic Learning, Range of Motion</string>
                 <string>Multi-skilling.
-                    Also Spinal Flexibility, Right-Left Brain Coordination, Eye-Hand Coordination</string>
+Also Spinal Flexibility, Right-Left Brain Coordination, Eye-Hand Coordination</string>
                 <string>Systemic Movement.
-                    Also Breathing, Fall Prevention, Cognitive Function (Memory/Imagination), Humor</string>
-                <string>Stability in the Ligaments/Joints.
-                    Also Muscle Control, Eye-Hand Coordination, Breathing and Relaxation</string>
+Also Breathing, Fall Prevention, Cognitive Function (Memory/Imagination), Humor</string>
+                <string>Stability in the Ligaments/Joints.Also Muscle Control, Eye-Hand Coordination, Breathing and Relaxation</string>
                 <string>Flexibility.
-                    Also Alignment, Joint Stability, Bone Density</string>
+Also Alignment, Joint Stability, Bone Density</string>
                 <string>Ability to Respond, React and Recover. (The Three R&apos;s)
-                    Also Cognitive Function, Agility, Neural Response</string>
+Also Cognitive Function, Agility, Neural Response</string>
                 <string>Neuroplasticity.
-                    Also Coordination, Neural Response, Multi-skilling, Sense of Humor</string>
+Also Coordination, Neural Response, Multi-skilling, Sense of Humor</string>
                 <string>Hip Flexors and lower body function.
-                    Also Thigh Strength, Hip Mobility, Ankle and Foot Flexibility, Arch Support, Foot Health</string>
+Also Thigh Strength, Hip Mobility, Ankle and Foot Flexibility, Arch Support, Foot Health</string>
                 <string>Spinal Flexibility: all 26 working parts of the spine.
-                    (7 Cervical vertebrae, 12 thoracic, 5 lumbar, sacrum and coccyx)</string>
+(7 Cervical vertebrae, 12 thoracic, 5 lumbar, sacrum and coccyx)</string>
                 <string>Mobility, Strength and Agility in Entire Arm.
-                    (the Hands, Fingers, Arms, Shoulders, back and chest muscles)</string>
+(the Hands, Fingers, Arms, Shoulders, back and chest muscles)</string>
                 <string>Power and Leverage.
-                    Also Integration, Imagination, Memory/ Recall, Coordination</string>
+Also Integration, Imagination, Memory/ Recall, Coordination</string>
                 <string>Release of Tension in the Face, Head and Neck.
-                    Also Relaxation, Muscle Toning, Headache Relief, TMJ/ Jaw Tension, Sense of Humor</string>
-                <string>Balance and Fall Prevention.
-                    Inner Ear Fluid Stimulation, Neural Pathway Development, Bone Density, Ankle Strength</string>
+Also Relaxation, Muscle Toning, Headache Relief, TMJ/ Jaw Tension, Sense of Humor</string>
+                <string>Balance and Fall Prevention.\nInner Ear Fluid Stimulation, Neural Pathway Development, Bone Density, Ankle Strength</string>
                 <string>Oxygenation of Cells. (bloodstream, muscles, brain).
-                    Also Sense of Humor, Stress Relief, Personal Power</string>
+Also Sense of Humor, Stress Relief, Personal Power</string>
                 <string>Dexterity in the Hands, Fingers and Wrists. (ADLs)
-                    Also Muscle Strength, Arthritis, Joint Flexibility/Mobility, Eye-Hand Coordination</string>
+Also Muscle Strength, Arthritis, Joint Flexibility/Mobility, Eye-Hand Coordination</string>
                 <string>Myofascia/Connective Tissue.
-                    Nervous System Stimulation, Skin and Connective Tissue Health, Agility</string>
+Nervous System Stimulation, Skin and Connective Tissue Health, Agility</string>
                 <string>Muscle Mass and Coordination.
-                    Overall Physical Strength, Eye-Hand Coordination, Memory/Recall/Strategic Planning</string>
+Overall Physical Strength, Eye-Hand Coordination, Memory/Recall/Strategic Planning</string>
                 <string>The Muscle of the Heart/Cardio Conditioning.
-                    Also Muscle Strength, Spinal Health and Flexibility, Bone Density, Fall Prevention</string>
+Also Muscle Strength, Spinal Health and Flexibility, Bone Density, Fall Prevention</string>
                 <string>Emotional Expression,
-                    Memory/Recall, Cardiovascular Conditioning, Overall Functionality.</string>
+Memory/Recall, Cardiovascular Conditioning, Overall Functionality.</string>
             </array>
             <key>AGToolDescriptions</key>
             <array>
@@ -124,166 +122,169 @@
             <key>AGToolBodyPartsToMove</key>
             <array>
                 <string>Ankles and wrists
-                    knees and elbows
-                    hips and shoulders
-                    fingers and toes
-                    spine (neck, between shoulder blades, lower back)</string>
+knees and elbows
+hips and shoulders
+fingers and toes
+spine (neck, between shoulder blades, lower back)</string>
                 <string>Arms and hands
-                    head and neck
-                    shoulders
-                    core of body and spine (especially in &apos;dives&apos;)
-                    legs and feet</string>
+head and neck
+shoulders
+core of body and spine (especially in &apos;dives&apos;)
+legs and feet</string>
                 <string>Head, chin or nose (moves neck)
-                    fingers, hands, elbows or entire arms
-                    toes, feet and legs (entire leg/hip joints)
-                    belly button (moves abdominals) or tail bone (moves hip joints)</string>
+fingers, hands, elbows or entire arms
+toes, feet and legs
+ominals) or tail bone (moves hip joints)</string>
                 <string>Arms, hands and fingers
-                    core of the body (rib cage, abdominals)
-                    feet and ankles
-                    head and neck</string>
+core of the body (rib cage, abdominals)
+feet and ankles
+head and neck</string>
                 <string>Face, eyes, cheeks and mouth
-                    spine (neck, shoulder blades, lower back) and entire back of the body
-                    fingers, hands, arms and shoulders
-                    feet and legs</string>
+spine (neck, shoulder blades, lower back) and entire back of the body
+fingers, hands, arms and shoulders
+feet and legs</string>
                 <string>Eyes, head and neck (spine)
-                    hands, palms, arms and shoulders
-                    hip joints, knees and ankles</string>
+hands, palms, arms and shoulders
+hip joints, knees and ankles</string>
                 <string>Eyes, head, neck and spine
-                    shoulders, arms and palms
-                    hip joints, knees and ankles</string>
+shoulders, arms and palms
+hip joints, knees and ankles</string>
                 <string>Hands and feet (which move shoulders and hip joints)
-                    abdominals (as legs criss-cross or lift off the floor) and core muscles,
-                    arms and legs
-                    head</string>
+abdominals (as legs criss-cross or lift off the floor) and core muscles,
+arms and legs
+head</string>
                 <string>Arms and legs (shoulders and hip joints)
-                    abdominals and core muscles
-                    head and neck; eyes watch hands and feet draw lines, circles and triangles</string>
+abdominals and core muscles
+head and neck; eyes watch hands and feet draw lines, circles and triangles</string>
                 <string>Toes, feet, ankles, knees and legs (which move hip joints)
-                    abdominals (as legs lift off the floor) and other core muscles</string>
+abdominals (as legs lift off the floor) and other core muscles</string>
                 <string>Spine (head, neck, rib cage, shoulder blades, pelvis, tailbone and lower back
-                    abdominals (as legs lift off the floor), other core muscles as you engage the full length of your spine</string>
+abdominals (as legs lift off the floor), other core muscles as you engage the full length of your spine</string>
                 <string>Fingers, hands, arms and shoulders
-                    back of the body and front of the chest
-                    facial muscles</string>
+back of the body and front of the chest
+facial muscles</string>
                 <string>Hands, arms, shoulders and back
-                    core, waist and abdominals
-                    legs and feet
-                    head and eyes watching hands</string>
+core, waist and abdominals
+legs and feet
+head and eyes watching hands</string>
                 <string>Facial muscles, chin , cheeks, forehead, neck and jawbone
-                    eyebrows, eyelids and lashes
-                    nose, lips, tongue and ears</string>
+eyebrows, eyelids and lashes
+nose, lips, tongue and ears</string>
                 <string>Feet and toes (press down between the second and third toes)
-                    knees (softening to raise/lower center of gravity or balance point, holding onto chair)
-                    head and eyes watching moving hands</string>
+knees (softening to raise/lower center of gravity or balance point, holding onto chair)
+head and eyes watching moving hands</string>
                 <string>Lungs, chest, belly, abdominals and voice</string>
                 <string>Fingers, hands and arms
-                    head, eyes and neck as you watch what your hands are doing
-                    spine (neck, shoulder blades, lower back</string>
+head, eyes and neck as you watch what your hands are doing
+spine (neck, shoulder blades, lower back</string>
                 <string>Arms and legs
-                    shoulders, rib cage and chest muscles
-                    back of the body
-                    jawbone and head (Relax! Open the mouth slightly and part the teeth)
-                    open hands (rather than clenched)</string>
+shoulders, rib cage and chest muscles
+back of the body
+jawbone and head (Relax! Open the mouth slightly and part the teeth)
+open hands (rather than clenched)</string>
                 <string>Upper body, fingers and arms, hands, shoulders and back
-                    core and abdominals
-                    lower body, legs and feet
-                    eyes, head and neck</string>
+core and abdominals
+lower body, legs and feet
+eyes, head and neck</string>
                 <string>Use every body part you can
-                    spine (neck, shoulder blades, lower back
-                    thighs and calves</string>
+spine (neck, shoulder blades, lower back
+thighs and calves</string>
                 <string>All your joints
-                    all your muscles
-                    all your bones
-                    all your body parts, including your facial muscles
-                    everything you can</string>
+all your muscles
+all your bones
+all your body parts, including your facial muscles
+everything you can</string>
             </array>
             <key>AGToolMovementSuggestions</key>
             <array>
                 <string>Circling
-                    Up and down
-                    in and out
-                    rolling or waving
-                    shaking, pulsing, vibrating</string>
+Up and down
+in and out
+rolling or waving
+shaking, pulsing, vibrating</string>
                 <string>Breast stroke, Australian crawl, side stroke, back stroke
-                    dog paddling or treading water
-                    diving downward toward floor
-                    shaking</string>
+dog paddling or treading water
+diving downward toward floor
+shaking</string>
                 <string>Tracing and re-tracing block letters of the alphabet in the air
-                    writing in the air with cursive or script
-                    writing foreign words
-                    making large letters with some body parts, small letters with others
-                    drawing letters on the floor with the toes, in the air with the fingers</string>
+writing in the air with cursive or script
+writing foreign words
+making large letters with some body parts, small letters with others
+drawing letters on the floor with the toes, in the air with the fingers</string>
                 <string>Pretending to play various musical instruments
-                    side-by-side, con brio (with vigor!)
-                    up and down, high and low
-                    rotating and turning
-                    using feet and legs to tap and keep time</string>
+side-by-side, con brio (with vigor!)
+up and down, high and low
+rotating and turning
+using feet and legs to tap and keep time</string>
                 <string>Imitating various wild or domestic animal movements and sounds
-                    sensuously, elegantly, gracefully, powerfully, boldly, timidly
-                    noisily, expressively, theatrically, stealthily, crashing, ferociously
-                    agressively, swiftly, playfully</string>
+sensuously, elegantly, gracefully, powerfully, boldly, timidly
+noisily, expressively, theatrically, stealthily, crashing, ferociously
+agressively, swiftly, playfully</string>
                 <string>As if you are practicing Tai Chi
-                    slowly, carefully, consiously, deliberately, eyes following each detail of your movement
-                    resisting the air as you &quot;push&quot; your hands and arms through it
-                    rotating around your spinal axis</string>
+slowly, carefully, consiously, deliberately, eyes following each detail of your movement
+resisting the air as you &quot;push&quot; your hands and arms through it
+rotating around your spinal axis</string>
                 <string>As if you are practicing yoga postures
-                    turn head and neck and look in the direction you turn
-                    create lines and angles with arms and legs
-                    rotate spine and hips; align knees and toes
-                    stretch, extend, bend and flex your body</string>
-                <string>Tap arms, hands, feet, counting numbers aloud adding up to 8 (4X on right, 4X on left, 2X on each side, 5X and clap 3X, etc.)
-                    fast, alternating side-to-side
-                    hands up, up, down, down or in, out
-                    criss-cross or &apos;scissor&apos; movements</string>
-                <string>Draw short, quick, choppy lines, circles, triangles; or use long, elegant and slow movements
-                    small circles like quarters or saucers; large circles like Frisbees or hula hoops
-                    vertically and horizontally, both extremties at once; alternating right and left arm or leg
-                    use different body parts to draw a circle, triangle and line at the same time</string>
+turn head and neck and look in the direction you turn
+create lines and angles with arms and legs
+rotate spine and hips; align knees and toes
+stretch, extend, bend and flex your body</string>
+                <string>Tap arms, hands, feet, counting numbers aloud adding up to 8 (4X on right,
+4X on left, 2X on each side, 5X and clap 3X, etc.)
+fast, alternating side-to-side
+hands up, up, down, down or in, out
+criss-cross or &apos;scissor&apos; movements</string>
+                <string>Draw short, quick, choppy lines, circles, triangles; or use long, elegant
+and slow movements
+small circles like quarters or saucers; large circles like Frisbees or hula hoops
+vertically and horizontally, both extremties at once; alternating right and left arm or leg
+use different body parts to draw a circle, triangle and line at the same time</string>
                 <string>Like you are tap dancing
-                    sharp kicks vs jazzy; lifting vs kicking; pointed toes vs flexed ankle
-                    kick to corners to engage psoas muscle (groin)
-                    lift leg up, set down, kick out, set down; alternate sides</string>
+sharp kicks vs jazzy; lifting vs kicking; pointed toes vs flexed ankle
+kick to corners to engage psoas muscle (groin)
+lift leg up, set down, kick out, set down; alternate sides</string>
                 <string>Wave and flow like your spine is al dente spaghetti
-                    slither, wiggle, sqirm, writhe like a snake; wave like a silk cord, seaweed or scarf
-                    rotate, bend, fold, shift, turn, spiral each side; pulse forward and back</string>
-                <string>Acting as if you are a traffic cop, beauty queen, artist, conductor, boxer, etc.
-                    with drama/emotion; with power/force; with grace/elegance
-                    fast/slowly; in polarity</string>
+slither, wiggle, sqirm, writhe like a snake; wave like a silk cord, seaweed or scarf
+rotate, bend, fold, shift, turn, spiral each side; pulse forward and back</string>
+                <string>Acting as if you are a traffic cop, beauty queen, artist, conductor,
+boxer, etc.
+with drama/emotion; with power/force; with grace/elegance
+fast/slowly; in polarity</string>
                 <string>As if you are using various tools for carpentry, building , gardening
-                    vibrating or shaking
-                    precise and linear
-                    circular, rotating or spiraling
-                    side-to-side, swinging motions
-                    lifting and pushing down</string>
+vibrating or shaking
+precise and linear
+circular, rotating or spiraling
+side-to-side, swinging motions
+lifting and pushing down</string>
                 <string>Making crazy faces
-                    gyrate, wiggle, distort
-                    raise and lower, scrunch and relax, open and close
-                    exaggerate</string>
+gyrate, wiggle, distort
+raise and lower, scrunch and relax, open and close
+exaggerate</string>
                 <string>Head swiftly side-to-side to move fluid in ear canals (seated)
-                    with playful experimentation: seated, standing, holding onto chair, bending down
-                    one-legged: shifting weight: &quot;floating&quot; weightlessly</string>
+with playful experimentation: seated, standing, holding onto chair, bending down
+one-legged: shifting weight: &quot;floating&quot; weightlessly</string>
                 <string>Breath long and slow:staccato: smoothly: pant
-                    &quot;pumping&quot; abdominal muscles as you sound or breathe
-                    softly, loudly, making sounds of all kinds
-                    Singing silly songs
-                    using gibberish or childlike words and phrases</string>
+&quot;pumping&quot; abdominal muscles as you sound or breathe
+softly, loudly, making sounds of all kinds
+Singing silly songs
+using gibberish or childlike words and phrases</string>
                 <string>Swiftly grabbing, catching or snatching imaginary objects
-                    in the spirit of playful, childlike wonder
-                    quickly, sharply, with great speed
-                    high/low,side-to-side, front/back
-                    reaching under legs, sides and front of the chair</string>
+in the spirit of playful, childlike wonder
+quickly, sharply, with great speed
+high/low,side-to-side, front/back
+reaching under legs, sides and front of the chair</string>
                 <string>Shake, vibrate, shimmy, tremor: individual body parts or all of them
-                    with abandon and lack of self-consciousness
-                    relaxing the muscles and ligaments - release and let go!
-                    opening the fingers and hands</string>
+with abandon and lack of self-consciousness
+relaxing the muscles and ligaments - release and let go!
+opening the fingers and hands</string>
                 <string>Pretending to play various sports with vigor
-                    using the full body
-                    remembering how it felt to make those athletic movements in the past
-                    visualizing the way you have seen athletes on television do the moves</string>
+using the full body
+remembering how it felt to make those athletic movements in the past
+visualizing the way you have seen athletes on television do the moves</string>
                 <string>Seated, reach down to the floor, come back to seated: reach or stand up. back to seated:repeat sequence quickly
-                    lower and raise yourself from your chair, differently each time
-                    rotate, twist and stretch the spine
-                    if possible, get onto the floor and back up as many times as you can</string>
+lower and raise yourself from your chair, differently each time
+rotate, twist and stretch the spine
+if possible, get onto the floor and back up as many times as you can</string>
                 <string></string>
             </array>
         </dict>

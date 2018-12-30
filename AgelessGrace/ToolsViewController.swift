@@ -345,6 +345,7 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         titleRow.text = "\(NSLocalizedString("Tool", comment:""))#\(indexPath.row + 1): \(toolsDescr[indexPath.row])"
         let subTitleRow = cell.viewWithTag(11) as! UILabel
         subTitleRow.text = (appDelegate.getRequiredArray("AGToolPrimaryBenefits"))[indexPath.row]
+        subTitleRow.textAlignment = .center
         let selectorBtn = cell.viewWithTag(12) as! UIButton
         selectorBtn.addTarget(self, action: #selector(self.addSelectionToList(_:)), for: .touchDown)
         selectorBtn.setImage(UIImage(named:"selector"), for: .normal)
