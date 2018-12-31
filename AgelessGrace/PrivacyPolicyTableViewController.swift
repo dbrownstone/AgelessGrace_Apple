@@ -26,12 +26,13 @@ class PrivacyPolicyTableViewController: UITableViewController {
         let headerView = UIView()
         headerView.backgroundColor = UIColor.white
         
-        if (section == 0) { return nil }
         let sectionLabel = UILabel(frame: CGRect(x: 24, y: 0, width:
             tableView.bounds.size.width, height: tableView.bounds.size.height))
         sectionLabel.font = UIFont(name: "Helvetica-Bold", size: 16)
         sectionLabel.textColor = UIColor.black
         switch section {
+        case 0:
+            sectionLabel.text = NSLocalizedString("Effective date", comment: "")
         case 1:
             sectionLabel.text = NSLocalizedString("Information Collection And Use", comment: "")
         case 2:
@@ -64,7 +65,7 @@ class PrivacyPolicyTableViewController: UITableViewController {
         
         switch indexPath.section {
         case 0:
-            cell.theTextLabel.text = NSLocalizedString("Effective date", comment: "")
+            cell.theTextLabel.text = NSLocalizedString("Operation", comment: "")
         case 1:
             cell.theTextLabel.text = NSLocalizedString("Collecting information", comment: "")
         case 2:
