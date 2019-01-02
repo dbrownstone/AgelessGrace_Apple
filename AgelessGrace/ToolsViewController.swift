@@ -9,7 +9,7 @@
 import UIKit
 import MediaPlayer
 
-let SESSIONPERIOD = 1.00
+let SESSIONPERIOD = 10.00
 
 let toolControl:ToolProtocol = ToolManipulations()
 
