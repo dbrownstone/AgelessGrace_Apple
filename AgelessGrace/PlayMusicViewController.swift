@@ -138,12 +138,15 @@ class PlayMusicViewController: UIViewController, AVAudioPlayerDelegate {
         setupTickerTape(0)
         
         isPaused = false
-        
-        /* Start playing the items in the collection */
-        //        audioPlayer.shuffleTheMusic(true) //self.preselected == true ? false : true)
-        //        audioPlayer.repeatTheMusic(false)
-        audioPlayer.playMusic(selectedPlayList!)
-        audioPlayerJustStarted = true
+        if UIDevice.isSimulator == false {
+            /* Start playing the items in the collection */
+            //        audioPlayer.shuffleTheMusic(true) //self.preselected == true ? false : true)
+            //        audioPlayer.repeatTheMusic(false)
+            audioPlayer.playMusic(selectedPlayList!)
+            audioPlayerJustStarted = true
+        } else {
+            recordingImage.image = UIImage(named:"missingCover")!
+        }
         sessionCount(sessionDuration)
         timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(timerAction(_:)), userInfo: nil, repeats: true)
         if audioPlayer.isCurrentlyPlaying {
@@ -179,8 +182,10 @@ class PlayMusicViewController: UIViewController, AVAudioPlayerDelegate {
     // MARK: - Timer Action
     
     @objc func timerAction(_ sender: UIBarButtonItem) {
-        if audioPlayerJustStarted == false && audioPlayer.isCurrentlyPlaying == false {
-            return
+        if UIDevice.isSimulator == false {
+            if audioPlayerJustStarted == false && audioPlayer.isCurrentlyPlaying == false {
+                return
+            }
         }
         audioPlayerJustStarted = false
         if toolTimeRemaining <= 0 {
@@ -196,6 +201,7 @@ class PlayMusicViewController: UIViewController, AVAudioPlayerDelegate {
             timer.invalidate()
             totalTimeRemaining.text = baseTimerText
             audioPlayer.stopPlayingAudio()
+            datastore.setDateOfLastCompletedExercise()
             self.performSegue(withIdentifier: "returnToMainMenu", sender: self)
         } else {
             var remainingTime = audioPlayer.setRemainingTime(lastItem)
@@ -240,6 +246,10 @@ class PlayMusicViewController: UIViewController, AVAudioPlayerDelegate {
     }
     
     func displayMusicDetails() {
+        if UIDevice.isSimulator {
+            recordingImage.image = UIImage(named:"missingCover")!
+            return
+        }
         let song = (selectedPlayList.items)[currentItemCnt] as MPMediaItem
         let duration = song.value(forProperty: MPMediaItemPropertyPlaybackDuration)! as! Double
         let timeReqd = " (" + (NSString(format: "%01.0f:%02.0f",duration/60,duration.truncatingRemainder(dividingBy: 60)) as String) as String + ")"

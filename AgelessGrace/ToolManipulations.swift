@@ -37,7 +37,7 @@ class ToolManipulations: NSObject, ToolProtocol {
     var sevenDayToolSelection:[[String]] = []
     var arrayForRandomSelection = appDelegate.getRequiredArray("AGToolNames")
     var completedTools:Array<String>!
-    var theToolCount:Int!
+    var theToolCount = 3
     var timeOfSession:Double!
     
     func reset() {
@@ -59,7 +59,10 @@ class ToolManipulations: NSObject, ToolProtocol {
     }
     
     func getManuallySelectedTools() -> Array<String> {
-        return datastore.loadArray("CompletedManualTools") as? Array<String> ?? Array<String>()
+        if let manuallySelectedTools = datastore.loadArray("CompletedManualTools") as? Array<String> {
+            return manuallySelectedTools
+        }
+        return []
     }
     
     func setSelectionType(_ selectionType: Bool) {

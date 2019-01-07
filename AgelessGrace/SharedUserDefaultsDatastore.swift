@@ -20,6 +20,10 @@ protocol DatastoreProtocol {
     func computeYesterdaysDate() -> Date
     func updateDate(_ theDate: Date, byDays: Int) -> Date
     func isToday(_ date:Date) -> Bool
+    func setDateOfLastCompletedExercise()
+    func lastCompletedExerciseWasYesterday() -> Bool
+    func resetLastCompletedExercisDate()
+    func resetManuallyCompletedTools()
     func getCompletedWeeks() -> Int
     func setCompletedWeeks() -> Int
     func resetCompletedWeeks()
@@ -48,6 +52,28 @@ class SharedUserDefaultsDatastore: NSObject, DatastoreProtocol {
     
     func resetCompletedWeeks() {
         userDefaults.removeObject(forKey:"CompletedWeeks")
+        self.commitToDisk()
+    }
+    
+    func setDateOfLastCompletedExercise() {
+        userDefaults.set(Date(), forKey: "DateOfLastExercise")
+        self.commitToDisk()
+    }
+    
+    func lastCompletedExerciseWasYesterday() -> Bool {
+        if userDefaults.object(forKey: "DateOfLastExercise") != nil {
+            return (self.computeYesterdaysDate() == userDefaults.object(forKey: "DateOfLastExercise") as! Date)
+        }
+        return false
+    }
+    
+    func resetLastCompletedExercisDate() {
+        userDefaults.removeObject(forKey:"DateOfLastExercise")
+        self.commitToDisk()
+    }
+    
+    func resetManuallyCompletedTools() {
+        userDefaults.removeObject(forKey:"CompletedManualTools")
     }
     
     func save(_ key: String, value: NSObject) {
@@ -76,7 +102,8 @@ class SharedUserDefaultsDatastore: NSObject, DatastoreProtocol {
     
     func sevenDaysFrom(_ date:Date) -> Date {
         let cal = Calendar(identifier: Calendar.Identifier.gregorian)
-        return (cal as NSCalendar).date(byAdding: NSCalendar.Unit.day, value: 7, to: date, options: NSCalendar.Options(rawValue: 0))!
+        //note that seven days must include the first date - i.e. date
+        return (cal as NSCalendar).date(byAdding: NSCalendar.Unit.day, value: 6, to: date, options: NSCalendar.Options(rawValue: 0))!
     }
     
     func fourteenDaysFrom(cal:Calendar, date:Date) -> Date {
