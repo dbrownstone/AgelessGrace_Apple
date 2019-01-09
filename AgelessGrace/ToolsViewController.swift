@@ -29,6 +29,7 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     var returningFromDescriptionVC = false
     var returningFromPlayMusicVC = false
+    var showingNextToolInSimulator = false
     var startDate:Date!
     var selectedPlaylist:MPMediaItemCollection!
     var toolGroupHasBeenCompleted = false
@@ -105,6 +106,7 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     @objc func showNextTool() {
+        showingNextToolInSimulator = true
         let currentIndex = selectedGroups.index(of: selectedGroup)! + 1
         self.exerciseDay += 1
         selectedGroup = nil
@@ -112,6 +114,7 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.title = ""
         self.title = String(format: "Day %d", self.exerciseDay)
         self.theTableView.reloadData()
+        showingNextToolInSimulator = false
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -308,6 +311,10 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     // MARK: -  UITableViewDelegate and DataSelect
     
     func numberOfSections(in tableView: UITableView) -> Int {
+        if showingNextToolInSimulator {
+            self.replaceButtonWithMusicSelector()
+            return 1
+        }
         self.selectedGroups = (datastore.loadArray("SelectedGroups") as! Array<[String]>)
         if  datastore.lastCompletedExerciseWasYesterday() ||
             self.toolsHaveBeenSelected ||
@@ -344,7 +351,7 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 }
                 toolsDescr = selectedGroup
                 self.toolsHaveBeenSelected = true
-                if selectedPlaylist == nil && self.completedNotice.isHidden == true && UIDevice.isSimulator == false {
+                if selectedPlaylist == nil && self.completedNotice.isHidden == true && toolControl.getLastCompletedGroup() != selectedGroup {
                     self.replaceButtonWithMusicSelector()
                 }
                 if self.toolGroupHasBeenCompleted {

@@ -55,6 +55,10 @@ class SharedUserDefaultsDatastore: NSObject, DatastoreProtocol {
         self.commitToDisk()
     }
     
+    func getLastCompletedGroup() ->Array<String> {
+        return userDefaults.object(forKey: "LastCompletedToolGroup") as! Array<String>
+    }
+    
     func setDateOfLastCompletedExercise() {
         userDefaults.set(Date(), forKey: "DateOfLastExercise")
         self.commitToDisk()
@@ -63,6 +67,14 @@ class SharedUserDefaultsDatastore: NSObject, DatastoreProtocol {
     func lastCompletedExerciseWasYesterday() -> Bool {
         if userDefaults.object(forKey: "DateOfLastExercise") != nil {
             return (self.computeYesterdaysDate() == userDefaults.object(forKey: "DateOfLastExercise") as! Date)
+        }
+        return false
+    }
+    
+    func lastCompletedExerciseWasToday() -> Bool {
+        if userDefaults.object(forKey: "DateOfLastExercise") != nil {
+            let theDate = userDefaults.object(forKey: "DateOfLastExercise") as! Date
+            return self.compareDate(date1: theDate, date2: Date())
         }
         return false
     }
@@ -122,6 +134,16 @@ class SharedUserDefaultsDatastore: NSObject, DatastoreProtocol {
     func computeDateBefore(_ noDays:Int) -> Date {
         let toDate = Date()
         return Calendar.current.date(byAdding: .day, value: -noDays, to: toDate)!
+    }
+    
+    func compareDate(date1:Date, date2:Date) -> Bool {
+        let order = NSCalendar.current.compare(date1, to: date2, toGranularity: .day)
+        switch order {
+        case .orderedSame:
+            return true
+        default:
+            return false
+        }
     }
     
     func daysBetweenDate(_ startDate: Date, endDate: Date) -> Int {
