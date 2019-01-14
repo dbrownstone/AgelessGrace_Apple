@@ -38,6 +38,7 @@ class PlayMusicViewController: UIViewController, AVAudioPlayerDelegate {
     var selectedGroup:Array<String>!
     var selectedPlayList: MPMediaItemCollection!
     var initialSong: MPMediaItem!
+    var selectionTypeIsManual = false
     
     var audioPlayerJustStarted = false
     
@@ -342,16 +343,19 @@ class PlayMusicViewController: UIViewController, AVAudioPlayerDelegate {
         }
         if segue.identifier == "returnToMainMenu" {
             let controller = segue.destination as! ToolsViewController
-            for tool in selectedGroup {
-                controller.completedManualTools.append(tool)
+            if self.selectionTypeIsManual {
+                self.selectionTypeIsManual = false
+                for tool in selectedGroup {
+                    controller.completedManualTools.append(tool)
+                }
+                let cMT = controller.completedManualTools
+                var cMTIds = [Int]()
+                for i in 0..<cMT!.count {
+                    cMTIds.append(getToolId((cMT![i])))
+                }
+                controller.completedManualToolIds = cMTIds
             }
-            let cMT = controller.completedManualTools
-            var cMTIds = [Int]()
-            for i in 0..<cMT!.count {
-                cMTIds.append(getToolId((cMT![i])))
-            }
-            controller.completedManualToolIds = cMTIds
-            toolControl.saveLastCompletedGroup(selectedGroup)
+             
         }
     }
 }

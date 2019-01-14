@@ -45,7 +45,7 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.theTableView.delegate = self
         self.theTableView.dataSource = self
         if UIDevice.isSimulator {
-            SESSIONPERIOD = 1.0
+            SESSIONPERIOD = 0.25 //1.0
         }
 
     }
@@ -269,7 +269,8 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         var message = ""
         let endingDate = datastore.loadDate("EndingDate")
         let calendar = NSCalendar.current
-        if calendar.isDateInToday(endingDate) {
+        if calendar.isDateInToday(endingDate) ||
+            (UIDevice.isSimulator && selectedGroups.index(of: toolControl.getLastCompletedGroup()) == 6) {
             selectedGroup = nil
             let completedWeekCount = datastore.setCompletedWeeks()
             switch completedWeekCount {
@@ -316,36 +317,46 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             return 1
         }
         self.selectedGroups = (datastore.loadArray("SelectedGroups") as! Array<[String]>)
+//        print(self.selectedGroups!)
+        var index = -1
         if  datastore.lastCompletedExerciseWasYesterday() ||
             self.toolsHaveBeenSelected ||
             self.selectedGroups.count == 7 {
             self.completedManualTools = toolControl.getManuallySelectedTools()
             if selectedGroups.count == 7 {
-                let index = datastore.daysBetweenDate(datastore.loadDate("StartingDate"),endDate: Date())
-                selectedGroup = self.selectedGroups?[index]
+                if UIDevice.isSimulator {
+                    index = (self.selectedGroups.index(of: toolControl.getLastCompletedGroup()) ?? -1) + 1
+                } else {
+                    index = datastore.daysBetweenDate(datastore.loadDate("StartingDate"),endDate: Date())
+                }
+                if (index < 7) {
+                    selectedGroup = self.selectedGroups?[index]
+                } else {
+                    selectedGroup = nil
+                }
             }
-            if selectedGroup != nil && selectedGroup.count >= 3 {
-                var startDate: Date!
+            if selectedGroup != nil && selectedGroup.count == 3 {
                 if selectedGroups.contains(selectedGroup)  {
-                    if let theDate = userDefaults.object(forKey: "StartingDate") {
-                        startDate = theDate as? Date
-                    } else {
-                        startDate = Date()
-                    }
-                    self.exerciseDay = calculateDaysBetweenTwoDates(start: startDate!, end: Date()) + 1
-                    self.title = String(format: "Day %d", self.exerciseDay)
-                    if UIDevice.isSimulator == false {
-                        if toolControl.getLastCompletedGroup() == selectedGroup {
-                            self.completedNotice.isHidden = false
-                            self.navigationItem.rightBarButtonItem = nil
-                        }
-                    } else {
+                    if UIDevice.isSimulator {
+                        self.exerciseDay = (self.selectedGroups.index(of:toolControl.getLastCompletedGroup()) ?? -1) + 2
                         if toolControl.getLastCompletedGroup() == selectedGroup {
                             let rightBarSelectButtonItem: UIBarButtonItem = UIBarButtonItem(customView: nextToolButton)
                             self.navigationItem.setRightBarButton(
                                 rightBarSelectButtonItem, animated: false)
                         }
+                    } else {
+                        var startDate = Date()
+                        if let theDate = userDefaults.object(forKey: "StartingDate") {
+                            startDate = (theDate as? Date)!
+                        }
+                        self.exerciseDay = calculateDaysBetweenTwoDates(start: startDate, end: Date()) + 1
+                        if toolControl.getLastCompletedGroup() == selectedGroup {
+                            self.completedNotice.isHidden = false
+                            self.navigationItem.rightBarButtonItem = nil
+                        }
+
                     }
+                    self.title = String(format: "Day %d", self.exerciseDay)
                 } else {
                     self.title = NSLocalizedString("Selected Tools", comment:"")
                 }

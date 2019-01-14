@@ -33,7 +33,7 @@ protocol DatastoreProtocol {
 class SharedUserDefaultsDatastore: NSObject, DatastoreProtocol {
     
     func getCompletedWeeks() -> Int {
-        if  let count = userDefaults.object(forKey: "Completed Weeks") {
+        if  let count = userDefaults.object(forKey: "CompletedWeeks") {
             return count as! Int
         }
         return 0
@@ -41,12 +41,13 @@ class SharedUserDefaultsDatastore: NSObject, DatastoreProtocol {
     
     func setCompletedWeeks() -> Int {
         var result = 0
-        if  let count = userDefaults.object(forKey: "Completed Weeks") {
+        if  let count = userDefaults.object(forKey: "CompletedWeeks") {
             result = (count as! Int) + 1
         } else {
             result = 1
         }
         userDefaults.set(result, forKey: "CompletedWeeks")
+        self.commitToDisk()
         return result
     }
     
