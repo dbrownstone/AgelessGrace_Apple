@@ -38,6 +38,7 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     let selectBtn = UIButton(type:.custom)
     let reSelectBtn = UIButton(type:.custom)
     let continueBtn = UIButton(type:.custom)
+    let refreshBtn = UIButton(type:.custom)
     let nextToolButton = UIButton(type: .custom) // used only for simulator
     
     override func viewDidLoad() {
@@ -66,24 +67,26 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             } else {
                 selectBtn.addTarget(self, action: #selector(self.showActionSheet), for: UIControl.Event.touchUpInside)
                 var title = NSLocalizedString("Select", comment:"")
-                //            selectBtn.setTitle(title, for: UIControl.State())
                 selectBtn.setTitleColor(UIColor(red: 42/255, green: 22/255, blue: 114/255, alpha: 1), for: UIControl.State())
                 selectBtn.setAttributedTitle(NSAttributedString(string: title, attributes:[
                     NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14.0, weight: UIFont.Weight.light)]), for: .normal)
                 selectBtn.sizeToFit()
                 selectBtn.backgroundColor = .clear
-                //            selectBtn.layer.borderWidth = 1
-                //            selectBtn.layer.borderColor = UIColor.gray.cgColor
+                
                 title = NSLocalizedString("Continue", comment:"")
-                //            continueBtn.setTitle(title, for: UIControl.State())
+                continueBtn.addTarget(self, action: #selector(self.updateDisplayList(_:)), for: .touchDown)
                 continueBtn.setTitleColor(UIColor(red: 42/255, green: 22/255, blue: 114/255, alpha: 1), for: UIControl.State())
                 continueBtn.setAttributedTitle(NSAttributedString(string: title, attributes:[
                     NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14.0, weight: UIFont.Weight.light)]), for: .normal)
                 continueBtn.sizeToFit()
                 continueBtn.backgroundColor = .clear
-                //            continueBtn.layer.borderWidth = 1
-                //            continueBtn.layer.borderColor = UIColor.gray.cgColor
-                continueBtn.addTarget(self, action: #selector(self.updateDisplayList(_:)), for: .touchDown)
+
+                refreshBtn.addTarget(self, action: #selector(self.refreshTable(_:)), for: .touchDown)
+                refreshBtn.setImage(UIImage(named: "synch"), for: UIControl.State.normal)
+                selectBtn.sizeToFit()
+                refreshBtn.setTitleColor(UIColor(red: 42/255, green: 22/255, blue: 114/255, alpha: 1), for: UIControl.State())
+                refreshBtn.backgroundColor = .clear
+                
                 if UIDevice.isSimulator {
                     nextToolButton.addTarget(self, action: #selector(self.showNextTool), for: UIControl.Event.touchUpInside)
                     nextToolButton.setTitleColor(UIColor(red: 42/255, green: 22/255, blue: 114/255, alpha: 1), for: UIControl.State())
@@ -153,6 +156,29 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             let rightBarSelectButtonItem: UIBarButtonItem = UIBarButtonItem(customView: selectBtn)
             self.navigationItem.setRightBarButton(
                 rightBarSelectButtonItem, animated: false)
+        }
+    }
+    
+    @objc func refreshTable(_ sender: UIButton) {
+        // check that the last group was completed yesterday.
+        // If so, change the title and show the appropriate tool if there are more
+        // or all the tools if this is the 7th day
+        // otherwise show a message to the effect that nothing can be visible until tomorrow
+        let titleIndex = Int((self.title!.split(separator: " "))[1])
+        if titleIndex == 7 {
+            selectedGroup = nil
+            return
+        }
+        if selectedGroups.index(of: selectedGroup) == titleIndex! - 1 {
+            let message = NSLocalizedString("Your exercise requirement for today is complete. You should continue tomorrow!", comment: "")
+            let title = NSLocalizedString("You're done!", comment: "")
+            let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "OK", style: .cancel)
+            alertController.addAction(okAction)
+            present(alertController, animated: true, completion:nil)
+        } else {
+            selectedGroup = selectedGroups[titleIndex! - 1]
+            theTableView.reloadData()
         }
     }
     
@@ -350,13 +376,16 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
                             startDate = (theDate as? Date)!
                         }
                         self.exerciseDay = calculateDaysBetweenTwoDates(start: startDate, end: Date()) + 1
-                        if toolControl.getLastCompletedGroup() == selectedGroup {
-                            self.completedNotice.isHidden = false
-                            self.navigationItem.rightBarButtonItem = nil
-                        }
-
+                        
                     }
                     self.title = String(format: "Day %d", self.exerciseDay)
+                    selectedGroup = selectedGroups[self.exerciseDay - 1]
+                    if toolControl.getLastCompletedGroup() == selectedGroup {
+                        self.completedNotice.isHidden = false
+                        let rightBarSelectButtonItem: UIBarButtonItem = UIBarButtonItem(customView: refreshBtn)
+                        self.navigationItem.setRightBarButton(
+                            rightBarSelectButtonItem, animated: false)
+                    }
                 } else {
                     self.title = NSLocalizedString("Selected Tools", comment:"")
                 }
@@ -371,7 +400,9 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
                         self.navigationItem.setRightBarButton(
                             rightBarSelectButtonItem, animated: false)
                     } else {
-                        self.navigationItem.rightBarButtonItem = nil
+                        let rightBarSelectButtonItem: UIBarButtonItem = UIBarButtonItem(customView: refreshBtn)
+                        self.navigationItem.setRightBarButton(
+                            rightBarSelectButtonItem, animated: false)
                         self.completedNotice.isHidden = false
                     }
                 }

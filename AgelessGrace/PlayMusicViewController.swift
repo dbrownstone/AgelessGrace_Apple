@@ -134,6 +134,7 @@ class PlayMusicViewController: UIViewController, AVAudioPlayerDelegate {
     }
     
     func startTheTimer() {
+        UIApplication.shared.isIdleTimerDisabled = true
         toolTimeRemaining = (SESSIONPERIOD / 3) * 60
         currentItemCnt = 0
         setupTickerTape(0)
@@ -203,6 +204,7 @@ class PlayMusicViewController: UIViewController, AVAudioPlayerDelegate {
             totalTimeRemaining.text = baseTimerText
             audioPlayer.stopPlayingAudio()
             datastore.setDateOfLastCompletedExercise()
+            UIApplication.shared.isIdleTimerDisabled = false
             self.performSegue(withIdentifier: "returnToMainMenu", sender: self)
         } else {
             var remainingTime = audioPlayer.setRemainingTime(lastItem)
