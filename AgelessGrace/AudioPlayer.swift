@@ -81,7 +81,8 @@ class AudioPlayer: NSObject, AVAudioPlayerDelegate {
         case .playing:
             /* The media player is playing the queue. */
             isCurrentlyPlaying = true
-            print("Playing")
+            let index = musicPlayer.indexOfNowPlayingItem
+            print("Playing index: \(index)")
         case .paused:
             /* The media playback is paused here. You might want
              to indicate by showing graphics to the user */
@@ -199,8 +200,14 @@ class AudioPlayer: NSObject, AVAudioPlayerDelegate {
     
     func playNextPiece() {
         musicPlayer.skipToNextItem()
+        musicPlayer.play()
     }
     
+    func stopPlayingCurrentAudio() {
+        musicPlayer.stop()
+    }
+
+
     func stopPlayingAudio(){
         musicPlayer.stop()
         //        musicPlayer.endGeneratingPlaybackNotifications()

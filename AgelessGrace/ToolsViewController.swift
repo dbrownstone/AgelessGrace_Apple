@@ -544,6 +544,7 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             let controller = navControl.topViewController as! PlayMusicViewController
             controller.selectedPlayList = selectedPlaylist
             controller.selectedGroup = selectedGroup
+            controller.selectionTypeIsManual = self.selectionTypeIsManual
         } else if segue.identifier == "showToolDescr" {
             let cell = sender as! UITableViewCell
             let indexPath = self.theTableView.indexPath(for: cell)

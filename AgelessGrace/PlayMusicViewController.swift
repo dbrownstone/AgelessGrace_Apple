@@ -91,12 +91,10 @@ class PlayMusicViewController: UIViewController, AVAudioPlayerDelegate {
             name:NSNotification.Name(rawValue: "MusicChangedNotification"),
             object: nil
         )
-        //        cancelled = false
-        //        nextButton.isHidden = true
         
         sessionDuration = Double(toolControl.getSessionPeriod())
         sessionDuration *= 60
-        totalTimeRemaining.text = "\(toolControl.getSessionPeriod())"
+        totalTimeRemaining.text = baseTimerText
         self.loadTheToolLabels(0)
     }
     
@@ -104,32 +102,34 @@ class PlayMusicViewController: UIViewController, AVAudioPlayerDelegate {
     
     @IBAction func startTheSession(_ sender: UIBarButtonItem) {
         startTheTimer()
-        self.navigationItem.setRightBarButton(UIBarButtonItem(barButtonSystemItem: .pause, target: self, action: #selector(self.pause(_ :))), animated: true)
+//        self.navigationItem.setRightBarButton(UIBarButtonItem(barButtonSystemItem: .pause, target: self, action: #selector(self.pause(_ :))), animated: true)
+        self.navigationItem.rightBarButtonItem = nil
     }
     
     func loadTheToolLabels(_ startingIndex:Int) {
-        let toolTime = sessionDuration / 3
-//        let indivToolTimeReqd = " (" + (NSString(format: "%01.0f:%02.0f",toolTime/60,toolTime.truncatingRemainder(dividingBy: 60)) as String) as String + ")"
         for var i in startingIndex..<startingIndex+3 {
             if i >= selectedGroup.count {
                 i = selectedGroup.count - 1
             }
             let title = selectedGroup[i]
             let idx = (appDelegate.getRequiredArray("AGToolNames")).index(of: title)
-            let partialStr = "\(NSLocalizedString("Tool", comment:""))#" + "\(idx! + 1)" + ": " + title// + indivToolTimeReqd
+            let partialStr = "\(NSLocalizedString("Tool", comment:""))#" + "\(idx! + 1)" + ": " + title
             switch (i - startingIndex) {
             case 0:
                 tool1Name.textColor = .red
                 tool1Name.text = partialStr
+                self.title = title
             case 1:
                 tool2Name.textColor = .black
                 tool2Name.text = partialStr
             case 2:
                 tool3Name.textColor = .black
                 tool3Name.text = partialStr
+
             default:
                 break
             }
+            
         }
     }
     
@@ -142,8 +142,6 @@ class PlayMusicViewController: UIViewController, AVAudioPlayerDelegate {
         isPaused = false
         if UIDevice.isSimulator == false {
             /* Start playing the items in the collection */
-            //        audioPlayer.shuffleTheMusic(true) //self.preselected == true ? false : true)
-            //        audioPlayer.repeatTheMusic(false)
             audioPlayer.playMusic(selectedPlayList!)
             audioPlayerJustStarted = true
         } else {
@@ -161,6 +159,13 @@ class PlayMusicViewController: UIViewController, AVAudioPlayerDelegate {
         
     }
     
+    @objc func restartTheTimer(_ sender:UIBarButtonItem) {
+        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(timerAction(_:)), userInfo: nil, repeats: true)
+        self.navigationItem.rightBarButtonItem = nil
+        let song = (selectedPlayList.items)[currentItemCnt] as MPMediaItem
+        print("\(String(describing: song.value(forProperty: MPMediaItemPropertyTitle) as? String))")
+        audioPlayer.playNextPiece()
+    }
     
     func setupTickerTape(_ itemCnt:Int) {
         marquee.text = getTheText(itemCnt)
@@ -184,15 +189,18 @@ class PlayMusicViewController: UIViewController, AVAudioPlayerDelegate {
     // MARK: - Timer Action
     
     @objc func timerAction(_ sender: UIBarButtonItem) {
-        if UIDevice.isSimulator == false {
-            if audioPlayerJustStarted == false && audioPlayer.isCurrentlyPlaying == false {
-                return
-            }
-        }
+//        if UIDevice.isSimulator == false {
+//            if audioPlayerJustStarted == false && audioPlayer.isCurrentlyPlaying == false {
+//                return
+//            }
+//        }
         audioPlayerJustStarted = false
         if toolTimeRemaining <= 0 {
+            audioPlayer.stopPlayingCurrentAudio()
             selectTheNextTool()
-            toolTimeRemaining = (SESSIONPERIOD / 3) * 60
+            timer.invalidate()
+            self.navigationItem.setRightBarButton(UIBarButtonItem(barButtonSystemItem: .play, target: self, action: #selector(self.restartTheTimer(_ :))), animated: true)
+            return
         } else {
             toolTimeRemaining -= 1
         }
@@ -225,15 +233,19 @@ class PlayMusicViewController: UIViewController, AVAudioPlayerDelegate {
             tool2Name.textColor = .red
             tool1Name.textColor = .black
             tool3Name.textColor = .black
+            self.title = selectedGroup[currentItemCnt]
         case 2:
             tool3Name.textColor = .red
             tool1Name.textColor = .black
             tool2Name.textColor = .black
+            self.title = selectedGroup[currentItemCnt]
         default:
             break
         }
         setupTickerTape(currentItemCnt)
-        audioPlayer.playNextPiece()
+        displayMusicDetails()
+        toolTimeRemaining = (SESSIONPERIOD / 3) * 60
+        
     }
     
     func musicCount(_ cnt:Float) {
@@ -274,9 +286,6 @@ class PlayMusicViewController: UIViewController, AVAudioPlayerDelegate {
         if selectedPlayList != nil {
             displayMusicDetails()
         }
-        //let UIDictionary = notification.userInfo
-        //        let song = (selectedPlayList.items)[currentItemCnt] as MPMediaItem
-        
     }
     
     // MARK: - Actions
