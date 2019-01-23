@@ -9,7 +9,7 @@
 import UIKit
 import MediaPlayer
 
-var SESSIONPERIOD = 10.00
+var SESSIONPERIOD = 10.0
 
 let toolControl:ToolProtocol = ToolManipulations()
 
@@ -165,11 +165,15 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         // or all the tools if this is the 7th day
         // otherwise show a message to the effect that nothing can be visible until tomorrow
         let titleIndex = Int((self.title!.split(separator: " "))[1])
-        if titleIndex == 7 {
+        if titleIndex == 7 && datastore.lastCompletedExerciseWasYesterday() && datastore.yesterdayWasDay7() {
             selectedGroup = nil
-            return
+            selectedGroups = nil
+            userDefaults.removeObject(forKey:"SelectedGroup")
+            userDefaults.removeObject(forKey:"SelectedGroups")
+            self.completedNotice.isHidden = true
         }
-        if selectedGroups.index(of: selectedGroup) == titleIndex! - 1 {
+        if (selectedGroups.index(of: selectedGroup) == titleIndex! - 1 &&
+            datastore.lastCompletedExerciseWasYesterday() == false) {
             let message = NSLocalizedString("Your exercise requirement for today is complete. You should continue tomorrow!", comment: "")
             let title = NSLocalizedString("You're done!", comment: "")
             let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -309,6 +313,7 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 break
             }
             toolsDescr = appDelegate.getRequiredArray("AGToolNames")
+            selectedGroups = nil
         } else  {
             message =  NSLocalizedString("Congratulations on doing your 10 minutes of Ageless Grace Brain. See you tomorrow!", comment:"")
         }

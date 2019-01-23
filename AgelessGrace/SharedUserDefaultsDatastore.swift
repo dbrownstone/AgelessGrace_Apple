@@ -20,6 +20,7 @@ protocol DatastoreProtocol {
     func computeYesterdaysDate() -> Date
     func updateDate(_ theDate: Date, byDays: Int) -> Date
     func isToday(_ date:Date) -> Bool
+    func yesterdayWasDay7() -> Bool
     func setDateOfLastCompletedExercise()
     func lastCompletedExerciseWasYesterday() -> Bool
     func resetLastCompletedExercisDate()
@@ -165,6 +166,12 @@ class SharedUserDefaultsDatastore: NSObject, DatastoreProtocol {
         
         let newDate = calendar.date(byAdding: dateComponent, to: theDate)!
         return newDate
+    }
+    
+    func yesterdayWasDay7() -> Bool {
+        let yesterday = computeYesterdaysDate()
+        let day7 = loadDate("EndingDate")
+        return compareDate(date1: day7, date2: yesterday)
     }
     
     func isToday(_ date:Date) -> Bool {
