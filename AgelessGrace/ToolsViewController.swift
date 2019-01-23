@@ -171,6 +171,7 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             userDefaults.removeObject(forKey:"SelectedGroup")
             userDefaults.removeObject(forKey:"SelectedGroups")
             self.completedNotice.isHidden = true
+            theTableView.reloadData()
         }
         if (selectedGroups.index(of: selectedGroup) == titleIndex! - 1 &&
             datastore.lastCompletedExerciseWasYesterday() == false) {
