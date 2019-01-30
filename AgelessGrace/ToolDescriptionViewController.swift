@@ -11,6 +11,7 @@ import UIKit
 class ToolDescriptionViewController: UITableViewController {
     
     var selectedToolIndex: Int!
+    var completedNoticeVisible = false
     
     override func viewDidLoad() {
         super.viewDidLoad()

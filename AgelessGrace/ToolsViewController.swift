@@ -9,7 +9,7 @@
 import UIKit
 import MediaPlayer
 
-var SESSIONPERIOD = 10.0
+var SESSIONPERIOD = 0.30//10.0
 
 let toolControl:ToolProtocol = ToolManipulations()
 
@@ -34,6 +34,7 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     var selectedPlaylist:MPMediaItemCollection!
     var toolGroupHasBeenCompleted = false
     var exerciseDay = 0
+    var completedNoticeVisible = false
     
     let selectBtn = UIButton(type:.custom)
     let reSelectBtn = UIButton(type:.custom)
@@ -46,7 +47,7 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.theTableView.delegate = self
         self.theTableView.dataSource = self
         if UIDevice.isSimulator {
-            SESSIONPERIOD = 0.25 //1.0
+            SESSIONPERIOD = 0.30 //1.0
         }
 
     }
@@ -60,7 +61,13 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 self.returningFromDescriptionVC = false
                 self.returningFromPlayMusicVC = false
                 if self.completedNotice.isHidden == false {
-                    self.navigationItem.rightBarButtonItem = nil
+                    if !self.completedNoticeVisible {
+                        self.navigationItem.rightBarButtonItem = nil
+                    } else {
+                        let rightBarSelectButtonItem: UIBarButtonItem = UIBarButtonItem(customView: refreshBtn)
+                        self.navigationItem.setRightBarButton(
+                        rightBarSelectButtonItem, animated: false)
+                    }
                 } else {
                     replaceButtonWithMusicSelector()
                 }
@@ -171,6 +178,7 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             userDefaults.removeObject(forKey:"SelectedGroup")
             userDefaults.removeObject(forKey:"SelectedGroups")
             self.completedNotice.isHidden = true
+            self.completedNoticeVisible = false
             theTableView.reloadData()
         }
         if (selectedGroups.index(of: selectedGroup) == titleIndex! - 1 &&
@@ -388,6 +396,7 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
                     selectedGroup = selectedGroups[self.exerciseDay - 1]
                     if toolControl.getLastCompletedGroup() == selectedGroup {
                         self.completedNotice.isHidden = false
+                        self.completedNoticeVisible = true
                         let rightBarSelectButtonItem: UIBarButtonItem = UIBarButtonItem(customView: refreshBtn)
                         self.navigationItem.setRightBarButton(
                             rightBarSelectButtonItem, animated: false)
@@ -410,6 +419,7 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
                         self.navigationItem.setRightBarButton(
                             rightBarSelectButtonItem, animated: false)
                         self.completedNotice.isHidden = false
+                        self.completedNoticeVisible = true
                     }
                 }
             } else {
@@ -556,9 +566,8 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             let indexPath = self.theTableView.indexPath(for: cell)
             let controller = segue.destination as! ToolDescriptionViewController
             let selectedTool = self.toolsDescr[indexPath!.row]
-//            if self.title == NSLocalizedString("Selected Tools", comment:"") {
-                self.returningFromDescriptionVC = true
-//            }
+            self.returningFromDescriptionVC = true
+            controller.completedNoticeVisible = self.completedNoticeVisible
             controller.selectedToolIndex = (appDelegate.getRequiredArray("AGToolNames")).index(of:selectedTool)
         }
     }

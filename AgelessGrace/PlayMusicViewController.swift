@@ -42,6 +42,8 @@ class PlayMusicViewController: UIViewController, AVAudioPlayerDelegate {
     
     var audioPlayerJustStarted = false
     
+    var completedNoticeVisible = false
+    
     //    var musicPlayer = MPMusicPlayerController.applicationMusicPlayer
     var timer:Timer!
     var sessionDuration = Double(SESSIONPERIOD)
