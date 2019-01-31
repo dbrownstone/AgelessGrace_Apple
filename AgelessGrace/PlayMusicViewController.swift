@@ -164,9 +164,11 @@ class PlayMusicViewController: UIViewController, AVAudioPlayerDelegate {
     @objc func restartTheTimer(_ sender:UIBarButtonItem) {
         timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(timerAction(_:)), userInfo: nil, repeats: true)
         self.navigationItem.rightBarButtonItem = nil
-        let song = (selectedPlayList.items)[currentItemCnt] as MPMediaItem
-        print("\(String(describing: song.value(forProperty: MPMediaItemPropertyTitle) as? String))")
-        audioPlayer.playNextPiece()
+        if !UIDevice.isSimulator {
+            let song = (selectedPlayList.items)[currentItemCnt] as MPMediaItem
+            print("\(String(describing: song.value(forProperty: MPMediaItemPropertyTitle) as? String))")
+            audioPlayer.playNextPiece()
+        }
     }
     
     func setupTickerTape(_ itemCnt:Int) {
