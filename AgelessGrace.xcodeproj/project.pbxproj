@@ -97,28 +97,17 @@
 			isa = PBXGroup;
 			children = (
 				639B73F921CCD2C3007AFB1E /* AppDelegate.swift */,
-				639B740E21CCD388007AFB1E /* Controllers */,
+				D8B869192210314D00202D20 /* Controllers */,
+				D846912E220D4B2000B6CEFC /* About */,
+				D846912D220D4ADE00B6CEFC /* Settings */,
+				D8469133220DACC200B6CEFC /* Utilities */,
+				D846912F220D4B9100B6CEFC /* Localizables */,
 				639B73FD21CCD2C3007AFB1E /* Main.storyboard */,
 				639B740221CCD2C6007AFB1E /* LaunchScreen.storyboard */,
 				639B740521CCD2C6007AFB1E /* Info.plist */,
 				639B742121CCD82E007AFB1E /* Assets.xcassets */,
 			);
 			path = AgelessGrace;
-			sourceTree = "<group>";
-		};
-		639B740E21CCD388007AFB1E /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				D846912F220D4B9100B6CEFC /* Localizables */,
-				639B740F21CCD449007AFB1E /* ToolDescriptionViewController.swift */,
-				639B741121CCD4A5007AFB1E /* ToolManipulations.swift */,
-				639B741321CCD4F1007AFB1E /* ToolsViewController.swift */,
-				639B741521CCD542007AFB1E /* PlayMusicViewController.swift */,
-				D846912E220D4B2000B6CEFC /* About */,
-				D846912D220D4ADE00B6CEFC /* Settings */,
-				D8469133220DACC200B6CEFC /* Utilities */,
-			);
-			name = Controllers;
 			sourceTree = "<group>";
 		};
 		D846912D220D4ADE00B6CEFC /* Settings */ = {
@@ -156,6 +145,17 @@
 				639B741F21CCD72A007AFB1E /* SwiftActivity.swift */,
 			);
 			path = Utilities;
+			sourceTree = "<group>";
+		};
+		D8B869192210314D00202D20 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				639B740F21CCD449007AFB1E /* ToolDescriptionViewController.swift */,
+				639B741121CCD4A5007AFB1E /* ToolManipulations.swift */,
+				639B741321CCD4F1007AFB1E /* ToolsViewController.swift */,
+				639B741521CCD542007AFB1E /* PlayMusicViewController.swift */,
+			);
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 		E0FDEAEC15A38BC741BA9DA5 /* Pods */ = {
