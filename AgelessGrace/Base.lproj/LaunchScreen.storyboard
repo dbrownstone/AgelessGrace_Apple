@@ -14,10 +14,6 @@
         <scene sceneID="vBt-tx-lzE">
             <objects>
                 <viewController id="yWA-6q-jbJ" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="439-zd-cFL"/>
-                        <viewControllerLayoutGuide type="bottom" id="hic-ib-5kb"/>
-                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="ab9-tc-SJQ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -32,16 +28,16 @@
                         </subviews>
                         <color key="backgroundColor" red="0.16078431369999999" green="0.086274509799999996" blue="0.44705882349999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="hic-ib-5kb" firstAttribute="top" secondItem="vQ2-g0-pX9" secondAttribute="bottom" id="39O-U2-hJf"/>
-                            <constraint firstItem="hic-ib-5kb" firstAttribute="top" secondItem="xbb-sT-e6v" secondAttribute="bottom" id="9Al-p6-ePD"/>
+                            <constraint firstItem="0xE-gO-QAX" firstAttribute="bottom" secondItem="vQ2-g0-pX9" secondAttribute="bottom" id="39O-U2-hJf"/>
+                            <constraint firstItem="0xE-gO-QAX" firstAttribute="bottom" secondItem="xbb-sT-e6v" secondAttribute="bottom" id="9Al-p6-ePD"/>
                             <constraint firstItem="vQ2-g0-pX9" firstAttribute="top" secondItem="ab9-tc-SJQ" secondAttribute="top" id="Ex9-qe-Uvk"/>
-                            <constraint firstItem="xbb-sT-e6v" firstAttribute="leading" secondItem="ab9-tc-SJQ" secondAttribute="leading" id="Nbx-Rz-YrW"/>
-                            <constraint firstAttribute="trailing" secondItem="xbb-sT-e6v" secondAttribute="trailing" id="Xdy-zw-TS1"/>
-                            <constraint firstAttribute="trailing" secondItem="vQ2-g0-pX9" secondAttribute="trailing" id="pRK-JF-OXl"/>
+                            <constraint firstItem="xbb-sT-e6v" firstAttribute="leading" secondItem="0xE-gO-QAX" secondAttribute="leading" id="Nbx-Rz-YrW"/>
+                            <constraint firstItem="0xE-gO-QAX" firstAttribute="trailing" secondItem="xbb-sT-e6v" secondAttribute="trailing" id="Xdy-zw-TS1"/>
+                            <constraint firstItem="0xE-gO-QAX" firstAttribute="trailing" secondItem="vQ2-g0-pX9" secondAttribute="trailing" id="pRK-JF-OXl"/>
                             <constraint firstItem="xbb-sT-e6v" firstAttribute="top" secondItem="ab9-tc-SJQ" secondAttribute="top" id="smU-Do-XkG"/>
-                            <constraint firstItem="vQ2-g0-pX9" firstAttribute="leading" secondItem="ab9-tc-SJQ" secondAttribute="leading" id="ude-0k-Smc"/>
+                            <constraint firstItem="vQ2-g0-pX9" firstAttribute="leading" secondItem="0xE-gO-QAX" secondAttribute="leading" id="ude-0k-Smc"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="OXF-aB-dIR"/>
+                        <viewLayoutGuide key="safeArea" id="0xE-gO-QAX"/>
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>

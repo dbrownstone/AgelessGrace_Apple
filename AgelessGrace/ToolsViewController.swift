@@ -10,10 +10,9 @@ import UIKit
 import MediaPlayer
 
 var SESSIONPERIOD = 10.0
-
 let toolControl:ToolProtocol = ToolManipulations()
 
-class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MPMediaPickerControllerDelegate {
     
     @IBOutlet weak var theTableView: UITableView!
     @IBOutlet weak var completedNotice: UIView!
@@ -56,44 +55,46 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         super.viewWillAppear(animated)
         self.navigationItem.rightBarButtonItem = nil
         
-        if selectedPlaylist == nil {
-            if returningFromDescriptionVC || returningFromPlayMusicVC {
+        if selectedPlaylist == nil || self.returnedFromExercise {
+            if returningFromDescriptionVC ||
+                returningFromPlayMusicVC  {
                 self.returningFromDescriptionVC = false
                 self.returningFromPlayMusicVC = false
                 if self.completedNotice.isHidden == false {
-                    if !self.completedNoticeVisible {
-                        self.navigationItem.rightBarButtonItem = nil
-                    } else {
-                        let rightBarSelectButtonItem: UIBarButtonItem = UIBarButtonItem(customView: refreshBtn)
-                        self.navigationItem.setRightBarButton(
+                    let rightBarSelectButtonItem: UIBarButtonItem = UIBarButtonItem(customView: refreshBtn)
+                    self.navigationItem.setRightBarButton(
                         rightBarSelectButtonItem, animated: false)
-                    }
                 } else {
                     replaceButtonWithMusicSelector()
                 }
             } else {
-                selectBtn.addTarget(self, action: #selector(self.showActionSheet), for: UIControl.Event.touchUpInside)
-                var title = NSLocalizedString("Select", comment:"")
-                selectBtn.setTitleColor(UIColor(red: 42/255, green: 22/255, blue: 114/255, alpha: 1), for: UIControl.State())
-                selectBtn.setAttributedTitle(NSAttributedString(string: title, attributes:[
-                    NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14.0, weight: UIFont.Weight.light)]), for: .normal)
-                selectBtn.sizeToFit()
-                selectBtn.backgroundColor = .clear
-                
-                title = NSLocalizedString("Continue", comment:"")
-                continueBtn.addTarget(self, action: #selector(self.updateDisplayList(_:)), for: .touchDown)
-                continueBtn.setTitleColor(UIColor(red: 42/255, green: 22/255, blue: 114/255, alpha: 1), for: UIControl.State())
-                continueBtn.setAttributedTitle(NSAttributedString(string: title, attributes:[
-                    NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14.0, weight: UIFont.Weight.light)]), for: .normal)
-                continueBtn.sizeToFit()
-                continueBtn.backgroundColor = .clear
-
-                refreshBtn.addTarget(self, action: #selector(self.refreshTable(_:)), for: .touchDown)
-                refreshBtn.setImage(UIImage(named: "synch"), for: UIControl.State.normal)
-                selectBtn.sizeToFit()
-                refreshBtn.setTitleColor(UIColor(red: 42/255, green: 22/255, blue: 114/255, alpha: 1), for: UIControl.State())
-                refreshBtn.backgroundColor = .clear
-                
+                if self.returnedFromExercise && self.completedNotice.isHidden == false {
+                    let rightBarSelectButtonItem: UIBarButtonItem = UIBarButtonItem(customView: refreshBtn)
+                    self.navigationItem.setRightBarButton(
+                    rightBarSelectButtonItem, animated: false)                    
+                } else {
+                    selectBtn.addTarget(self, action: #selector(self.showActionSheet), for: UIControl.Event.touchUpInside)
+                    var title = NSLocalizedString("Select", comment:"")
+                    selectBtn.setTitleColor(UIColor(red: 42/255, green: 22/255, blue: 114/255, alpha: 1), for: UIControl.State())
+                    selectBtn.setAttributedTitle(NSAttributedString(string: title, attributes:[
+                        NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14.0, weight: UIFont.Weight.light)]), for: .normal)
+                    selectBtn.sizeToFit()
+                    selectBtn.backgroundColor = .clear
+                    
+                    title = NSLocalizedString("Continue", comment:"")
+                    continueBtn.addTarget(self, action: #selector(self.updateDisplayList(_:)), for: .touchDown)
+                    continueBtn.setTitleColor(UIColor(red: 42/255, green: 22/255, blue: 114/255, alpha: 1), for: UIControl.State())
+                    continueBtn.setAttributedTitle(NSAttributedString(string: title, attributes:[
+                        NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14.0, weight: UIFont.Weight.light)]), for: .normal)
+                    continueBtn.sizeToFit()
+                    continueBtn.backgroundColor = .clear
+                    
+                    refreshBtn.addTarget(self, action: #selector(self.refreshTable(_:)), for: .touchDown)
+                    refreshBtn.setImage(UIImage(named: "synch"), for: UIControl.State.normal)
+                    selectBtn.sizeToFit()
+                    refreshBtn.setTitleColor(UIColor(red: 42/255, green: 22/255, blue: 114/255, alpha: 1), for: UIControl.State())
+                    refreshBtn.backgroundColor = .clear
+                }
                 if UIDevice.isSimulator {
                     nextToolButton.addTarget(self, action: #selector(self.showNextTool), for: UIControl.Event.touchUpInside)
                     nextToolButton.setTitleColor(UIColor(red: 42/255, green: 22/255, blue: 114/255, alpha: 1), for: UIControl.State())
@@ -217,6 +218,7 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             toolControl.setSelectionType(self.selectionTypeIsManual)
             self.completedManualToolIds = toolControl.getManuallyCompletedToolIds()
             if self.completedManualToolIds.count == 0 && self.completedManualTools.count > 0 {
+                self.selectionTypeIsManual = false
                 self.completedManualToolIds = [Int]()
                 for i in 0..<self.completedManualTools!.count {
                     let tool = self.completedManualTools[i]
@@ -276,6 +278,19 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         }
     }
     
+//    func prepareToStartTheSession() {
+//        var totalPlayingTime = 0.0
+//        for item in self.musicForSelectedGroup {
+//            let duration = item["duration"]
+//            totalPlayingTime += duration as! Double
+//        }
+//        if totalPlayingTime >= SESSIONPERIOD * 60 {
+//            self.startTheSession()
+//        } else {
+//
+//        }
+//    }
+    
     func startTheSession() {
         if #available(iOS 9.3, *) {
             let authorizationStatus = MPMediaLibrary.authorizationStatus()
@@ -296,6 +311,7 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         } else {
             appDelegate.mediaAuthorized = true
         }
+        
         if self.selectedPlaylist != nil  || UIDevice.isSimulator {
             // if all the music has been selected for this group
             if appDelegate.mediaAuthorized {
@@ -515,16 +531,21 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     // MARK: - Navigation
     
     @IBAction func unwindToMainMenu(_ sender: UIStoryboardSegue) {
-        self.toolGroupHasBeenCompleted = true
         toolControl.saveLastCompletedGroup(self.selectedGroup)
-        if self.selectionTypeIsManual {
-            // save to datastore
-            selectedGroup = nil
-            self.returnedFromExercise = true
-            toolControl.saveManuallySelectedTools(completedManualTools)
-//            self.completedNotice.isHidden = false
-        } else {
-            self.selectedGroup = nil
+        if self.toolGroupHasBeenCompleted {
+            if self.selectionTypeIsManual {
+                // save to datastore
+                selectedGroup = nil
+                self.returnedFromExercise = true
+                toolControl.saveManuallySelectedTools(completedManualTools)
+                self.completedNotice.isHidden = false
+                self.completedNoticeVisible = true
+                let rightBarSelectButtonItem: UIBarButtonItem = UIBarButtonItem(customView: refreshBtn)
+                self.navigationItem.setRightBarButton(
+                    rightBarSelectButtonItem, animated: false)
+            } else {
+                self.selectedGroup = nil
+            }
         }
     }
     
@@ -571,11 +592,9 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             controller.selectedToolIndex = (appDelegate.getRequiredArray("AGToolNames")).index(of:selectedTool)
         }
     }
-}
-
-extension ToolsViewController: MPMediaPickerControllerDelegate {
     
     @objc func selectMusicForGroup() {
+        musicForSelectedGroup = Array<[String: Any]> ()
         if UIDevice.isSimulator {
             print("running on simulator")
             self.startTheSession()
@@ -585,20 +604,20 @@ extension ToolsViewController: MPMediaPickerControllerDelegate {
             mediaPicker.delegate = self
             mediaPicker.allowsPickingMultipleItems = true
             mediaPicker.showsCloudItems = true
-            let prompt = NSLocalizedString("Select 3 songs.", comment:"")
+            let prompt = NSLocalizedString("Select 3 songs", comment:"")
             mediaPicker.prompt = prompt
-            
-            //        replaceButtonWithPlayButton()
-            
             present(mediaPicker, animated: true, completion: nil)
         }
+    }
+    
+    func validateTheTotalPlayingTime(_ totalPlayingTime: Double) {
+        
     }
     
     // MARK: - Media Picker
     
     func mediaPicker(_ mediaPicker: MPMediaPickerController, didPickMediaItems mediaItemCollection: MPMediaItemCollection) {
         
-        var musicForSelectedGroup = Array<[String: Any]> ()//Array<NSURL> ()
         selectedPlaylist = mediaItemCollection
         for thisItem in mediaItemCollection.items {
             let persistentID = thisItem.value(forProperty: MPMediaItemPropertyPersistentID) as! NSNumber
@@ -606,12 +625,13 @@ extension ToolsViewController: MPMediaPickerControllerDelegate {
             let album = thisItem.albumTitle!
             let artist = thisItem.artist!
             let genre = thisItem.genre
-            //            let itemUrl = thisItem.value(forProperty: MPMediaItemPropertyAssetURL) as? NSURL
+            let duration = thisItem.value(forProperty: MPMediaItemPropertyPlaybackDuration) as? Double
             musicForSelectedGroup.append(["ID": persistentID as Any,
                                           "title": title as Any,
                                           "album": album as Any,
                                           "artist": artist as Any,
-                                          "genre": genre as Any]
+                                          "genre": genre as Any,
+                                          "duration": duration as Any]
             )
         }
         self.navigationItem.rightBarButtonItem = nil

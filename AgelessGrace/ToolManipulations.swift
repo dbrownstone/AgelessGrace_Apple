@@ -93,6 +93,7 @@ class ToolManipulations: NSObject, ToolProtocol {
         }
         let firstDay = Date().addingTimeInterval(TimeInterval(-noOfManualDays*24*60*60))
         datastore.save("StartingDate", value:firstDay as NSObject)
+        
         datastore.save("EndingDate", value:datastore.sevenDaysFrom(firstDay) as NSObject)        
     }
     
@@ -133,9 +134,8 @@ class ToolManipulations: NSObject, ToolProtocol {
             randomizedList.append(randNum)
         }
         var theGroup = [String]()
-        var startId = 0
         if self.completedManualToolIds.count > 0 {
-            startId = completedManualToolIds.count - 1
+//            let startId = completedManualToolIds.count - 1
             for indx in 0...completedManualToolIds.count  {
                 if indx > 0 && indx%theToolCount == 0 {
                     sevenDayToolSelection.append(theGroup)
@@ -216,7 +216,7 @@ class ToolManipulations: NSObject, ToolProtocol {
     }
     
     func getToolCount() -> Int {
-        if theToolCount == nil {
+        if theToolCount <= 0 {
             theToolCount = 3
         }
         return theToolCount

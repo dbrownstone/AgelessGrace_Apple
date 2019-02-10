@@ -100,12 +100,15 @@ class PlayMusicViewController: UIViewController, AVAudioPlayerDelegate {
         self.loadTheToolLabels(0)
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+//        print("Play music disappears")
+    }
     // MARK: - Start Session
     
     @IBAction func startTheSession(_ sender: UIBarButtonItem) {
         startTheTimer()
-//        self.navigationItem.setRightBarButton(UIBarButtonItem(barButtonSystemItem: .pause, target: self, action: #selector(self.pause(_ :))), animated: true)
-        self.navigationItem.rightBarButtonItem = nil
+        self.navigationItem.setRightBarButton(UIBarButtonItem(barButtonSystemItem: .pause, target: self, action: #selector(self.pause(_ :))), animated: true)
+//        self.navigationItem.rightBarButtonItem = nil
     }
     
     func loadTheToolLabels(_ startingIndex:Int) {
@@ -163,12 +166,12 @@ class PlayMusicViewController: UIViewController, AVAudioPlayerDelegate {
     
     @objc func restartTheTimer(_ sender:UIBarButtonItem) {
         timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(timerAction(_:)), userInfo: nil, repeats: true)
-        self.navigationItem.rightBarButtonItem = nil
+        self.navigationItem.setRightBarButton(UIBarButtonItem(barButtonSystemItem: .pause, target: self, action: #selector(self.pause(_ :))), animated: true)
         if !UIDevice.isSimulator {
             let song = (selectedPlayList.items)[currentItemCnt] as MPMediaItem
             print("\(String(describing: song.value(forProperty: MPMediaItemPropertyTitle) as? String))")
-            audioPlayer.playNextPiece()
         }
+        audioPlayer.playNextPiece()
     }
     
     func setupTickerTape(_ itemCnt:Int) {
@@ -193,17 +196,18 @@ class PlayMusicViewController: UIViewController, AVAudioPlayerDelegate {
     // MARK: - Timer Action
     
     @objc func timerAction(_ sender: UIBarButtonItem) {
-//        if UIDevice.isSimulator == false {
-//            if audioPlayerJustStarted == false && audioPlayer.isCurrentlyPlaying == false {
-//                return
-//            }
-//        }
         audioPlayerJustStarted = false
         if toolTimeRemaining <= 0 {
             audioPlayer.stopPlayingCurrentAudio()
-            selectTheNextTool()
             timer.invalidate()
-            self.navigationItem.setRightBarButton(UIBarButtonItem(barButtonSystemItem: .play, target: self, action: #selector(self.restartTheTimer(_ :))), animated: true)
+            selectTheNextTool()
+            if datastore.pauseBetweenTools() {
+                self.navigationItem.setRightBarButton(
+                    UIBarButtonItem(barButtonSystemItem: .play,
+                                    target: self, action: #selector(self.restartTheTimer(_ :))),
+                    animated: true
+                )
+            }
             return
         } else {
             toolTimeRemaining -= 1
@@ -220,13 +224,15 @@ class PlayMusicViewController: UIViewController, AVAudioPlayerDelegate {
             self.performSegue(withIdentifier: "returnToMainMenu", sender: self)
         } else {
             var remainingTime = audioPlayer.setRemainingTime(lastItem)
-            if lastItem  && sessionDuration > remainingTime && remainingTime < SESSIONPERIOD {
+            if remainingTime <= 0 && toolTimeRemaining > 5 {
+                audioPlayer.repeatCurrentItem()
+                remainingTime = toolTimeRemaining
+            } else if lastItem  && sessionDuration > remainingTime && remainingTime < SESSIONPERIOD {
                 audioPlayer.repeatCurrentItem()
                 remainingTime = audioPlayer.setRemainingTime(lastItem)
-                musicCount(Float(remainingTime))
-            } else {
-                musicCount(Float(remainingTime))
+                
             }
+            musicCount(Float(remainingTime))
         }
     }
     
@@ -285,7 +291,10 @@ class PlayMusicViewController: UIViewController, AVAudioPlayerDelegate {
     }
     
     @objc func nowPlayingItemIsChanged(_ notification: Notification) {
-        
+        if notification.userInfo?["playbackState"] != nil && notification.userInfo?["playbackState"] as! String == "interrupted" {
+            self.pause()
+            return
+        }
         lastItem = false
         if selectedPlayList != nil {
             displayMusicDetails()
@@ -293,8 +302,13 @@ class PlayMusicViewController: UIViewController, AVAudioPlayerDelegate {
     }
     
     // MARK: - Actions
-    
     @objc func pause(_ sender:UIBarButtonItem) {
+        self.pause()
+    }
+    
+    func pause() {
+        print("timer paused at: \(String(describing: (totalTimeRemaining.text)!))")
+        timer.invalidate()
         audioPlayer.pauseTheMusicPlayer()
         self.navigationItem.setRightBarButton(UIBarButtonItem(barButtonSystemItem: .play, target: self, action: #selector(self.resume(_ :))), animated: true)
     }
@@ -370,6 +384,7 @@ class PlayMusicViewController: UIViewController, AVAudioPlayerDelegate {
                 }
                 controller.completedManualToolIds = cMTIds
             }
+            controller.toolGroupHasBeenCompleted = true
              
         }
     }
