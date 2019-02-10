@@ -315,6 +315,11 @@ class PlayMusicViewController: UIViewController, AVAudioPlayerDelegate {
     
     @objc func resume(_ sender:UIBarButtonItem) {
         audioPlayer.resumeTheMusicPlayer();
+        let currentDuration = (songTimeRemaining.text)?.secondFromMinutesAndSecondsString
+        toolTimeRemaining = Double(currentDuration!)
+            
+        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(timerAction(_:)), userInfo: nil, repeats: true)
+        self.navigationItem.setRightBarButton(UIBarButtonItem(barButtonSystemItem: .pause, target: self, action: #selector(self.pause(_ :))), animated: true)
     }
     
     @IBAction func next(_ sender: Any) {
@@ -387,5 +392,19 @@ class PlayMusicViewController: UIViewController, AVAudioPlayerDelegate {
             controller.toolGroupHasBeenCompleted = true
              
         }
+    }
+}
+
+extension String{
+    
+    var integer: Int {
+        return Int(self) ?? 0
+    }
+    
+    var secondFromMinutesAndSecondsString : Int{
+        var components: Array = self.components(separatedBy: ":")
+        let minutes = components[0].integer
+        let seconds = components[1].integer
+        return Int((minutes * 60) + seconds)
     }
 }
