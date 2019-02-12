@@ -49,8 +49,8 @@ class ToolManipulations: NSObject, ToolProtocol {
         }
         selectedGroup = [String](repeating: "", count: theToolCount)
         datastore.save("SelectedGroup", value:(selectedGroup as NSObject?)!)
-        setTheDatesInTheDatastore()
-        datastore.commitToDisk()
+//        setTheDatesInTheDatastore()
+//        datastore.commitToDisk()
     }
     
     func saveManuallySelectedTools(_ tools:Array<String>) {

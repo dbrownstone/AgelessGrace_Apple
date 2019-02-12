@@ -103,8 +103,6 @@ class SettingsViewController: UITableViewController {
             theSwitch?.addTarget(self, action: #selector(exerciseSwitchClicked), for: .valueChanged)
             datePicker = cell?.viewWithTag(100) as? UIDatePicker
             datePicker.addTarget(self, action: #selector(dateChanged(_ :)), for: .valueChanged)
-//            let dateFormatter = DateFormatter()
-//            dateFormatter.dateFormat =  "dd:MM:yyyy"
             if let startDate = userDefaults.object(forKey: "StartingDate") {
                 datePicker.date = startDate as! Date
             } else {
@@ -123,14 +121,6 @@ class SettingsViewController: UITableViewController {
                 self.pauseSetting = theSwitch?.isOn
                 theSwitch?.addTarget(self, action: #selector(toolsSwitchClicked), for: .valueChanged)
             }
-//            else {
-//                if datastore.pauseForPhonecall() {
-//                    theSwitch?.isOn = true
-//                } else {
-//                    theSwitch?.isOn = false
-//                }
-//                theSwitch?.addTarget(self, action: #selector(phoneSwitchClicked), for: .valueChanged)
-//            }
             break
         }
         return cell!
@@ -138,13 +128,10 @@ class SettingsViewController: UITableViewController {
     
     @objc func exerciseSwitchClicked(sender:UISwitch) {
         self.exerciseSetting = sender.isOn
-//        datastore.setShouldExerciseDaily(sender.isOn)
     }
     
     @objc func toolsSwitchClicked(sender:UISwitch!) {
-        let theSwitch = sender
         self.pauseSetting = sender.isOn
-//        datastore.setPauseBetweenTools(theSwitch!.isOn)
     }
     
     @objc func dateChanged(_ sender: Any) {
@@ -158,21 +145,7 @@ class SettingsViewController: UITableViewController {
         if let day = components.day, let month = components.month, let year = components.year {
             dateStr = String(format:"%4d-%02d-%02d",year,month,day)
             print(dateStr)
-//            datastore.setDates((datePicker?.date)!)
         }
         doneBtn.isHidden = true
-
-//        if datastore.shouldExerciseDaily() {
-//
-//        } else {
-//
-//        }
-//        let dateFormatter = DateFormatter()
-//        dateFormatter.dateFormat =  "dd:MM:yyyy"
-//        if let date = dateFormatter.date(from: dateStr) {
-//            datePicker.date = date
-//        }
     }
-    
-    
 }
