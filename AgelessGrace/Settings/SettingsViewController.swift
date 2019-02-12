@@ -9,13 +9,33 @@
 import UIKit
 
 class SettingsViewController: UITableViewController {
-
-    let headersArray = [NSLocalizedString("Select when and how you will exercise", comment:""),
+    
+    var datePicker:UIDatePicker!
+    var doneBtn:UIButton!
+    
+    var currentStartDate: Date?
+    var exerciseSetting: Bool?
+    var pauseSetting: Bool?
+    
+    
+    let headersArray = [NSLocalizedString("Select when and how you will exercise after you have started", comment:""),
                         NSLocalizedString("Pause between tool exercises", comment:""),
                         NSLocalizedString("Pause when telephone rings", comment:"")]
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        tableView.reloadData()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        datastore.setDates(datePicker.date)
+        datastore.setShouldExerciseDaily(self.exerciseSetting!)
+        datastore.setPauseBetweenTools(self.pauseSetting!)
+        datastore.commitToDisk()
+        super.viewDidDisappear(animated)
     }
 
     // MARK: - Table view data source
@@ -78,107 +98,81 @@ class SettingsViewController: UITableViewController {
             identifier = "onOff"
             cell = tableView.dequeueReusableCell(withIdentifier: identifier!, for: indexPath)
             theSwitch = cell!.viewWithTag(10) as? UISwitch
-            
+            theSwitch?.isOn = datastore.shouldExerciseDaily()
+            self.exerciseSetting = theSwitch?.isOn
+            theSwitch?.addTarget(self, action: #selector(exerciseSwitchClicked), for: .valueChanged)
+            datePicker = cell?.viewWithTag(100) as? UIDatePicker
+            datePicker.addTarget(self, action: #selector(dateChanged(_ :)), for: .valueChanged)
+//            let dateFormatter = DateFormatter()
+//            dateFormatter.dateFormat =  "dd:MM:yyyy"
+            if let startDate = userDefaults.object(forKey: "StartingDate") {
+                datePicker.date = startDate as! Date
+            } else {
+                datePicker.date = Date()
+            }
+            self.currentStartDate = datePicker.date
+            doneBtn = cell?.viewWithTag(101) as? UIButton
+            doneBtn.addTarget(self, action:#selector(donePressed(_:)), for: .touchDown)
             break
         default:
             identifier = "yesNo"
             cell = tableView.dequeueReusableCell(withIdentifier: identifier!, for: indexPath)
-            theSwitch = cell!.viewWithTag(10) as? UISwitch
+            theSwitch = cell!.viewWithTag(20) as? UISwitch
             if indexPath.section == 1 {
-                if datastore.pauseBetweenTools() {
-                    theSwitch?.isOn = true
-                } else {
-                    theSwitch?.isOn = false
-                }
+                theSwitch?.isOn = datastore.pauseBetweenTools()
+                self.pauseSetting = theSwitch?.isOn
                 theSwitch?.addTarget(self, action: #selector(toolsSwitchClicked), for: .valueChanged)
-
-            } else {
-                if datastore.pauseForPhonecall() {
-                    theSwitch?.isOn = true
-                } else {
-                    theSwitch?.isOn = false
-                }
-//                theSwitch?.addTarget(self, action: #selector(phoneSwitchClicked), for: .valueChanged)
             }
+//            else {
+//                if datastore.pauseForPhonecall() {
+//                    theSwitch?.isOn = true
+//                } else {
+//                    theSwitch?.isOn = false
+//                }
+//                theSwitch?.addTarget(self, action: #selector(phoneSwitchClicked), for: .valueChanged)
+//            }
             break
         }
         return cell!
     }
     
+    @objc func exerciseSwitchClicked(sender:UISwitch) {
+        self.exerciseSetting = sender.isOn
+//        datastore.setShouldExerciseDaily(sender.isOn)
+    }
+    
     @objc func toolsSwitchClicked(sender:UISwitch!) {
         let theSwitch = sender
-        let cell = (sender?.superview?.superview) as! UITableViewCell
-        let section = (tableView.indexPath(for: cell))?.section
-        if section == 0 {
-            if (theSwitch?.isOn)! {
-                datastore.save("DailyFromStartDate",value: false as NSObject)
-            } else {
-                datastore.save("DailyFromStartDate",value: true as NSObject)
-            }
-        } else {
-            if theSwitch!.isOn {
-                datastore.save("PauseBetweenTools",value:true as NSObject)
-            }
-            else {
-                datastore.save("PauseBetweenTools",value:false as NSObject)
-            }
+        self.pauseSetting = sender.isOn
+//        datastore.setPauseBetweenTools(theSwitch!.isOn)
+    }
+    
+    @objc func dateChanged(_ sender: Any) {
+        doneBtn.isHidden = false
+    }
+    
+    @objc func donePressed(_ sender: UIButton) {
+        self.currentStartDate = datePicker.date
+        var dateStr = ""
+        let components = Calendar.current.dateComponents([.year, .month, .day], from: datePicker.date)
+        if let day = components.day, let month = components.month, let year = components.year {
+            dateStr = String(format:"%4d-%02d-%02d",year,month,day)
+            print(dateStr)
+//            datastore.setDates((datePicker?.date)!)
         }
-    }
+        doneBtn.isHidden = true
 
-//    @objc func phoneSwitchClicked(sender:UISwitch!) {
-//        let theSwitch = sender
-//        if theSwitch!.isOn {
-//            datastore.save("PauseForPhonecall",value:true as NSObject)
+//        if datastore.shouldExerciseDaily() {
+//
+//        } else {
+//
 //        }
-//        else {
-//            datastore.save("PauseForPhonecall",value:false as NSObject)
+//        let dateFormatter = DateFormatter()
+//        dateFormatter.dateFormat =  "dd:MM:yyyy"
+//        if let date = dateFormatter.date(from: dateStr) {
+//            datePicker.date = date
 //        }
-//        datastore.commitToDisk()
-//    }
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+    
+    
 }

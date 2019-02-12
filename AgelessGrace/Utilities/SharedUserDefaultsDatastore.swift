@@ -28,6 +28,10 @@ protocol DatastoreProtocol {
     func getCompletedWeeks() -> Int
     func setCompletedWeeks() -> Int
     func resetCompletedWeeks()
+    func setDates(_ value: Date)
+    func shouldExerciseDaily() -> Bool
+    func setShouldExerciseDaily(_ value: Bool)
+    func setPauseBetweenTools(_ value: Bool)
     func pauseBetweenTools() -> Bool
     func pauseForPhonecall() -> Bool
     func commitToDisk()
@@ -35,8 +39,41 @@ protocol DatastoreProtocol {
 
 class SharedUserDefaultsDatastore: NSObject, DatastoreProtocol {
     
+    func setPauseBetweenTools(_ value: Bool) {
+        userDefaults.removeObject(forKey: "PauseBetweenTools")
+        commitToDisk()
+        userDefaults.set(value, forKey: "PauseBetweenTools")
+    }
+    
     func pauseBetweenTools() -> Bool {
-        return userDefaults.bool(forKey: "PauseBetweenTools")
+        if let result = userDefaults.object(forKey: "PauseBetweenTools") {
+            return result as! Bool
+        } else {
+            return false
+        }
+    }
+    
+    func shouldExerciseDaily() -> Bool {
+        if let result = userDefaults.object(forKey: "DailyFromStartDate") {
+            return result as! Bool
+        }
+        return false
+    }
+    
+    func setShouldExerciseDaily(_ value: Bool) {
+        userDefaults.removeObject(forKey: "DailyFromStartDate")
+        commitToDisk()
+        userDefaults.set(value, forKey:"DailyFromStartDate")
+    }
+    
+    func setDates(_ value: Date) {
+        userDefaults.removeObject(forKey:"StartingDate")
+        userDefaults.removeObject(forKey:"EndingDate")
+        userDefaults.set(value, forKey:"StartingDate")
+        if self.shouldExerciseDaily() {
+            let seventhDate = self.sevenDaysFrom(value)
+            userDefaults.set(seventhDate, forKey:"EndingDate")
+        }
     }
     
     func pauseForPhonecall() -> Bool {
@@ -111,6 +148,7 @@ class SharedUserDefaultsDatastore: NSObject, DatastoreProtocol {
             if key == "StartingDate" {
                 return Date()
             } else {
+                //depending on settings
                 return sevenDaysFrom(Date())
             }
         }
