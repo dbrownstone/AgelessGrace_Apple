@@ -32,6 +32,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         self.toolInfoPath = Bundle.main.path(forResource: "Localizable", ofType: "plist")
         
+        if let tabBarController = self.window!.rootViewController as? UITabBarController {
+            if userDefaults.object(forKey: "StartingDate")  == nil {
+                tabBarController.selectedIndex = 1
+            }
+        }
+        
         return true
     }
     
