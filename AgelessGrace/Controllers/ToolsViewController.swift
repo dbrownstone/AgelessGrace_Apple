@@ -28,7 +28,6 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     var returningFromDescriptionVC = false
     var returningFromPlayMusicVC = false
-    var showingNextToolInSimulator = false
     var startDate:Date!
     var selectedPlaylist:MPMediaItemCollection!
     var toolGroupHasBeenCompleted = false
@@ -39,15 +38,11 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     let reSelectBtn = UIButton(type:.custom)
     let continueBtn = UIButton(type:.custom)
     let refreshBtn = UIButton(type:.custom)
-    let nextToolButton = UIButton(type: .custom) // used only for simulator
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.theTableView.delegate = self
         self.theTableView.dataSource = self
-        if UIDevice.isSimulator {
-            SESSIONPERIOD = 0.30 //1.0
-        }
 
     }
     
@@ -95,12 +90,6 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
                     refreshBtn.setTitleColor(UIColor(red: 42/255, green: 22/255, blue: 114/255, alpha: 1), for: UIControl.State())
                     refreshBtn.backgroundColor = .clear
                 }
-                if UIDevice.isSimulator {
-                    nextToolButton.addTarget(self, action: #selector(self.showNextTool), for: UIControl.Event.touchUpInside)
-                    nextToolButton.setTitleColor(UIColor(red: 42/255, green: 22/255, blue: 114/255, alpha: 1), for: UIControl.State())
-                    nextToolButton.setImage(UIImage(named:"next"), for: .normal)
-                    nextToolButton .backgroundColor = .clear
-                }
                 if self.completedNotice.isHidden == true {
                     let rightBarSelectButtonItem: UIBarButtonItem = UIBarButtonItem(customView: selectBtn)
                     self.navigationItem.setRightBarButton(
@@ -114,18 +103,6 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
                     rightBarSelectButtonItem, animated: false)
             }
         }
-    }
-    
-    @objc func showNextTool() {
-        showingNextToolInSimulator = true
-        let currentIndex = selectedGroups.index(of: selectedGroup)! + 1
-        self.exerciseDay += 1
-        selectedGroup = nil
-        selectedGroup = selectedGroups![currentIndex]
-        self.title = ""
-        self.title = String(format: "Day %d", self.exerciseDay)
-        self.theTableView.reloadData()
-        showingNextToolInSimulator = false
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -312,7 +289,7 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             appDelegate.mediaAuthorized = true
         }
         
-        if self.selectedPlaylist != nil  || UIDevice.isSimulator {
+        if self.selectedPlaylist != nil {
             // if all the music has been selected for this group
             if appDelegate.mediaAuthorized {
                 self.performSegue(withIdentifier: "Countdown", sender: self)
@@ -324,8 +301,7 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         var message = ""
         let endingDate = datastore.loadDate("EndingDate")
         let calendar = NSCalendar.current
-        if calendar.isDateInToday(endingDate) ||
-            (UIDevice.isSimulator && selectedGroups.index(of: toolControl.getLastCompletedGroup()) == 6) {
+        if calendar.isDateInToday(endingDate) {
             selectedGroup = nil
             let completedWeekCount = datastore.setCompletedWeeks()
             switch completedWeekCount {
@@ -368,10 +344,6 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     // MARK: -  UITableViewDelegate and DataSelect
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        if showingNextToolInSimulator {
-            self.replaceButtonWithMusicSelector()
-            return 1
-        }
         self.selectedGroups = (datastore.loadArray("SelectedGroups") as! Array<[String]>)
 //        print(self.selectedGroups!)
         var index = -1
@@ -380,11 +352,7 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             self.selectedGroups.count == 7 {
             self.completedManualTools = toolControl.getManuallySelectedTools()
             if selectedGroups.count == 7 {
-                if UIDevice.isSimulator {
-                    index = (self.selectedGroups.index(of: toolControl.getLastCompletedGroup()) ?? -1) + 1
-                } else {
-                    index = datastore.daysBetweenDate(datastore.loadDate("StartingDate"),endDate: Date())
-                }
+                index = datastore.daysBetweenDate(datastore.loadDate("StartingDate"),endDate: Date())
                 if (index < 7) {
                     selectedGroup = self.selectedGroups?[index]
                 } else {
@@ -393,21 +361,13 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             }
             if selectedGroup != nil && selectedGroup.count == 3 {
                 if selectedGroups.contains(selectedGroup)  {
-                    if UIDevice.isSimulator {
-                        self.exerciseDay = (self.selectedGroups.index(of:toolControl.getLastCompletedGroup()) ?? -1) + 2
-                        if toolControl.getLastCompletedGroup() == selectedGroup {
-                            let rightBarSelectButtonItem: UIBarButtonItem = UIBarButtonItem(customView: nextToolButton)
-                            self.navigationItem.setRightBarButton(
-                                rightBarSelectButtonItem, animated: false)
-                        }
-                    } else {
-                        var startDate = Date()
-                        if let theDate = userDefaults.object(forKey: "StartingDate") {
-                            startDate = (theDate as? Date)!
-                        }
-                        self.exerciseDay = calculateDaysBetweenTwoDates(start: startDate, end: Date()) + 1
-                        
+                    var startDate = Date()
+                    if let theDate = userDefaults.object(forKey: "StartingDate") {
+                        startDate = (theDate as? Date)!
                     }
+                    self.exerciseDay = calculateDaysBetweenTwoDates(start: startDate, end: Date()) + 1
+                    
+                    
                     self.title = String(format: "Day %d", self.exerciseDay)
                     selectedGroup = selectedGroups[self.exerciseDay - 1]
                     if toolControl.getLastCompletedGroup() == selectedGroup {
@@ -426,17 +386,11 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
                     self.replaceButtonWithMusicSelector()
                 }
                 if self.toolGroupHasBeenCompleted {
-                    if UIDevice.isSimulator {
-                        let rightBarSelectButtonItem: UIBarButtonItem = UIBarButtonItem(customView: nextToolButton)
-                        self.navigationItem.setRightBarButton(
-                            rightBarSelectButtonItem, animated: false)
-                    } else {
-                        let rightBarSelectButtonItem: UIBarButtonItem = UIBarButtonItem(customView: refreshBtn)
-                        self.navigationItem.setRightBarButton(
-                            rightBarSelectButtonItem, animated: false)
-                        self.completedNotice.isHidden = false
-                        self.completedNoticeVisible = true
-                    }
+                    let rightBarSelectButtonItem: UIBarButtonItem = UIBarButtonItem(customView: refreshBtn)
+                    self.navigationItem.setRightBarButton(
+                        rightBarSelectButtonItem, animated: false)
+                    self.completedNotice.isHidden = false
+                    self.completedNoticeVisible = true
                 }
             } else {
                 self.title = NSLocalizedString("Available Tools", comment:"")
@@ -595,19 +549,15 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     @objc func selectMusicForGroup() {
         musicForSelectedGroup = Array<[String: Any]> ()
-        if UIDevice.isSimulator {
-            print("running on simulator")
-            self.startTheSession()
-        } else {
-            let mediaPicker = MPMediaPickerController(mediaTypes: .music)
-            
-            mediaPicker.delegate = self
-            mediaPicker.allowsPickingMultipleItems = true
-            mediaPicker.showsCloudItems = true
-            let prompt = NSLocalizedString("Select 3 songs", comment:"")
-            mediaPicker.prompt = prompt
-            present(mediaPicker, animated: true, completion: nil)
-        }
+        let mediaPicker = MPMediaPickerController(mediaTypes: .music)
+        
+        mediaPicker.delegate = self
+        mediaPicker.allowsPickingMultipleItems = true
+        mediaPicker.showsCloudItems = true
+        let prompt = NSLocalizedString("Select 3 songs", comment:"")
+        mediaPicker.prompt = prompt
+        present(mediaPicker, animated: true, completion: nil)
+        
     }
     
     func validateTheTotalPlayingTime(_ totalPlayingTime: Double) {

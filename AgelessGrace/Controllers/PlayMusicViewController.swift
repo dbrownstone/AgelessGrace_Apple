@@ -145,13 +145,7 @@ class PlayMusicViewController: UIViewController, AVAudioPlayerDelegate {
         setupTickerTape(0)
         
         isPaused = false
-        if UIDevice.isSimulator == false {
-            /* Start playing the items in the collection */
-            audioPlayer.playMusic(selectedPlayList!)
-            audioPlayerJustStarted = true
-        } else {
-            recordingImage.image = UIImage(named:"missingCover")!
-        }
+        recordingImage.image = UIImage(named:"missingCover")!
         sessionCount(sessionDuration)
         timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(timerAction(_:)), userInfo: nil, repeats: true)
         if audioPlayer.isCurrentlyPlaying {
@@ -167,10 +161,6 @@ class PlayMusicViewController: UIViewController, AVAudioPlayerDelegate {
     @objc func restartTheTimer(_ sender:UIBarButtonItem) {
         timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(timerAction(_:)), userInfo: nil, repeats: true)
         self.navigationItem.setRightBarButton(UIBarButtonItem(barButtonSystemItem: .pause, target: self, action: #selector(self.pause(_ :))), animated: true)
-        if !UIDevice.isSimulator {
-            let song = (selectedPlayList.items)[currentItemCnt] as MPMediaItem
-            print("\(String(describing: song.value(forProperty: MPMediaItemPropertyTitle) as? String))")
-        }
         audioPlayer.playNextPiece()
     }
     
@@ -271,10 +261,6 @@ class PlayMusicViewController: UIViewController, AVAudioPlayerDelegate {
     }
     
     func displayMusicDetails() {
-        if UIDevice.isSimulator {
-            recordingImage.image = UIImage(named:"missingCover")!
-            return
-        }
         let song = (selectedPlayList.items)[currentItemCnt] as MPMediaItem
         let duration = song.value(forProperty: MPMediaItemPropertyPlaybackDuration)! as! Double
         let timeReqd = " (" + (NSString(format: "%01.0f:%02.0f",duration/60,duration.truncatingRemainder(dividingBy: 60)) as String) as String + ")"
