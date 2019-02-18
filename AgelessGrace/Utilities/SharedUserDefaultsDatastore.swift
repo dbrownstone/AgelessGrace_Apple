@@ -56,7 +56,7 @@ class SharedUserDefaultsDatastore: NSObject, DatastoreProtocol {
         if let result = userDefaults.object(forKey: "PauseBetweenTools") {
             return result as! Bool
         } else {
-            return false
+            return true
         }
     }
     
@@ -64,7 +64,7 @@ class SharedUserDefaultsDatastore: NSObject, DatastoreProtocol {
         if let result = userDefaults.object(forKey: "DailyFromStartDate") {
             return result as! Bool
         }
-        return false
+        return true
     }
     
     func setShouldExerciseDaily(_ value: Bool) {

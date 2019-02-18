@@ -117,12 +117,10 @@ class SettingsViewController: UITableViewController {
         return cell!
     }
     
-    @IBAction func accepted(_ sender: UIBarButtonItem) {
 //        var dateStr = ""
 //        let components = Calendar.current.dateComponents([.year, .month, .day], from: datePicker.date)
 //        if let day = components.day, let month = components.month, let year = components.year {
 //            dateStr = String(format:"%4d-%02d-%02d",year,month,day)
 //            print(dateStr)
 //        }
-    }
 }
