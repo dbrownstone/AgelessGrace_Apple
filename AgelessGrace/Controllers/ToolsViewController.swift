@@ -17,12 +17,16 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     @IBOutlet weak var theTableView: UITableView!
     @IBOutlet weak var completedNotice: UIView!
     
+    var exercisingConsecutively:Bool?
+    var exercisePeriodHasYetToStart = true
+    var completedToolSets:[Array<String>]?
+    var selectedGroups:[Array<String>]?
+    
     var selectedGroup:Array<String>!
-    var completedManualTools:Array<String>!
-    var completedManualToolIds:Array<Int>!
+    var selectedTools:Array<String>!
+    var selectedToolsIds:Array<Int>!
     var returnedFromExercise = false
     var selectionTypeIsManual = false;
-    var selectedGroups: Array<[String]>!
     var musicForSelectedGroup:Array<[String: Any]>!
     var toolsHaveBeenSelected = false
     
@@ -39,16 +43,24 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     let continueBtn = UIButton(type:.custom)
     let refreshBtn = UIButton(type:.custom)
     
+    // MARK - Basic
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.theTableView.delegate = self
         self.theTableView.dataSource = self
-
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationItem.rightBarButtonItem = nil
+        
+        self.exercisingConsecutively = datastore.shouldExerciseDaily()
+        self.exercisePeriodHasYetToStart = toolControl.exercisePeriodHasYetToStart()
+        self.startDate = datastore.loadDate("StartingDate")
+        self.completedToolSets = datastore.getCompletedToolSets()
+        self.selectedGroups = datastore.getSelectedGroups()
+        self.selectedGroup = datastore.getSelectedGroup()
         
         if selectedPlaylist == nil || self.returnedFromExercise {
             if returningFromDescriptionVC ||
@@ -60,6 +72,7 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
                     self.navigationItem.setRightBarButton(
                         rightBarSelectButtonItem, animated: false)
                 } else {
+                    self.title = "Day 1"
                     replaceButtonWithMusicSelector()
                 }
             } else {
@@ -90,10 +103,14 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
                     refreshBtn.setTitleColor(UIColor(red: 42/255, green: 22/255, blue: 114/255, alpha: 1), for: UIControl.State())
                     refreshBtn.backgroundColor = .clear
                 }
-                if self.completedNotice.isHidden == true {
-                    let rightBarSelectButtonItem: UIBarButtonItem = UIBarButtonItem(customView: selectBtn)
-                    self.navigationItem.setRightBarButton(
+                if self.completedNotice.isHidden {
+                    if datastore.isToday(self.startDate){
+                        replaceButtonWithMusicSelector()
+                    } else {
+                        let rightBarSelectButtonItem: UIBarButtonItem = UIBarButtonItem(customView: selectBtn)
+                        self.navigationItem.setRightBarButton(
                         rightBarSelectButtonItem, animated: false)
+                    }
                 }
             }
         } else {
@@ -103,6 +120,7 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
                     rightBarSelectButtonItem, animated: false)
             }
         }
+        theTableView.reloadData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -132,25 +150,27 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         } else {
             self.selectedGroup.append(toolName)
         }
-        if self.selectedGroup.count >= 3 {
+        if self.selectedGroup.count % 3 == 0 {
+            if self.selectedGroups == nil {
+                self.selectedGroups = [Array<String>]()
+            }
+            self.selectedGroups?.append(self.selectedGroup)
+            self.selectedGroup = nil
             selectionTypeIsManual = true
             let rightBarContinueButtonItem: UIBarButtonItem = UIBarButtonItem(customView: continueBtn)
             self.navigationItem.setRightBarButton(
                 rightBarContinueButtonItem, animated: false)
         } else {
-            let rightBarSelectButtonItem: UIBarButtonItem = UIBarButtonItem(customView: selectBtn)
-            self.navigationItem.setRightBarButton(
-                rightBarSelectButtonItem, animated: false)
+//            let rightBarSelectButtonItem: UIBarButtonItem = UIBarButtonItem(customView: selectBtn)
+//            self.navigationItem.setRightBarButton(
+//                rightBarSelectButtonItem, animated: false)
+            self.navigationItem.rightBarButtonItem = nil
         }
     }
     
     @objc func refreshTable(_ sender: UIButton) {
-        // check that the last group was completed yesterday.
-        // If so, change the title and show the appropriate tool if there are more
-        // or all the tools if this is the 7th day
-        // otherwise show a message to the effect that nothing can be visible until tomorrow
         let titleIndex = Int((self.title!.split(separator: " "))[1])
-        if titleIndex == 7 && datastore.lastCompletedExerciseWasYesterday() && datastore.yesterdayWasDay7() {
+        if titleIndex == 7 && datastore.yesterdayWasDay7() {
             selectedGroup = nil
             selectedGroups = nil
             userDefaults.removeObject(forKey:"SelectedGroup")
@@ -159,7 +179,7 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             self.completedNoticeVisible = false
             theTableView.reloadData()
         }
-        if (selectedGroups.index(of: selectedGroup) == titleIndex! - 1 &&
+        if (selectedGroups!.index(of: selectedGroup) == titleIndex! - 1 &&
             datastore.lastCompletedExerciseWasYesterday() == false) {
             let message = NSLocalizedString("Your exercise requirement for today is complete. You should continue tomorrow!", comment: "")
             let title = NSLocalizedString("You're done!", comment: "")
@@ -168,14 +188,16 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             alertController.addAction(okAction)
             present(alertController, animated: true, completion:nil)
         } else {
-            selectedGroup = selectedGroups[titleIndex! - 1]
+            selectedGroup = selectedGroups![titleIndex! - 1]
             theTableView.reloadData()
         }
     }
     
     @objc func updateDisplayList(_ sender: UIButton) {
         self.toolsHaveBeenSelected = true
-        self.selectionTypeIsManual = true
+        datastore.save("SelectedGroups", value: self.selectedGroups! as NSObject)
+        self.selectedGroup = self.selectedGroups![0]
+        datastore.save("SelectedGroup", value: self.selectedGroup! as NSObject)
         self.selectedPlaylist = nil
         self.theTableView.reloadData()
         let topIndex = IndexPath(row: 0, section: 0)
@@ -184,7 +206,7 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     @objc func showActionSheet() {
         var title = NSLocalizedString("Select Type of Session", comment:"")
-        let noOfDaysRemaining = 7 - (completedManualTools.count / 3)
+        let noOfDaysRemaining = 7 - (selectedGroups?.count)!
         let message = String( format: NSLocalizedString("Touch 'OK' to randomly select %d days worth of 10 minute sessions.", comment:""),noOfDaysRemaining)
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         title = NSLocalizedString("OK", comment:"")
@@ -193,22 +215,8 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             toolControl.setToolCount(3)
             toolControl.setSessionPeriod(SESSIONPERIOD)
             toolControl.setSelectionType(self.selectionTypeIsManual)
-            self.completedManualToolIds = toolControl.getManuallyCompletedToolIds()
-            if self.completedManualToolIds.count == 0 && self.completedManualTools.count > 0 {
-                self.selectionTypeIsManual = false
-                self.completedManualToolIds = [Int]()
-                for i in 0..<self.completedManualTools!.count {
-                    let tool = self.completedManualTools[i]
-                    let index = (appDelegate.getRequiredArray("AGToolNames")).index(of: tool)!
-                    self.completedManualToolIds.append(index)
-                }
-                if self.completedManualToolIds.count > 0 {
-                    toolControl.setManuallyCompletedToolIds(self.completedManualToolIds)
-                }
-            }
-            toolControl.randomlySelectRemainingArrayOfTools()
-            let selectedGroups = datastore.loadArray("SelectedGroups")
-            self.selectedGroup = selectedGroups[0] as? Array<String>
+            toolControl.randomlySelectRemainingArrayOfTools(self.selectedGroups ?? [])
+            self.selectedGroups = datastore.getSelectedGroups()
             self.toolsHaveBeenSelected = true
             self.selectedPlaylist = nil
             self.theTableView.reloadData()
@@ -247,6 +255,9 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             self.toolsHaveBeenSelected = false
             self.selectionTypeIsManual = false
             self.selectedGroup = nil
+            datastore.clearSelectedGroup()
+            self.selectedGroups = nil
+            datastore.clearSelectedGroups()
             self.theTableView.reloadData()
         case 1:
             self.selectMusicForGroup()
@@ -344,33 +355,41 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     // MARK: -  UITableViewDelegate and DataSelect
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        self.selectedGroups = (datastore.loadArray("SelectedGroups") as! Array<[String]>)
-//        print(self.selectedGroups!)
         var index = -1
-        if  datastore.lastCompletedExerciseWasYesterday() ||
-            self.toolsHaveBeenSelected ||
-            self.selectedGroups.count == 7 {
-            self.completedManualTools = toolControl.getManuallySelectedTools()
-            if selectedGroups.count == 7 {
+        if self.selectedGroups!.count > 0 && self.selectedGroups!.count < 7 {
+            self.toolsHaveBeenSelected = true
+        }
+        if  self.toolsHaveBeenSelected ||
+            self.selectedGroups?.count == 7 {
+            if selectedGroups?.count == 7 {
                 index = datastore.daysBetweenDate(datastore.loadDate("StartingDate"),endDate: Date())
-                if (index < 7) {
+                if (0 < index && index < 7) {
                     selectedGroup = self.selectedGroups?[index]
                 } else {
-                    selectedGroup = nil
+                    selectedGroup = self.selectedGroups?[1]
                 }
             }
             if selectedGroup != nil && selectedGroup.count == 3 {
-                if selectedGroups.contains(selectedGroup)  {
+                if (selectedGroups?.contains(selectedGroup))!  {
                     var startDate = Date()
                     if let theDate = userDefaults.object(forKey: "StartingDate") {
                         startDate = (theDate as? Date)!
                     }
-                    self.exerciseDay = calculateDaysBetweenTwoDates(start: startDate, end: Date()) + 1
+                    self.exerciseDay = (calculateDaysBetweenTwoDates(start: startDate, end: Date())) + 1
+                    if self.exerciseDay <= 0 {
+                        self.exerciseDay = 1
+                        let theStart = getDateString(fromDate: startDate)
+                        self.title = "Day \(self.exerciseDay) \(theStart)"
+                        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: selectBtn)
+                        self.exercisePeriodHasYetToStart = true
+                    } else {
+                        self.title = String(format: "Day %d", self.exerciseDay)
+                        self.exercisePeriodHasYetToStart = false
+                    }
                     
                     
-                    self.title = String(format: "Day %d", self.exerciseDay)
-                    selectedGroup = selectedGroups[self.exerciseDay - 1]
-                    if toolControl.getLastCompletedGroup() == selectedGroup {
+                    selectedGroup = selectedGroups?[self.exerciseDay - 1]
+                    if datastore.getLastCompletedGroup() == selectedGroup {
                         self.completedNotice.isHidden = false
                         self.completedNoticeVisible = true
                         let rightBarSelectButtonItem: UIBarButtonItem = UIBarButtonItem(customView: refreshBtn)
@@ -382,8 +401,10 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 }
                 toolsDescr = selectedGroup
                 self.toolsHaveBeenSelected = true
-                if selectedPlaylist == nil && self.completedNotice.isHidden == true && toolControl.getLastCompletedGroup() != selectedGroup {
-                    self.replaceButtonWithMusicSelector()
+                if selectedPlaylist == nil && self.completedNotice.isHidden == true && datastore.getLastCompletedGroup() != selectedGroup {
+                    if self.exercisePeriodHasYetToStart == false {
+                        self.replaceButtonWithMusicSelector()
+                    }
                 }
                 if self.toolGroupHasBeenCompleted {
                     let rightBarSelectButtonItem: UIBarButtonItem = UIBarButtonItem(customView: refreshBtn)
@@ -396,17 +417,33 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 self.title = NSLocalizedString("Available Tools", comment:"")
                 toolsDescr = appDelegate.getRequiredArray("AGToolNames")
                 self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: selectBtn)
+                if self.toolsHaveBeenSelected {
+                    self.selectedTools = Array<String>()
+                    for toolGrp in self.selectedGroups! {
+                        for i in 0..<3 {
+                            self.selectedTools?.append(toolGrp[i])
+                        }
+                    }
+                }
             }
         } else {
             self.title = NSLocalizedString("Available Tools", comment:"")
             toolsDescr = appDelegate.getRequiredArray("AGToolNames")
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: selectBtn)
             datastore.resetLastCompletedExercisDate()
-            datastore.resetManuallyCompletedTools()
-            self.completedManualTools = []
+//            datastore.resetManuallyCompletedTools()
+//            self.completedManualTools = []
             toolControl.reset()
         }
         return 1
+    }
+    
+    func getDateString(fromDate: Date) -> String{
+        let components = Calendar.current.dateComponents([.year, .month, .day], from: fromDate)
+        if let day = components.day, let month = components.month {
+            return String(format: "(%02d/%02d)", day,month)
+        }
+        return ""
     }
     
     func tableView(_ tableView:UITableView, willDisplay cell:UITableViewCell, forRowAt indexPath:IndexPath) {
@@ -445,14 +482,12 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         if self.selectedGroup == nil {
             self.selectedGroup = []
         }
-        if self.completedManualTools == nil {
-            self.completedManualTools = []
-        }
         
         let theTool = toolsDescr[indexPath.row]
-        if self.completedManualTools.contains(theTool) {
-            selectorBtn.isHidden = true
-        } else if self.selectedGroup.contains(theTool) {
+//        if self.completedTools?.contains(theTool) {
+//            selectorBtn.isHidden = true
+//        } else
+            if self.selectedTools != nil && self.selectedTools.contains(theTool) {
             selectorBtn.setImage(UIImage(named:"manuallySelected"), for: .normal)
         }
         
@@ -491,7 +526,7 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 // save to datastore
                 selectedGroup = nil
                 self.returnedFromExercise = true
-                toolControl.saveManuallySelectedTools(completedManualTools)
+//                toolControl.saveManuallySelectedTools(completedManualTools)
                 self.completedNotice.isHidden = false
                 self.completedNoticeVisible = true
                 let rightBarSelectButtonItem: UIBarButtonItem = UIBarButtonItem(customView: refreshBtn)
@@ -517,8 +552,8 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             self.navigationItem.rightBarButtonItem = nil
             let startDate = datastore.loadDate("StartingDate")
             let index = datastore.daysBetweenDate(startDate, endDate: Date())
-            selectedGroups.remove(at:index)
-            selectedGroups.append(selectedGroup)
+            selectedGroups?.remove(at:index)
+            selectedGroups?.append(selectedGroup)
             updateTheDates()
         default:
             break

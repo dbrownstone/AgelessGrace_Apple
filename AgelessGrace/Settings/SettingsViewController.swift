@@ -17,6 +17,8 @@ class SettingsViewController: UITableViewController {
     var exerciseSetting: Bool?
     var pauseSetting: Bool?
     
+    var exerciseSettingSw: UISwitch?
+    var pauseSettingSw: UISwitch?
     
     let headersArray = [NSLocalizedString("Select when and how you will exercise after you have started", comment:""),
                         NSLocalizedString("Pause between tool exercises", comment:""),
@@ -32,8 +34,8 @@ class SettingsViewController: UITableViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         datastore.setDates(datePicker.date)
-        datastore.setShouldExerciseDaily(self.exerciseSetting!)
-        datastore.setPauseBetweenTools(self.pauseSetting!)
+        datastore.setShouldExerciseDaily(self.exerciseSettingSw!.isOn)
+        datastore.setPauseBetweenTools(self.pauseSettingSw!.isOn)
         datastore.commitToDisk()
         super.viewDidDisappear(animated)
     }
@@ -49,7 +51,6 @@ class SettingsViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        //Need to create a label with the text we want in order to figure out height
         let label: UILabel = createHeaderLabel(section)
         let size = label.sizeThatFits(CGSize(width: view.frame.size.width, height: CGFloat.greatestFiniteMagnitude))
         let padding: CGFloat = 20.0
@@ -83,7 +84,7 @@ class SettingsViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.row == 0 {
-            return 200
+            return 230
         }
         return 40
     }
@@ -91,61 +92,37 @@ class SettingsViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var identifier: String?
         var cell: UITableViewCell?
-        var theSwitch: UISwitch?
 
         switch indexPath.section {
         case 0:
             identifier = "onOff"
             cell = tableView.dequeueReusableCell(withIdentifier: identifier!, for: indexPath)
-            theSwitch = cell!.viewWithTag(10) as? UISwitch
-            theSwitch?.isOn = datastore.shouldExerciseDaily()
-            self.exerciseSetting = theSwitch?.isOn
-            theSwitch?.addTarget(self, action: #selector(exerciseSwitchClicked), for: .valueChanged)
+            exerciseSettingSw = cell!.viewWithTag(10) as? UISwitch
+            exerciseSettingSw?.isOn = datastore.shouldExerciseDaily()
             datePicker = cell?.viewWithTag(100) as? UIDatePicker
-            datePicker.addTarget(self, action: #selector(dateChanged(_ :)), for: .valueChanged)
             if let startDate = userDefaults.object(forKey: "StartingDate") {
                 datePicker.date = startDate as! Date
             } else {
                 datePicker.date = Date()
             }
             self.currentStartDate = datePicker.date
-            doneBtn = cell?.viewWithTag(101) as? UIButton
-            doneBtn.addTarget(self, action:#selector(donePressed(_:)), for: .touchDown)
             break
         default:
             identifier = "yesNo"
             cell = tableView.dequeueReusableCell(withIdentifier: identifier!, for: indexPath)
-            theSwitch = cell!.viewWithTag(20) as? UISwitch
-            if indexPath.section == 1 {
-                theSwitch?.isOn = datastore.pauseBetweenTools()
-                self.pauseSetting = theSwitch?.isOn
-                theSwitch?.addTarget(self, action: #selector(toolsSwitchClicked), for: .valueChanged)
-            }
+            pauseSettingSw = cell!.viewWithTag(20) as? UISwitch
+            pauseSettingSw?.isOn = datastore.pauseBetweenTools()
             break
         }
         return cell!
     }
     
-    @objc func exerciseSwitchClicked(sender:UISwitch) {
-        self.exerciseSetting = sender.isOn
-    }
-    
-    @objc func toolsSwitchClicked(sender:UISwitch!) {
-        self.pauseSetting = sender.isOn
-    }
-    
-    @objc func dateChanged(_ sender: Any) {
-        doneBtn.isHidden = false
-    }
-    
-    @objc func donePressed(_ sender: UIButton) {
-        self.currentStartDate = datePicker.date
-        var dateStr = ""
-        let components = Calendar.current.dateComponents([.year, .month, .day], from: datePicker.date)
-        if let day = components.day, let month = components.month, let year = components.year {
-            dateStr = String(format:"%4d-%02d-%02d",year,month,day)
-            print(dateStr)
-        }
-        doneBtn.isHidden = true
+    @IBAction func accepted(_ sender: UIBarButtonItem) {
+//        var dateStr = ""
+//        let components = Calendar.current.dateComponents([.year, .month, .day], from: datePicker.date)
+//        if let day = components.day, let month = components.month, let year = components.year {
+//            dateStr = String(format:"%4d-%02d-%02d",year,month,day)
+//            print(dateStr)
+//        }
     }
 }

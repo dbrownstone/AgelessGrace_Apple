@@ -17,15 +17,15 @@ protocol ToolProtocol {
     func saveManuallySelectedTools(_ tools:Array<String>)
     func getManuallySelectedTools() -> Array<String>
     func saveLastCompletedGroup(_ group:Array<String>)
-    func getLastCompletedGroup() ->Array<String>
     func selectTools() -> Array<AnyObject>
     func setupArrayForRandomSelection()
-    func randomlySelectRemainingArrayOfTools()
+    func randomlySelectRemainingArrayOfTools(_ alreadySelected: [Array<String>])
     func isAlreadyInArray(_ tool:NSString) -> Bool
     func setToolCount(_ count:Int)
     func getToolCount() -> Int
     func setSessionPeriod(_ duration:Double)
     func getSessionPeriod() -> Double
+    func exercisePeriodHasYetToStart() -> Bool
 }
 
 class ToolManipulations: NSObject, ToolProtocol {
@@ -36,7 +36,7 @@ class ToolManipulations: NSObject, ToolProtocol {
     var completedManualToolIds:Array<Int>!
     var sevenDayToolSelection:[[String]] = []
     var arrayForRandomSelection = appDelegate.getRequiredArray("AGToolNames")
-    var completedTools:Array<String>!
+    var completedTools:[String]!
     var theToolCount = 3
     var timeOfSession:Double!
     
@@ -59,9 +59,9 @@ class ToolManipulations: NSObject, ToolProtocol {
     }
     
     func getManuallySelectedTools() -> Array<String> {
-        if let manuallySelectedTools = datastore.loadArray("CompletedManualTools") as? Array<String> {
-            return manuallySelectedTools
-        }
+//        if let manuallySelectedTools = datastore.loadArray("CompletedManualTools") as? Array<String> {
+//            return manuallySelectedTools
+//        }
         return []
     }
     
@@ -81,25 +81,45 @@ class ToolManipulations: NSObject, ToolProtocol {
         datastore.save("LastCompletedToolsGroup", value: group as NSObject)
     }
     
-    func getLastCompletedGroup() ->Array<String> {
-        return datastore.loadArray("LastCompletedToolsGroup") as? Array<String> ?? Array<String>()
-    }
+//    func getLastCompletedGroup() ->Array<String> {
+//        return datastore.loadArray("LastCompletedToolsGroup") as? Array<String> ?? Array<String>()
+//    }
 
-    func setTheDatesInTheDatastore() {
-        var noOfManualDays = 0
-        let manuallySelectedTools = getManuallySelectedTools()
-        if manuallySelectedTools.count > 0 {
-            noOfManualDays = manuallySelectedTools.count / 3
+    func exercisePeriodHasYetToStart() -> Bool {
+        //        daysBetweenDate
+        if let startDate = userDefaults.object(forKey: "StartingDate") {
+            let period = datastore.daysBetweenDate(startDate as! Date, endDate: Date())
+            if period < 0 {
+                return true
+            }
+        } else {
+            return true
         }
-        let firstDay = Date().addingTimeInterval(TimeInterval(-noOfManualDays*24*60*60))
-        datastore.save("StartingDate", value:firstDay as NSObject)
-        
+        return false
+    }
+    
+    func setTheDatesInTheDatastore() {
+        let firstDay = datastore.loadDate("StartingDate")
         datastore.save("EndingDate", value:datastore.sevenDaysFrom(firstDay) as NSObject)        
+    }
+    
+    func getCompletedTools() -> [String] {
+        var theseTools = [String]()
+        let completedToolSets = datastore.getCompletedToolSets()
+        for theToolSet in completedToolSets {
+            for i in 0..<3 {
+                theseTools.append(theToolSet[i])
+            }
+        }
+        if theseTools.count > 0 {
+            return theseTools
+        }
+        return []
     }
     
     func setupArrayForRandomSelection() {
         // remove any tool already used
-        completedTools = datastore.loadArray("CompletedTools") as? Array<String>
+        completedTools = getCompletedTools()
         arrayForRandomSelection = appDelegate.getRequiredArray("AGToolNames")
         for tool in completedTools {
             if let whichOne = arrayForRandomSelection.index(of: tool) {
@@ -108,18 +128,22 @@ class ToolManipulations: NSObject, ToolProtocol {
         }
     }
     
-    func randomlySelectRemainingArrayOfTools() {
-        if self.selectionTypeIsManual == false {
-            self.reset()
+    func randomlySelectRemainingArrayOfTools(_ alreadySelected: [Array<String>]) {
+        let selectedGroups = alreadySelected
+        if selectedGroups.count == 7 {
+            return
         }
         arrayForRandomSelection = appDelegate.getRequiredArray("AGToolNames")
         sevenDayToolSelection = [[String]] ()
         var randomizedList = [Int]()
         var nums = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
-        if completedManualToolIds == nil {
-            completedManualToolIds = Array<Int>()
+        var idsToBeRemoved = [Int]()
+        for toolGroup in selectedGroups {
+            for i in 0..<3 {
+                idsToBeRemoved.append(arrayForRandomSelection.index(of: toolGroup[i])!)
+            }
         }
-        for id in completedManualToolIds.reversed() {
+        for id in idsToBeRemoved.reversed() {
             print(id)
             nums.remove(at: (id))
         }
@@ -134,24 +158,6 @@ class ToolManipulations: NSObject, ToolProtocol {
             randomizedList.append(randNum)
         }
         var theGroup = [String]()
-        if self.completedManualToolIds.count > 0 {
-//            let startId = completedManualToolIds.count - 1
-            for indx in 0...completedManualToolIds.count  {
-                if indx > 0 && indx%theToolCount == 0 {
-                    sevenDayToolSelection.append(theGroup)
-                    theGroup = [String]()
-                }
-                if indx < completedManualToolIds.count {
-                    let id = completedManualToolIds[indx]
-                    let tool = (appDelegate.getRequiredArray("AGToolNames"))[id]
-                    theGroup.append(tool)
-                    if completedTools == nil {
-                        completedTools = Array<String>()
-                    }
-                    completedTools.append(tool)
-                }
-            }
-        }
         
         for indx in 0..<randomizedList.count {
             if theGroup.count == theToolCount {
@@ -172,7 +178,7 @@ class ToolManipulations: NSObject, ToolProtocol {
     }
     
     func isAlreadyInArray(_ tool:NSString) -> Bool {
-        completedTools = datastore.loadArray("CompletedTools") as? Array<String>
+        completedTools = datastore.getLastCompletedGroup()
         if completedTools != nil {
             if let _ = completedTools.first(where: { $0 == tool as String })  {
                 // item is the first matching array element

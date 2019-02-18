@@ -18,6 +18,9 @@
 /*   */
 "Congratulations on doing your 10 minutes of Ageless Grace Brain. See you tomorrow!" = "Congratulations on doing your 10 minutes of Ageless Grace Brain. See you tomorrow!";
 
+/*   */
+"Congratulations on doing your 10 minutes of Ageless Grace Brain. See you tomorrow?" = "Congratulations on doing your 10 minutes of Ageless Grace Brain. See you tomorrow?";
+
 /*  */
 "Wow! You have done your Ageless Grace Brain Health tools every day for a week now!" = "Wow! You have done your Ageless Grace Brain Health tools every day for a week now!";
 
@@ -29,6 +32,9 @@
 
 /*   */
 "Your exercise requirement for today is complete. You should continue tomorrow!" = "Your exercise requirement for today is complete. You should continue tomorrow!";
+
+/*   */
+"Your exercise requirement for today is complete." = "Your exercise requirement for today is complete.";
 
 /*   */
 "Manual" = "Manual";

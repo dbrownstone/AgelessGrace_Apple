@@ -14,7 +14,6 @@ protocol DatastoreProtocol {
     func save(_ key: String, value: NSObject)
     func loadString(_ key: String) -> String
     func loadDate(_ key: String) -> Date
-    func loadArray(_ key: String) -> Array<AnyObject>
     func daysBetweenDate(_ startDate: Date, endDate: Date) -> Int
     func sevenDaysFrom(_ date:Date) -> Date
     func computeYesterdaysDate() -> Date
@@ -28,6 +27,14 @@ protocol DatastoreProtocol {
     func getCompletedWeeks() -> Int
     func setCompletedWeeks() -> Int
     func resetCompletedWeeks()
+    func getCompletedToolSets() -> [Array<String>]
+    func saveCompletedToolSets(_ tools:[Array<String>])
+    func clearSelectedGroups()
+    func clearSelectedGroup()
+    func getSelectedGroups() -> [Array<String>]
+    func getSelectedGroup() -> Array<String>
+    func getLastCompletedGroup() -> Array<String>
+    func resetCompletedToolSets()
     func setDates(_ value: Date)
     func shouldExerciseDaily() -> Bool
     func setShouldExerciseDaily(_ value: Bool)
@@ -41,8 +48,8 @@ class SharedUserDefaultsDatastore: NSObject, DatastoreProtocol {
     
     func setPauseBetweenTools(_ value: Bool) {
         userDefaults.removeObject(forKey: "PauseBetweenTools")
-        commitToDisk()
         userDefaults.set(value, forKey: "PauseBetweenTools")
+        self.commitToDisk()
     }
     
     func pauseBetweenTools() -> Bool {
@@ -62,8 +69,8 @@ class SharedUserDefaultsDatastore: NSObject, DatastoreProtocol {
     
     func setShouldExerciseDaily(_ value: Bool) {
         userDefaults.removeObject(forKey: "DailyFromStartDate")
-        commitToDisk()
         userDefaults.set(value, forKey:"DailyFromStartDate")
+        self.commitToDisk()
     }
     
     func setDates(_ value: Date) {
@@ -74,6 +81,7 @@ class SharedUserDefaultsDatastore: NSObject, DatastoreProtocol {
             let seventhDate = self.sevenDaysFrom(value)
             userDefaults.set(seventhDate, forKey:"EndingDate")
         }
+        self.commitToDisk()
     }
     
     func pauseForPhonecall() -> Bool {
@@ -94,6 +102,7 @@ class SharedUserDefaultsDatastore: NSObject, DatastoreProtocol {
         } else {
             result = 1
         }
+        userDefaults.removeObject(forKey:"CompletedWeeks")
         userDefaults.set(result, forKey: "CompletedWeeks")
         self.commitToDisk()
         return result
@@ -104,8 +113,29 @@ class SharedUserDefaultsDatastore: NSObject, DatastoreProtocol {
         self.commitToDisk()
     }
     
+    func getCompletedToolSets() -> [Array<String>] {
+        if let tools = userDefaults.object(forKey: "CompletedTools") {
+            return tools as! [Array<String>]
+        }
+        return [Array<String>]()
+    }
+    
+    func saveCompletedToolSets(_ tools:[Array<String>]) {
+        userDefaults.removeObject(forKey:"CompletedTools")
+        userDefaults.setValue(tools as Any, forKeyPath: "CompletedTools")
+        self.commitToDisk()
+    }
+    
+    func resetCompletedToolSets() {
+        userDefaults.removeObject(forKey:"CompletedTools")
+        self.commitToDisk()
+    }
+    
     func getLastCompletedGroup() ->Array<String> {
-        return userDefaults.object(forKey: "LastCompletedToolGroup") as! Array<String>
+        if let tg = userDefaults.object(forKey: "LastCompletedToolGroup") {
+            return tg as! Array<String>
+        }
+        return []
     }
     
     func setDateOfLastCompletedExercise() {
@@ -135,10 +165,12 @@ class SharedUserDefaultsDatastore: NSObject, DatastoreProtocol {
     
     func resetManuallyCompletedTools() {
         userDefaults.removeObject(forKey:"CompletedManualTools")
+        self.commitToDisk()
     }
     
     func save(_ key: String, value: NSObject) {
         userDefaults.set(value, forKey: key)
+        commitToDisk()
     }
     
     func loadDate(_ key: String) -> Date {
@@ -227,19 +259,26 @@ class SharedUserDefaultsDatastore: NSObject, DatastoreProtocol {
         return calendar.isDateInToday(date)
     }
     
-    func loadArray(_ key: String) -> Array<AnyObject> {
-        if userDefaults.object(forKey: key) != nil {
-            if key == "SelectedGroups" {
-                return userDefaults.object(forKey: key) as! Array<AnyObject>
-            }
-            return userDefaults.object(forKey: key) as! Array<String> as Array<AnyObject>
-        } else {
-            if key == "SelectedGroup" {
-                return ["" as AnyObject, "" as AnyObject, "" as AnyObject]
-            } else {
-                return []
-            }
+    func getSelectedGroups() -> [Array<String>] {
+        if let object = userDefaults.object(forKey: "SelectedGroups") {
+            return object as! [Array<String>]
         }
+        return []
+    }
+    
+    func clearSelectedGroups() {
+        userDefaults.removeObject(forKey: "SelectedGroups")
+    }
+    
+    func clearSelectedGroup() {
+        userDefaults.removeObject(forKey: "SelectedGroup")
+    }
+    
+    func getSelectedGroup() -> Array<String> {
+        if let object = userDefaults.object(forKey: "SelectedGroup") {
+            return object as! Array<String>
+        }
+        return []
     }
     
     func commitToDisk() {

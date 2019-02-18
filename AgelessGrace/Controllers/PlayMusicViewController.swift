@@ -363,21 +363,20 @@ class PlayMusicViewController: UIViewController, AVAudioPlayerDelegate {
         }
         if segue.identifier == "returnToMainMenu" {
             let controller = segue.destination as! ToolsViewController
-            if self.selectionTypeIsManual {
-                self.selectionTypeIsManual = false
-                for tool in selectedGroup {
-                    controller.completedManualTools.append(tool)
-                }
-                let cMT = controller.completedManualTools
-                var cMTIds = [Int]()
-                for i in 0..<cMT!.count {
-                    cMTIds.append(getToolId((cMT![i])))
-                }
-                controller.completedManualToolIds = cMTIds
-            }
+//            if self.selectionTypeIsManual {
+//                self.selectionTypeIsManual = false
+//                for tool in selectedGroup {
+//                    controller.completedManualTools.append(tool)
+//                }
+//                let cMT = controller.completedManualTools
+//                var cMTIds = [Int]()
+//                for i in 0..<cMT!.count {
+//                    cMTIds.append(getToolId((cMT![i])))
+//                }
+//                controller.completedManualToolIds = cMTIds
+//            }
             controller.toolGroupHasBeenCompleted = true
-             
-        }
+         }
     }
 }
 
