@@ -56,7 +56,7 @@ class SharedUserDefaultsDatastore: NSObject, DatastoreProtocol {
         if let result = userDefaults.object(forKey: "PauseBetweenTools") {
             return result as! Bool
         } else {
-            return true
+            return false
         }
     }
     

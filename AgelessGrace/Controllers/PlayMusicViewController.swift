@@ -158,10 +158,14 @@ class PlayMusicViewController: UIViewController, AVAudioPlayerDelegate {
         
     }
     
-    @objc func restartTheTimer(_ sender:UIBarButtonItem) {
+    func restartTheTimer() {
         timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(timerAction(_:)), userInfo: nil, repeats: true)
         self.navigationItem.setRightBarButton(UIBarButtonItem(barButtonSystemItem: .pause, target: self, action: #selector(self.pause(_ :))), animated: true)
         audioPlayer.playNextPiece()
+    }
+    
+    @objc func restartTheTimer(_ sender:UIBarButtonItem) {
+        restartTheTimer()
     }
     
     func setupTickerTape(_ itemCnt:Int) {
@@ -197,6 +201,8 @@ class PlayMusicViewController: UIViewController, AVAudioPlayerDelegate {
                                     target: self, action: #selector(self.restartTheTimer(_ :))),
                     animated: true
                 )
+            } else {
+                restartTheTimer()
             }
             return
         } else {

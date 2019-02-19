@@ -36,7 +36,6 @@ class SettingsViewController: UITableViewController {
         datastore.setDates(datePicker.date)
         datastore.setShouldExerciseDaily(self.exerciseSettingSw!.isOn)
         datastore.setPauseBetweenTools(self.pauseSettingSw!.isOn)
-        datastore.commitToDisk()
         super.viewDidDisappear(animated)
     }
 
