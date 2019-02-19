@@ -169,6 +169,7 @@ class SharedUserDefaultsDatastore: NSObject, DatastoreProtocol {
     }
     
     func save(_ key: String, value: NSObject) {
+        userDefaults.removeObject(forKey: key)
         userDefaults.set(value, forKey: key)
         commitToDisk()
     }

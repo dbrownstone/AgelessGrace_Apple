@@ -9,7 +9,7 @@
 import UIKit
 import MediaPlayer
 
-var SESSIONPERIOD = 10.0
+var SESSIONPERIOD = 1.00//10.0
 let toolControl:ToolProtocol = ToolManipulations()
 
 class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MPMediaPickerControllerDelegate {
@@ -136,6 +136,9 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     // manual selection
     @objc func addSelectionToList(_ sender: UIButton) {
+        if self.selectedTools == nil {
+            self.selectedTools = Array<String>()
+        }
         let cell = sender.superview?.superview as! UITableViewCell
         let indexPath = theTableView.indexPath(for: cell)
         sender.setImage(UIImage(named: "manuallySelected"), for: .normal)
@@ -144,11 +147,14 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         }
         let toolName = toolsDescr[indexPath!.row]
         if self.selectedGroup.contains(toolName) {
-            let indx = self.selectedGroup.index(of: toolName)
+            var indx = self.selectedGroup.index(of: toolName)
             self.selectedGroup.remove(at:indx!)
+            indx = self.selectedTools.index(of: toolName)
+            self.selectedTools.remove(at:indx!)
             sender.setImage(UIImage(named:"selector"), for: .normal)
         } else {
             self.selectedGroup.append(toolName)
+            self.selectedTools.append(toolName)
         }
         if self.selectedGroup.count % 3 == 0 {
             if self.selectedGroups == nil {
@@ -369,6 +375,7 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
                     selectedGroup = self.selectedGroups?[1]
                 }
             }
+            self.selectedTools = Array<String>()
             if selectedGroup != nil && selectedGroup.count == 3 {
                 if (selectedGroups?.contains(selectedGroup))!  {
                     var startDate = Date()
@@ -386,8 +393,6 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
                         self.title = String(format: "Day %d", self.exerciseDay)
                         self.exercisePeriodHasYetToStart = false
                     }
-                    
-                    
                     selectedGroup = selectedGroups?[self.exerciseDay - 1]
                     if datastore.getLastCompletedGroup() == selectedGroup {
                         self.completedNotice.isHidden = false
@@ -418,7 +423,6 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 toolsDescr = appDelegate.getRequiredArray("AGToolNames")
                 self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: selectBtn)
                 if self.toolsHaveBeenSelected {
-                    self.selectedTools = Array<String>()
                     for toolGrp in self.selectedGroups! {
                         for i in 0..<3 {
                             self.selectedTools?.append(toolGrp[i])
