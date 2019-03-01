@@ -118,7 +118,13 @@
 "Pause between tool exercises" = "Pause between tool exercises";
 
 /*   */
+"Touch 'Reset Start' to change  your 7 day sessions to begin today, or 'Go Ahead' to change your setting to exercise intermittenly." = "Touch 'Reset Start' to change  your 7 day sessions to begin today, or 'Go Ahead' to change your setting to exercise intermittenly.";
 
+/*   */
+"Go Ahead" = "Go Ahead";
+
+/*   */
+"Reset Start" = "Reset Start";
 
 /*   */
 "Manual" = "Manual";

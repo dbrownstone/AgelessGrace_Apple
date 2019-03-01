@@ -38,7 +38,7 @@ class PlayMusicViewController: UIViewController, AVAudioPlayerDelegate {
     var selectedGroup:Array<String>!
     var selectedPlayList: MPMediaItemCollection!
     var initialSong: MPMediaItem!
-    var selectionTypeIsManual = false
+//    var selectionTypeIsManual = false
     
     var audioPlayerJustStarted = false
     
@@ -107,6 +107,7 @@ class PlayMusicViewController: UIViewController, AVAudioPlayerDelegate {
     
     @IBAction func startTheSession(_ sender: UIBarButtonItem) {
         startTheTimer()
+        audioPlayer.playMusic(selectedPlayList)
         self.navigationItem.setRightBarButton(UIBarButtonItem(barButtonSystemItem: .pause, target: self, action: #selector(self.pause(_ :))), animated: true)
 //        self.navigationItem.rightBarButtonItem = nil
     }
@@ -195,7 +196,7 @@ class PlayMusicViewController: UIViewController, AVAudioPlayerDelegate {
             audioPlayer.stopPlayingCurrentAudio()
             timer.invalidate()
             selectTheNextTool()
-            if datastore.pauseBetweenTools() {
+            if !datastore.noPauseBetweenTools() {
                 self.navigationItem.setRightBarButton(
                     UIBarButtonItem(barButtonSystemItem: .play,
                                     target: self, action: #selector(self.restartTheTimer(_ :))),
@@ -220,15 +221,19 @@ class PlayMusicViewController: UIViewController, AVAudioPlayerDelegate {
             self.performSegue(withIdentifier: "returnToMainMenu", sender: self)
         } else {
             var remainingTime = audioPlayer.setRemainingTime(lastItem)
-            if remainingTime <= 0 && toolTimeRemaining > 5 {
-                audioPlayer.repeatCurrentItem()
-                remainingTime = toolTimeRemaining
-            } else if lastItem  && sessionDuration > remainingTime && remainingTime < SESSIONPERIOD {
+//            self.musicCount(Float(remainingTime))
+            print("remaining time = \(remainingTime)")
+//            if toolTimeRemaining > 5 {
+//                audioPlayer.repeatCurrentItem()
+//                remainingTime = toolTimeRemaining
+//            } else
+            if lastItem  && sessionDuration > remainingTime && remainingTime < SESSIONPERIOD {
                 audioPlayer.repeatCurrentItem()
                 remainingTime = audioPlayer.setRemainingTime(lastItem)
-                
+//                self.songTimeRemaining.text = "\(remainingTime)"
             }
-            musicCount(Float(remainingTime))
+            self.songTimeRemaining.text = musicCount(Float(remainingTime))
+            print("song time remaining = \(String(describing: self.songTimeRemaining.text))")
         }
     }
     
@@ -254,10 +259,10 @@ class PlayMusicViewController: UIViewController, AVAudioPlayerDelegate {
         
     }
     
-    func musicCount(_ cnt:Float) {
+    func musicCount(_ cnt:Float) -> String {
         let mins = floor(cnt/60)
         let secs = cnt - mins*60
-        songTimeRemaining.text = NSString(format:"%1.0f:%02.0f",mins,secs) as String
+        return NSString(format:"%1.0f:%02.0f",mins,secs) as String
     }
     
     func sessionCount(_ cnt:Double) {
@@ -369,19 +374,10 @@ class PlayMusicViewController: UIViewController, AVAudioPlayerDelegate {
         }
         if segue.identifier == "returnToMainMenu" {
             let controller = segue.destination as! ToolsViewController
-//            if self.selectionTypeIsManual {
-//                self.selectionTypeIsManual = false
-//                for tool in selectedGroup {
-//                    controller.completedManualTools.append(tool)
-//                }
-//                let cMT = controller.completedManualTools
-//                var cMTIds = [Int]()
-//                for i in 0..<cMT!.count {
-//                    cMTIds.append(getToolId((cMT![i])))
-//                }
-//                controller.completedManualToolIds = cMTIds
-//            }
             controller.toolGroupHasBeenCompleted = true
+            controller.returnedFromExercise = true
+            controller.completedToolSets?.append(selectedGroup)
+            datastore.saveCompletedToolSets(controller.completedToolSets!)
          }
     }
 }

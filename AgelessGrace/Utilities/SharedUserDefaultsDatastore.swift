@@ -14,6 +14,7 @@ protocol DatastoreProtocol {
     func save(_ key: String, value: NSObject)
     func loadString(_ key: String) -> String
     func loadDate(_ key: String) -> Date
+    func loadArray(_ key: String) -> Array<Any>
     func daysBetweenDate(_ startDate: Date, endDate: Date) -> Int
     func sevenDaysFrom(_ date:Date) -> Date
     func computeYesterdaysDate() -> Date
@@ -22,8 +23,7 @@ protocol DatastoreProtocol {
     func yesterdayWasDay7() -> Bool
     func setDateOfLastCompletedExercise()
     func lastCompletedExerciseWasYesterday() -> Bool
-    func resetLastCompletedExercisDate()
-    func resetManuallyCompletedTools()
+    func lastCompletedExerciseWasToday() -> Bool
     func getCompletedWeeks() -> Int
     func setCompletedWeeks() -> Int
     func resetCompletedWeeks()
@@ -38,25 +38,26 @@ protocol DatastoreProtocol {
     func setDates(_ value: Date)
     func shouldExerciseDaily() -> Bool
     func setShouldExerciseDaily(_ value: Bool)
-    func setPauseBetweenTools(_ value: Bool)
-    func pauseBetweenTools() -> Bool
+    func setNoPauseBetweenTools(_ value: Bool)
+    func noPauseBetweenTools() -> Bool
     func pauseForPhonecall() -> Bool
+    func getDaysSinceLastExercise() -> Int
     func commitToDisk()
 }
 
 class SharedUserDefaultsDatastore: NSObject, DatastoreProtocol {
     
-    func setPauseBetweenTools(_ value: Bool) {
-        userDefaults.removeObject(forKey: "PauseBetweenTools")
-        userDefaults.set(value, forKey: "PauseBetweenTools")
+    func setNoPauseBetweenTools(_ value: Bool) {
+        userDefaults.removeObject(forKey: "NoPauseBetweenTools")
+        userDefaults.set(value, forKey: "NoPauseBetweenTools")
         self.commitToDisk()
     }
     
-    func pauseBetweenTools() -> Bool {
-        if let result = userDefaults.object(forKey: "PauseBetweenTools") {
+    func noPauseBetweenTools() -> Bool {
+        if let result = userDefaults.object(forKey: "NoPauseBetweenTools") {
             return result as! Bool
         } else {
-            return false
+            return true
         }
     }
     
@@ -138,15 +139,27 @@ class SharedUserDefaultsDatastore: NSObject, DatastoreProtocol {
         return []
     }
     
+    func getDaysSinceLastExercise() -> Int {
+        if userDefaults.object(forKey: "DateOfLastExercise") != nil {
+            let theDate = userDefaults.object(forKey: "DateOfLastExercise") as! Date
+            return Calendar.current.dateComponents([.day], from: theDate, to: Date()).day!
+        }
+        return 0
+    }
+    
     func setDateOfLastCompletedExercise() {
         userDefaults.set(Date(), forKey: "DateOfLastExercise")
         self.commitToDisk()
     }
     
     func lastCompletedExerciseWasYesterday() -> Bool {
-        if userDefaults.object(forKey: "DateOfLastExercise") != nil {
-            return (self.computeYesterdaysDate() == userDefaults.object(forKey: "DateOfLastExercise") as! Date)
+        if let dateOfLastExercise = userDefaults.object(forKey: "DateOfLastExercise") {
+            let result = !(Calendar.current.isDate(dateOfLastExercise as! Date, inSameDayAs: Date()))
+            return result
         }
+//        if userDefaults.object(forKey: "DateOfLastExercise") != nil {
+//            return (self.computeYesterdaysDate() == userDefaults.object(forKey: "DateOfLastExercise") as! Date)
+//        }
         return false
     }
     
@@ -160,11 +173,6 @@ class SharedUserDefaultsDatastore: NSObject, DatastoreProtocol {
     
     func resetLastCompletedExercisDate() {
         userDefaults.removeObject(forKey:"DateOfLastExercise")
-        self.commitToDisk()
-    }
-    
-    func resetManuallyCompletedTools() {
-        userDefaults.removeObject(forKey:"CompletedManualTools")
         self.commitToDisk()
     }
     
@@ -185,6 +193,13 @@ class SharedUserDefaultsDatastore: NSObject, DatastoreProtocol {
                 return sevenDaysFrom(Date())
             }
         }
+    }
+    
+    func loadArray(_ key: String) -> Array<Any> {
+        if let thisArray = userDefaults.object(forKey: key) {
+            return thisArray as! Array<Any>
+        }
+        return Array<Any>()
     }
     
     func loadString(_ key: String) -> String {

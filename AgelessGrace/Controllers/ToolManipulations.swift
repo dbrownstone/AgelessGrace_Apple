@@ -10,16 +10,17 @@ import UIKit
 import Foundation
 
 protocol ToolProtocol {
-    func reset()
+    func reset7DayPeriod()
     func setSelectionType(_ selectionType:Bool)
     func setManuallyCompletedToolIds(_ ids:Array<Int>)
     func getManuallyCompletedToolIds() -> [Int]
     func saveManuallySelectedTools(_ tools:Array<String>)
     func getManuallySelectedTools() -> Array<String>
     func saveLastCompletedGroup(_ group:Array<String>)
+    func getLastCompletedGroup() -> Array<String>
     func selectTools() -> Array<AnyObject>
     func setupArrayForRandomSelection()
-    func randomlySelectRemainingArrayOfTools(_ alreadySelected: [Array<String>])
+    func randomlySelectRemainingArrayOfTools(_ alreadySelected: [Array<String>], selectedTools:[String])
     func isAlreadyInArray(_ tool:NSString) -> Bool
     func setToolCount(_ count:Int)
     func getToolCount() -> Int
@@ -40,17 +41,13 @@ class ToolManipulations: NSObject, ToolProtocol {
     var theToolCount = 3
     var timeOfSession:Double!
     
-    func reset() {
-        //resets all data to begin a new 7-day period
-        completedTools = []
-        datastore.save("CompletedTools", value:(completedTools as NSObject?)! )
-        if theToolCount == 0 {
-            theToolCount = 3
-        }
-        selectedGroup = [String](repeating: "", count: theToolCount)
-        datastore.save("SelectedGroup", value:(selectedGroup as NSObject?)!)
-//        setTheDatesInTheDatastore()
-//        datastore.commitToDisk()
+    func reset7DayPeriod() {
+        theToolCount = 3
+        selectedGroup = [String]()
+        datastore.clearSelectedGroup()
+        datastore.clearSelectedGroups()
+        datastore.resetCompletedToolSets()
+        setTheDatesInTheDatastore()
     }
     
     func saveManuallySelectedTools(_ tools:Array<String>) {
@@ -81,9 +78,9 @@ class ToolManipulations: NSObject, ToolProtocol {
         datastore.save("LastCompletedToolsGroup", value: group as NSObject)
     }
     
-//    func getLastCompletedGroup() ->Array<String> {
-//        return datastore.loadArray("LastCompletedToolsGroup") as? Array<String> ?? Array<String>()
-//    }
+    func getLastCompletedGroup() ->Array<String> {
+        return datastore.loadArray("LastCompletedToolsGroup") as? Array<String> ?? Array<String>()
+    }
 
     func exercisePeriodHasYetToStart() -> Bool {
         //        daysBetweenDate
@@ -100,7 +97,9 @@ class ToolManipulations: NSObject, ToolProtocol {
     
     func setTheDatesInTheDatastore() {
         let firstDay = datastore.loadDate("StartingDate")
-        datastore.save("EndingDate", value:datastore.sevenDaysFrom(firstDay) as NSObject)        
+        if datastore.shouldExerciseDaily() {
+            datastore.save("EndingDate", value:datastore.sevenDaysFrom(firstDay) as NSObject)
+        }
     }
     
     func getCompletedTools() -> [String] {
@@ -128,8 +127,8 @@ class ToolManipulations: NSObject, ToolProtocol {
         }
     }
     
-    func randomlySelectRemainingArrayOfTools(_ alreadySelected: [Array<String>]) {
-        let selectedGroups = alreadySelected
+    func randomlySelectRemainingArrayOfTools(_ alreadySelectedGroups: [Array<String>], selectedTools: [String]) {
+        let selectedGroups = alreadySelectedGroups
         if selectedGroups.count == 7 {
             return
         }
@@ -138,11 +137,11 @@ class ToolManipulations: NSObject, ToolProtocol {
         var randomizedList = [Int]()
         var nums = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
         var idsToBeRemoved = [Int]()
-        for toolGroup in selectedGroups {
-            for i in 0..<3 {
-                idsToBeRemoved.append(arrayForRandomSelection.index(of: toolGroup[i])!)
+//        for toolGroup in selectedGroups {
+            for i in 0..<selectedTools.count {
+                idsToBeRemoved.append(arrayForRandomSelection.index(of: selectedTools[i])!)
             }
-        }
+//        }
         for id in idsToBeRemoved.reversed() {
             print(id)
             nums.remove(at: (id))
@@ -157,6 +156,7 @@ class ToolManipulations: NSObject, ToolProtocol {
             nums.remove(at: arrayKey)
             randomizedList.append(randNum)
         }
+        sevenDayToolSelection = selectedGroups
         var theGroup = [String]()
         
         for indx in 0..<randomizedList.count {
@@ -169,10 +169,7 @@ class ToolManipulations: NSObject, ToolProtocol {
             }
             
         }
-        if theGroup.count == theToolCount {
-            sevenDayToolSelection.append(theGroup)
-            theGroup = [String]()
-        }
+        sevenDayToolSelection.append(theGroup)
         setTheDatesInTheDatastore()
         datastore.save("SelectedGroups", value:(sevenDayToolSelection as NSObject?)!)
     }

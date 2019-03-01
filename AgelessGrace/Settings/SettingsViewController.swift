@@ -32,11 +32,10 @@ class SettingsViewController: UITableViewController {
         tableView.reloadData()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        datastore.setDates(datePicker.date)
+    @IBAction func saveCurrentSelections(_ sender: UIBarButtonItem) {
+            datastore.setDates(datePicker.date)
         datastore.setShouldExerciseDaily(self.exerciseSettingSw!.isOn)
-        datastore.setPauseBetweenTools(self.pauseSettingSw!.isOn)
-        super.viewDidDisappear(animated)
+        datastore.setNoPauseBetweenTools(self.pauseSettingSw!.isOn)
     }
 
     // MARK: - Table view data source
@@ -99,18 +98,14 @@ class SettingsViewController: UITableViewController {
             exerciseSettingSw = cell!.viewWithTag(10) as? UISwitch
             exerciseSettingSw?.isOn = datastore.shouldExerciseDaily()
             datePicker = cell?.viewWithTag(100) as? UIDatePicker
-            if let startDate = userDefaults.object(forKey: "StartingDate") {
-                datePicker.date = startDate as! Date
-            } else {
-                datePicker.date = Date()
-            }
-            self.currentStartDate = datePicker.date
+            self.currentStartDate = datastore.loadDate("StartingDate")
+            datePicker.date = self.currentStartDate!
             break
         default:
             identifier = "yesNo"
             cell = tableView.dequeueReusableCell(withIdentifier: identifier!, for: indexPath)
             pauseSettingSw = cell!.viewWithTag(20) as? UISwitch
-            pauseSettingSw?.isOn = datastore.pauseBetweenTools()
+            pauseSettingSw?.isOn = datastore.noPauseBetweenTools()
             break
         }
         return cell!
