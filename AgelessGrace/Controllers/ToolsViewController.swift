@@ -79,8 +79,14 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         }
         
         prepareButtons()
-
-        if datastore.lastCompletedExerciseWasYesterday() {
+ 
+        if datastore.lastCompletedExerciseWasToday() {
+            self.selectedGroup = self.lastCompletedGroup
+            self.completedNotice.isHidden = false
+            let rightBarSelectButtonItem: UIBarButtonItem = UIBarButtonItem(customView: refreshBtn)
+            self.navigationItem.setRightBarButton(
+                rightBarSelectButtonItem, animated: false)
+        } else if datastore.lastCompletedExerciseWasYesterday() {
             print("lastCompletedExerciseWasYesterday = true")
             //display the next selected tool if it exists
             let indx = self.selectedGroups!.index(of:self.lastCompletedGroup!)
@@ -246,6 +252,7 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         }
     }
     
+    var completedRequirementMessageDisplayed = false
     @objc func refreshTable(_ sender: UIButton) {
         let titleIndex = Int((self.title!.split(separator: " "))[1])
         if titleIndex == 7 && datastore.yesterdayWasDay7() {
@@ -256,18 +263,35 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             self.completedNotice.isHidden = true
             self.completedNoticeVisible = false
             theTableView.reloadData()
-        }
-        if (selectedGroups!.index(of: selectedGroup) == titleIndex! - 1 &&
-            datastore.lastCompletedExerciseWasYesterday() == false) {
-            let message = NSLocalizedString("Your exercise requirement for today is complete. You should continue tomorrow!", comment: "")
-            let title = NSLocalizedString("You're done!", comment: "")
-            let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-            let okAction = UIAlertAction(title: "OK", style: .cancel)
-            alertController.addAction(okAction)
-            present(alertController, animated: true, completion:nil)
         } else {
-            selectedGroup = selectedGroups![titleIndex! - 1]
-            theTableView.reloadData()
+            if selectedGroups!.index(of: selectedGroup) == titleIndex! - 1 {
+                if datastore.getDaysSinceLastExercise() == 0  {
+                    completedRequirementMessageDisplayed = true
+                    let message = NSLocalizedString("Your exercise requirement for today is complete. You should continue tomorrow!", comment: "")
+                    let title = NSLocalizedString("You're done!", comment: "")
+                    let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+                    let okAction = UIAlertAction(title: "OK", style: .cancel) {
+                        (action) -> Void in
+                        self.completedNotice.isHidden = false
+                        self.completedNoticeVisible = true
+                    }
+                    alertController.addAction(okAction)
+                    present(alertController, animated: true, completion:nil)
+                } else {
+                    selectedGroup = selectedGroups![titleIndex! - 1]
+                    if completedRequirementMessageDisplayed == false {
+                        self.completedNotice.isHidden = true
+                        self.completedNoticeVisible = false
+                    }
+                }
+            } else {
+                selectedGroup = selectedGroups![titleIndex! - 1]
+                if completedRequirementMessageDisplayed == false {
+                    self.completedNotice.isHidden = true
+                    self.completedNoticeVisible = false
+                }
+                theTableView.reloadData()
+            }
         }
     }
     
@@ -358,6 +382,8 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     func replaceButtonWithMusicSelector() {
+        self.completedNotice.isHidden = true
+        self.completedNoticeVisible = true
         let items = [NSLocalizedString("Reselect", comment: "") , "music"]
         let segmentedControl = UISegmentedControl(items : items)
         let newImage = image(with: (UIImage(named: "music_image")), scaledTo: CGSize(width: 30, height: 30))
@@ -560,7 +586,7 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         let theTool = toolsDescr[indexPath.row]
         if self.completedTools != nil && self.completedTools!.contains(theTool) {
             selectorBtn.isHidden = true
-        } else if self.selectedTools != nil && self.selectedTools.contains(theTool) {
+        } else if self.selectedTools != nil && self.selectedTools.contains(theTool) && self.toolsDescr.count > 3 {
             selectorBtn.setImage(UIImage(named:"manuallySelected"), for: .normal)
         } else {
             selectorBtn.setImage(UIImage(named:"selector"), for: .normal)
