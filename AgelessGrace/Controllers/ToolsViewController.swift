@@ -92,7 +92,15 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             let indx = self.selectedGroups!.index(of:self.lastCompletedGroup!)
             if self.selectedGroups!.count > (indx! + 1) {
                 selectedGroup = self.selectedGroups![indx! + 1]
+            } else if self.selectedGroups!.count == 7 {
+                datastore.resetCompletedWeeks()
+                datastore.clearSelectedGroup()
+                datastore.clearSelectedGroups()
+                datastore.resetLastCompletedExercisDate()
+                datastore.resetCompletedToolSets()
+                self.toolsDescr = appDelegate.getRequiredArray("AGToolNames")
             }
+            
         }
         
         if self.dateOfLastCompletedExercise != nil && datastore.isToday(self.dateOfLastCompletedExercise!) {

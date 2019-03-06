@@ -24,6 +24,7 @@ protocol DatastoreProtocol {
     func setDateOfLastCompletedExercise()
     func lastCompletedExerciseWasYesterday() -> Bool
     func lastCompletedExerciseWasToday() -> Bool
+    func resetLastCompletedExercisDate()
     func getCompletedWeeks() -> Int
     func setCompletedWeeks() -> Int
     func resetCompletedWeeks()
