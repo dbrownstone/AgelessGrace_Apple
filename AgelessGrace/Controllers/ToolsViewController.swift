@@ -12,7 +12,7 @@ import MediaPlayer
 var SESSIONPERIOD = 1.00//10.0
 let toolControl:ToolProtocol = ToolManipulations()
 
-class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MPMediaPickerControllerDelegate {
+class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MPMediaPickerControllerDelegate, UITabBarControllerDelegate {
     
     @IBOutlet weak var theTableView: UITableView!
     @IBOutlet weak var completedNotice: UIView!
@@ -49,16 +49,24 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     let continueBtn = UIButton(type:.custom)
     let refreshBtn = UIButton(type:.custom)
     
+    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+        let tabBarIndex = tabBarController.selectedIndex
+        if tabBarIndex > 0 {
+            self.returningFromDescriptionVC = true
+        }
+    }
     // MARK: - Basic Life cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.theTableView.delegate = self
         self.theTableView.dataSource = self
+        self.tabBarController?.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+
         self.navigationItem.rightBarButtonItem = nil
         
         self.exercisingConsecutively = datastore.shouldExerciseDaily()
