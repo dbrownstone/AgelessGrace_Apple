@@ -37,6 +37,7 @@ protocol DatastoreProtocol {
     func getLastCompletedGroup() -> Array<String>
     func resetCompletedToolSets()
     func setDates(_ value: Date)
+    func resetDates()
     func shouldExerciseDaily() -> Bool
     func setShouldExerciseDaily(_ value: Bool)
     func setNoPauseBetweenTools(_ value: Bool)
@@ -76,13 +77,18 @@ class SharedUserDefaultsDatastore: NSObject, DatastoreProtocol {
     }
     
     func setDates(_ value: Date) {
-        userDefaults.removeObject(forKey:"StartingDate")
-        userDefaults.removeObject(forKey:"EndingDate")
+        resetDates()
         userDefaults.set(value, forKey:"StartingDate")
         if self.shouldExerciseDaily() {
             let seventhDate = self.sevenDaysFrom(value)
             userDefaults.set(seventhDate, forKey:"EndingDate")
         }
+        self.commitToDisk()
+    }
+    
+    func resetDates() {
+        userDefaults.removeObject(forKey:"StartingDate")
+        userDefaults.removeObject(forKey:"EndingDate")
         self.commitToDisk()
     }
     
@@ -289,6 +295,7 @@ class SharedUserDefaultsDatastore: NSObject, DatastoreProtocol {
     
     func clearSelectedGroup() {
         userDefaults.removeObject(forKey: "SelectedGroup")
+        self.commitToDisk()
     }
     
     func getSelectedGroup() -> Array<String> {

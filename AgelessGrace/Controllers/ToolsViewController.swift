@@ -98,6 +98,7 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 datastore.clearSelectedGroups()
                 datastore.resetLastCompletedExercisDate()
                 datastore.resetCompletedToolSets()
+                datastore.resetDates()
                 self.toolsDescr = appDelegate.getRequiredArray("AGToolNames")
             }
             
