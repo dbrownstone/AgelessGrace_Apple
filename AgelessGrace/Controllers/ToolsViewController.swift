@@ -49,12 +49,15 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     let continueBtn = UIButton(type:.custom)
     let refreshBtn = UIButton(type:.custom)
     
+    // MARK: - TabBarControllerDelegate
+    
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
         let tabBarIndex = tabBarController.selectedIndex
         if tabBarIndex > 0 {
             self.returningFromDescriptionVC = true
         }
     }
+    
     // MARK: - Basic Life cycle
     
     override func viewDidLoad() {
@@ -424,19 +427,6 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         }
     }
     
-//    func prepareToStartTheSession() {
-//        var totalPlayingTime = 0.0
-//        for item in self.musicForSelectedGroup {
-//            let duration = item["duration"]
-//            totalPlayingTime += duration as! Double
-//        }
-//        if totalPlayingTime >= SESSIONPERIOD * 60 {
-//            self.startTheSession()
-//        } else {
-//
-//        }
-//    }
-    
     func startTheSession() {
         if #available(iOS 9.3, *) {
             let authorizationStatus = MPMediaLibrary.authorizationStatus()
@@ -470,9 +460,10 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         var message = ""
         let endingDate = datastore.loadDate("EndingDate")
         let calendar = NSCalendar.current
+        var completedWeekCount = 0
         if calendar.isDateInToday(endingDate) {
             selectedGroup = nil
-            let completedWeekCount = datastore.setCompletedWeeks()
+            completedWeekCount = datastore.setCompletedWeeks()
             switch completedWeekCount {
             case 3:
                 message = NSLocalizedString("You are a champion! Your brain is getting stronger every day -- you did your Ageless Grace tools for 21 days in a row!", comment: "")
@@ -485,7 +476,11 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             toolsDescr = appDelegate.getRequiredArray("AGToolNames")
             selectedGroups = nil
         } else  {
-            message =  NSLocalizedString("Congratulations on doing your 10 minutes of Ageless Grace Brain. See you tomorrow!", comment:"")
+            if self.exercisingConsecutively! {
+                message =  NSLocalizedString("Congratulations on doing your 10 minutes of Ageless Grace Brain. See you tomorrow!", comment:"")
+            } else {
+                message =  NSLocalizedString("Congratulations on doing your 10 minutes of Ageless Grace Brain. See you next time!", comment:"")
+            }
         }
         var theTitle = NSLocalizedString("Well Done!", comment:"")
         let alert = UIAlertController(title: theTitle, message: message, preferredStyle: .alert)
