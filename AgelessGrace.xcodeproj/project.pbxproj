@@ -245,7 +245,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-AgelessGrace/Pods-AgelessGrace-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-AgelessGrace/Pods-AgelessGrace-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/MarqueeLabel/MarqueeLabel.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -254,7 +254,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AgelessGrace/Pods-AgelessGrace-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AgelessGrace/Pods-AgelessGrace-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		9A9FACA72989FA4B3DF7AAD2 /* [CP] Check Pods Manifest.lock */ = {

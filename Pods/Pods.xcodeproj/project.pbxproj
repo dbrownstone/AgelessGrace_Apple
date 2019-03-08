@@ -3,211 +3,211 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5AE6FD69832C89587E88556401B5AEE9 /* Pods-AgelessGrace-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = AA4DDC2B576F8D2B8F1581548A9CFE67 /* Pods-AgelessGrace-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		7A85DDA82105465191090E1CD3FCDC00 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3917A50EB224EEDBC66971700D698782 /* UIKit.framework */; };
-		7C8EA6714E5BB8ACDDB1EA1126BAA109 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33083C616C9CA8AF16FA7C690BC673C7 /* Foundation.framework */; };
-		8118A3F49ED6BB5CF7BC6D8927745BE5 /* Pods-AgelessGrace-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = B35521F2E3F5548C4DBA2C85B1855148 /* Pods-AgelessGrace-dummy.m */; };
-		81757F684D084AC69DAE797488D314F2 /* MarqueeLabel-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C2623477565B980B22C2D63452ABAF1 /* MarqueeLabel-dummy.m */; };
-		B812F90DB775AFDF1DFA13480D844916 /* MarqueeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A9923BCEFC384F176B7DCC0BC296ED /* MarqueeLabel.swift */; };
-		BE64F09C3FD8A8D6792060FA5E10381A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB7751D4D791D1183FB66D3CCA52CD8E /* QuartzCore.framework */; };
-		DB923051D121B166B855AF1C0809BAEF /* MarqueeLabel-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 6515F1CC6968BEDF4998BB9F93F1CB0D /* MarqueeLabel-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		E12F2F4AB46F2B8AF5E38C1A05C89C0D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33083C616C9CA8AF16FA7C690BC673C7 /* Foundation.framework */; };
+		13C8B217548B98BCB136AD0041012564 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E83663F81FCB07BBAA408574FF05126 /* QuartzCore.framework */; };
+		333DDF83BF86FBD755EB71DDB5C6FCFD /* MarqueeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 959EC99556A753C4DEADB2326202F2B4 /* MarqueeLabel.swift */; };
+		624FD1983268AE270F4BC36B87F2B979 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0CD490842D1267AC36524009F7A9B2A /* Foundation.framework */; };
+		77DAAA414058514B8CD397562A739C45 /* Pods-AgelessGrace-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 05C416D32167F514AA38560D7678E5D6 /* Pods-AgelessGrace-dummy.m */; };
+		865297ECA735286C0D1C5C379BA995CE /* MarqueeLabel-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 226ED8381F10260C30D0FD9E11AFBF0A /* MarqueeLabel-dummy.m */; };
+		ADB5DE14557FC95AB23882D410B3D780 /* MarqueeLabel-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = C16DA2FC91F80EAC2A5AC207C9B1F658 /* MarqueeLabel-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BB317DF6791C221545C5C0A0D44C222F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0CD490842D1267AC36524009F7A9B2A /* Foundation.framework */; };
+		E87AA2773E55E0435229E7F333F9629E /* Pods-AgelessGrace-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = DB4C3D0440BAC703776C7A88A3F18DE8 /* Pods-AgelessGrace-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		FF2F28C178B59EFF56879D29B0C71914 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B23E6659060337F19196726F1CEA06A0 /* UIKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		2D0BCC14285CBBC3DF3E344A5153BE1F /* PBXContainerItemProxy */ = {
+		29075A7A85A526C4530A368A8E6526AC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 320AD47B0C6BA014D301395D3BFC8FB6;
+			remoteGlobalIDString = 93560C05B87988775E43AA3CEBFCA82A;
 			remoteInfo = MarqueeLabel;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0324561C5AE657ED6ECBF7B40F205C00 /* Pods_AgelessGrace.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AgelessGrace.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		078246517276E70F36EDEC6CBA117BB0 /* MarqueeLabel-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "MarqueeLabel-prefix.pch"; sourceTree = "<group>"; };
-		2C806CC3BF5D38D15771F118C95D50E0 /* Pods-AgelessGrace.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-AgelessGrace.modulemap"; sourceTree = "<group>"; };
-		33083C616C9CA8AF16FA7C690BC673C7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		3917A50EB224EEDBC66971700D698782 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
-		39E89C6B84D086A7EB1C64683E43810C /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3C2623477565B980B22C2D63452ABAF1 /* MarqueeLabel-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "MarqueeLabel-dummy.m"; sourceTree = "<group>"; };
-		40CC88DC6FC6DCA60782CC9C7853F1B1 /* Pods-AgelessGrace-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-AgelessGrace-acknowledgements.plist"; sourceTree = "<group>"; };
-		493FDE577FB84C201C085283EB4414A6 /* Pods-AgelessGrace-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-AgelessGrace-resources.sh"; sourceTree = "<group>"; };
-		4AAEC36F9E253D6F8B35774D7654F311 /* Pods-AgelessGrace-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-AgelessGrace-acknowledgements.markdown"; sourceTree = "<group>"; };
-		6515F1CC6968BEDF4998BB9F93F1CB0D /* MarqueeLabel-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "MarqueeLabel-umbrella.h"; sourceTree = "<group>"; };
-		70C672F1B1B1EB481545ECE700C6691F /* Pods-AgelessGrace.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-AgelessGrace.debug.xcconfig"; sourceTree = "<group>"; };
-		8B972C86B36485624ABC906FF0C317C3 /* MarqueeLabel.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MarqueeLabel.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		9383539B797DC200C0F77AC3A2727C9B /* Pods-AgelessGrace-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-AgelessGrace-frameworks.sh"; sourceTree = "<group>"; };
-		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; };
-		AA4DDC2B576F8D2B8F1581548A9CFE67 /* Pods-AgelessGrace-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-AgelessGrace-umbrella.h"; sourceTree = "<group>"; };
-		B35521F2E3F5548C4DBA2C85B1855148 /* Pods-AgelessGrace-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-AgelessGrace-dummy.m"; sourceTree = "<group>"; };
-		B592B633FCB27A157FB97E4ACABD4B86 /* MarqueeLabel.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = MarqueeLabel.xcconfig; sourceTree = "<group>"; };
-		C45865EA5A2FE6A1B3A1C66F52B81859 /* MarqueeLabel.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = MarqueeLabel.modulemap; sourceTree = "<group>"; };
-		C5A9923BCEFC384F176B7DCC0BC296ED /* MarqueeLabel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MarqueeLabel.swift; path = Sources/Swift/MarqueeLabel.swift; sourceTree = "<group>"; };
-		D35798B577C56922ABB4E1C6FC6E7133 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EC90FF4BFFEE99AA172A10C74828E41B /* Pods-AgelessGrace.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-AgelessGrace.release.xcconfig"; sourceTree = "<group>"; };
-		FB7751D4D791D1183FB66D3CCA52CD8E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
+		05C416D32167F514AA38560D7678E5D6 /* Pods-AgelessGrace-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-AgelessGrace-dummy.m"; sourceTree = "<group>"; };
+		226ED8381F10260C30D0FD9E11AFBF0A /* MarqueeLabel-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "MarqueeLabel-dummy.m"; sourceTree = "<group>"; };
+		3E83663F81FCB07BBAA408574FF05126 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.0.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
+		49D68236DB4F6AB51B470A2E020B600D /* Pods-AgelessGrace.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-AgelessGrace.release.xcconfig"; sourceTree = "<group>"; };
+		516F042E70CB16635EC4C23A28C9616E /* Pods-AgelessGrace.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-AgelessGrace.debug.xcconfig"; sourceTree = "<group>"; };
+		54385E596171FC122BB111657C9BDF39 /* MarqueeLabel-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "MarqueeLabel-Info.plist"; sourceTree = "<group>"; };
+		546D18FA587CEF3B40EAA8ABCD9DB4BF /* MarqueeLabel-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "MarqueeLabel-prefix.pch"; sourceTree = "<group>"; };
+		5B2C9D21C8D73B09E1798D661AC5C093 /* Pods-AgelessGrace-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-AgelessGrace-acknowledgements.markdown"; sourceTree = "<group>"; };
+		69EB06A737D34E0378584D54CC915C67 /* Pods-AgelessGrace-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-AgelessGrace-acknowledgements.plist"; sourceTree = "<group>"; };
+		84A7B439568DD62E1BAFB0955B4E327C /* MarqueeLabel.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = MarqueeLabel.framework; path = MarqueeLabel.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		959EC99556A753C4DEADB2326202F2B4 /* MarqueeLabel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MarqueeLabel.swift; path = Sources/Swift/MarqueeLabel.swift; sourceTree = "<group>"; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		A0CD490842D1267AC36524009F7A9B2A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		AF84CB478A9B585CF7020107EDB35F75 /* Pods_AgelessGrace.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_AgelessGrace.framework; path = "Pods-AgelessGrace.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B23E6659060337F19196726F1CEA06A0 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.0.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		B9A1C09065EA645E01C562390C263080 /* Pods-AgelessGrace-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-AgelessGrace-frameworks.sh"; sourceTree = "<group>"; };
+		C16DA2FC91F80EAC2A5AC207C9B1F658 /* MarqueeLabel-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "MarqueeLabel-umbrella.h"; sourceTree = "<group>"; };
+		CE842A2C1FA3988A300D84BE2C92520A /* Pods-AgelessGrace-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-AgelessGrace-Info.plist"; sourceTree = "<group>"; };
+		D9067BE621C91DABFA2A56F09CF74058 /* MarqueeLabel.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = MarqueeLabel.modulemap; sourceTree = "<group>"; };
+		DB4C3D0440BAC703776C7A88A3F18DE8 /* Pods-AgelessGrace-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-AgelessGrace-umbrella.h"; sourceTree = "<group>"; };
+		DB6DEFD55FA73272CFC88F7CD49770C9 /* MarqueeLabel.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = MarqueeLabel.xcconfig; sourceTree = "<group>"; };
+		F438F19E63076E2F2A26EB6F74746A07 /* Pods-AgelessGrace.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-AgelessGrace.modulemap"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		5AABCB61A371D7190E80DFF7C06C8CAF /* Frameworks */ = {
+		E600412FEF0215934B56B3BE1E7DE5A5 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7C8EA6714E5BB8ACDDB1EA1126BAA109 /* Foundation.framework in Frameworks */,
+				BB317DF6791C221545C5C0A0D44C222F /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F5881BC4ADA6E767FAC6CDFC9A796C14 /* Frameworks */ = {
+		F7A7823F1039142D608683A2E6B7B542 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E12F2F4AB46F2B8AF5E38C1A05C89C0D /* Foundation.framework in Frameworks */,
-				BE64F09C3FD8A8D6792060FA5E10381A /* QuartzCore.framework in Frameworks */,
-				7A85DDA82105465191090E1CD3FCDC00 /* UIKit.framework in Frameworks */,
+				624FD1983268AE270F4BC36B87F2B979 /* Foundation.framework in Frameworks */,
+				13C8B217548B98BCB136AD0041012564 /* QuartzCore.framework in Frameworks */,
+				FF2F28C178B59EFF56879D29B0C71914 /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		122DA2E5084A4393C29BE363C764795C /* Frameworks */ = {
+		03C5C200A0787E300053CFA8F53CA094 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				93A319F2C1969B7AA0B17444A3F8BA22 /* iOS */,
+				CD766BFEDD0FE46FD0AF278EAE74102F /* iOS */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		385F135C89B39F39B01D288D34E843EF /* Swift */ = {
+		0778B5A314DAC90962C908A8D628A9F2 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C5A9923BCEFC384F176B7DCC0BC296ED /* MarqueeLabel.swift */,
-			);
-			name = Swift;
-			sourceTree = "<group>";
-		};
-		4743A513540FBCC62F7B5A37235FDF54 /* Targets Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				701C7B28896F3897E8707361D89BD456 /* Pods-AgelessGrace */,
-			);
-			name = "Targets Support Files";
-			sourceTree = "<group>";
-		};
-		525FA405AF2C98970D415CAB624258F1 /* MarqueeLabel */ = {
-			isa = PBXGroup;
-			children = (
-				E18EA82909120C20E37F74E04A441070 /* Support Files */,
-				385F135C89B39F39B01D288D34E843EF /* Swift */,
-			);
-			path = MarqueeLabel;
-			sourceTree = "<group>";
-		};
-		5A32E81BAAF57F11ADA37F022BF97847 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				525FA405AF2C98970D415CAB624258F1 /* MarqueeLabel */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
-		701C7B28896F3897E8707361D89BD456 /* Pods-AgelessGrace */ = {
-			isa = PBXGroup;
-			children = (
-				39E89C6B84D086A7EB1C64683E43810C /* Info.plist */,
-				2C806CC3BF5D38D15771F118C95D50E0 /* Pods-AgelessGrace.modulemap */,
-				4AAEC36F9E253D6F8B35774D7654F311 /* Pods-AgelessGrace-acknowledgements.markdown */,
-				40CC88DC6FC6DCA60782CC9C7853F1B1 /* Pods-AgelessGrace-acknowledgements.plist */,
-				B35521F2E3F5548C4DBA2C85B1855148 /* Pods-AgelessGrace-dummy.m */,
-				9383539B797DC200C0F77AC3A2727C9B /* Pods-AgelessGrace-frameworks.sh */,
-				493FDE577FB84C201C085283EB4414A6 /* Pods-AgelessGrace-resources.sh */,
-				AA4DDC2B576F8D2B8F1581548A9CFE67 /* Pods-AgelessGrace-umbrella.h */,
-				70C672F1B1B1EB481545ECE700C6691F /* Pods-AgelessGrace.debug.xcconfig */,
-				EC90FF4BFFEE99AA172A10C74828E41B /* Pods-AgelessGrace.release.xcconfig */,
-			);
-			name = "Pods-AgelessGrace";
-			path = "Target Support Files/Pods-AgelessGrace";
-			sourceTree = "<group>";
-		};
-		7DB346D0F39D3F0E887471402A8071AB = {
-			isa = PBXGroup;
-			children = (
-				93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */,
-				122DA2E5084A4393C29BE363C764795C /* Frameworks */,
-				5A32E81BAAF57F11ADA37F022BF97847 /* Pods */,
-				C49A3506878B7CE43850929E9DBA43B4 /* Products */,
-				4743A513540FBCC62F7B5A37235FDF54 /* Targets Support Files */,
-			);
-			sourceTree = "<group>";
-		};
-		93A319F2C1969B7AA0B17444A3F8BA22 /* iOS */ = {
-			isa = PBXGroup;
-			children = (
-				33083C616C9CA8AF16FA7C690BC673C7 /* Foundation.framework */,
-				FB7751D4D791D1183FB66D3CCA52CD8E /* QuartzCore.framework */,
-				3917A50EB224EEDBC66971700D698782 /* UIKit.framework */,
-			);
-			name = iOS;
-			sourceTree = "<group>";
-		};
-		C49A3506878B7CE43850929E9DBA43B4 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				8B972C86B36485624ABC906FF0C317C3 /* MarqueeLabel.framework */,
-				0324561C5AE657ED6ECBF7B40F205C00 /* Pods_AgelessGrace.framework */,
+				84A7B439568DD62E1BAFB0955B4E327C /* MarqueeLabel.framework */,
+				AF84CB478A9B585CF7020107EDB35F75 /* Pods_AgelessGrace.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		E18EA82909120C20E37F74E04A441070 /* Support Files */ = {
+		29874317F4EC323D479772072BB92CD0 /* Swift */ = {
 			isa = PBXGroup;
 			children = (
-				D35798B577C56922ABB4E1C6FC6E7133 /* Info.plist */,
-				C45865EA5A2FE6A1B3A1C66F52B81859 /* MarqueeLabel.modulemap */,
-				B592B633FCB27A157FB97E4ACABD4B86 /* MarqueeLabel.xcconfig */,
-				3C2623477565B980B22C2D63452ABAF1 /* MarqueeLabel-dummy.m */,
-				078246517276E70F36EDEC6CBA117BB0 /* MarqueeLabel-prefix.pch */,
-				6515F1CC6968BEDF4998BB9F93F1CB0D /* MarqueeLabel-umbrella.h */,
+				959EC99556A753C4DEADB2326202F2B4 /* MarqueeLabel.swift */,
+			);
+			name = Swift;
+			sourceTree = "<group>";
+		};
+		C38FE1A2BAFDA3437FA1B1598756C394 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				D9067BE621C91DABFA2A56F09CF74058 /* MarqueeLabel.modulemap */,
+				DB6DEFD55FA73272CFC88F7CD49770C9 /* MarqueeLabel.xcconfig */,
+				226ED8381F10260C30D0FD9E11AFBF0A /* MarqueeLabel-dummy.m */,
+				54385E596171FC122BB111657C9BDF39 /* MarqueeLabel-Info.plist */,
+				546D18FA587CEF3B40EAA8ABCD9DB4BF /* MarqueeLabel-prefix.pch */,
+				C16DA2FC91F80EAC2A5AC207C9B1F658 /* MarqueeLabel-umbrella.h */,
 			);
 			name = "Support Files";
 			path = "../Target Support Files/MarqueeLabel";
 			sourceTree = "<group>";
 		};
+		CD766BFEDD0FE46FD0AF278EAE74102F /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				A0CD490842D1267AC36524009F7A9B2A /* Foundation.framework */,
+				3E83663F81FCB07BBAA408574FF05126 /* QuartzCore.framework */,
+				B23E6659060337F19196726F1CEA06A0 /* UIKit.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		CF1408CF629C7361332E53B88F7BD30C = {
+			isa = PBXGroup;
+			children = (
+				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
+				03C5C200A0787E300053CFA8F53CA094 /* Frameworks */,
+				F89CF82BFB6B29D57B3ED666A4980FA6 /* Pods */,
+				0778B5A314DAC90962C908A8D628A9F2 /* Products */,
+				FAD7C79113A7EE1E8AC9DDADFA505146 /* Targets Support Files */,
+			);
+			sourceTree = "<group>";
+		};
+		D79AAEE33DA7BFCF596159268E8F78DF /* MarqueeLabel */ = {
+			isa = PBXGroup;
+			children = (
+				C38FE1A2BAFDA3437FA1B1598756C394 /* Support Files */,
+				29874317F4EC323D479772072BB92CD0 /* Swift */,
+			);
+			name = MarqueeLabel;
+			path = MarqueeLabel;
+			sourceTree = "<group>";
+		};
+		EA5FF6E7B387BC1C199091F0D338B28F /* Pods-AgelessGrace */ = {
+			isa = PBXGroup;
+			children = (
+				F438F19E63076E2F2A26EB6F74746A07 /* Pods-AgelessGrace.modulemap */,
+				5B2C9D21C8D73B09E1798D661AC5C093 /* Pods-AgelessGrace-acknowledgements.markdown */,
+				69EB06A737D34E0378584D54CC915C67 /* Pods-AgelessGrace-acknowledgements.plist */,
+				05C416D32167F514AA38560D7678E5D6 /* Pods-AgelessGrace-dummy.m */,
+				B9A1C09065EA645E01C562390C263080 /* Pods-AgelessGrace-frameworks.sh */,
+				CE842A2C1FA3988A300D84BE2C92520A /* Pods-AgelessGrace-Info.plist */,
+				DB4C3D0440BAC703776C7A88A3F18DE8 /* Pods-AgelessGrace-umbrella.h */,
+				516F042E70CB16635EC4C23A28C9616E /* Pods-AgelessGrace.debug.xcconfig */,
+				49D68236DB4F6AB51B470A2E020B600D /* Pods-AgelessGrace.release.xcconfig */,
+			);
+			name = "Pods-AgelessGrace";
+			path = "Target Support Files/Pods-AgelessGrace";
+			sourceTree = "<group>";
+		};
+		F89CF82BFB6B29D57B3ED666A4980FA6 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				D79AAEE33DA7BFCF596159268E8F78DF /* MarqueeLabel */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		FAD7C79113A7EE1E8AC9DDADFA505146 /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				EA5FF6E7B387BC1C199091F0D338B28F /* Pods-AgelessGrace */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		5F88F7CA0CD39602F8986BF12FDA595B /* Headers */ = {
+		72C80D040EDF60E6564658B38C7F585B /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5AE6FD69832C89587E88556401B5AEE9 /* Pods-AgelessGrace-umbrella.h in Headers */,
+				ADB5DE14557FC95AB23882D410B3D780 /* MarqueeLabel-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		AC4CC9FD659266292E00B030BE3557AE /* Headers */ = {
+		D5EF758B4515CF6F6E890B5BC7079D43 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DB923051D121B166B855AF1C0809BAEF /* MarqueeLabel-umbrella.h in Headers */,
+				E87AA2773E55E0435229E7F333F9629E /* Pods-AgelessGrace-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		320AD47B0C6BA014D301395D3BFC8FB6 /* MarqueeLabel */ = {
+		93560C05B87988775E43AA3CEBFCA82A /* MarqueeLabel */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = AB93BA3C12E3426B5019CB531E1C08DC /* Build configuration list for PBXNativeTarget "MarqueeLabel" */;
+			buildConfigurationList = B1B733E7B9870A7A0D7A1729C0E55156 /* Build configuration list for PBXNativeTarget "MarqueeLabel" */;
 			buildPhases = (
-				E424089A1B4CDB88E747B5F58F5C64AC /* Sources */,
-				F5881BC4ADA6E767FAC6CDFC9A796C14 /* Frameworks */,
-				AC4CC9FD659266292E00B030BE3557AE /* Headers */,
+				72C80D040EDF60E6564658B38C7F585B /* Headers */,
+				3B578A0C7D2A8CD94BBE40EDFCB5FEB3 /* Sources */,
+				F7A7823F1039142D608683A2E6B7B542 /* Frameworks */,
+				1804E8636DC9B911FF327FF7433FAA0C /* Resources */,
 			);
 			buildRules = (
 			);
@@ -215,85 +215,176 @@
 			);
 			name = MarqueeLabel;
 			productName = MarqueeLabel;
-			productReference = 8B972C86B36485624ABC906FF0C317C3 /* MarqueeLabel.framework */;
+			productReference = 84A7B439568DD62E1BAFB0955B4E327C /* MarqueeLabel.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		CF5FC0657969BCE7C32EDDB54B077176 /* Pods-AgelessGrace */ = {
+		A8694AAD53633710E134809A99395340 /* Pods-AgelessGrace */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 039F6C4B355B4B6D9CDFEE05E4C6EB5F /* Build configuration list for PBXNativeTarget "Pods-AgelessGrace" */;
+			buildConfigurationList = C557055F9CC83776B1926190D7138CF6 /* Build configuration list for PBXNativeTarget "Pods-AgelessGrace" */;
 			buildPhases = (
-				6019161ADF6F0C4182994977DFF4E86D /* Sources */,
-				5AABCB61A371D7190E80DFF7C06C8CAF /* Frameworks */,
-				5F88F7CA0CD39602F8986BF12FDA595B /* Headers */,
+				D5EF758B4515CF6F6E890B5BC7079D43 /* Headers */,
+				415C14285DB8F08A2AE8B368690D9310 /* Sources */,
+				E600412FEF0215934B56B3BE1E7DE5A5 /* Frameworks */,
+				CDAE1972CC104AC16BC5BB1FE9EE358A /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				27D59032ED64F29C74297A1655CDC6DD /* PBXTargetDependency */,
+				EDF40727227496F518EF368C6A1CDD9C /* PBXTargetDependency */,
 			);
 			name = "Pods-AgelessGrace";
 			productName = "Pods-AgelessGrace";
-			productReference = 0324561C5AE657ED6ECBF7B40F205C00 /* Pods_AgelessGrace.framework */;
+			productReference = AF84CB478A9B585CF7020107EDB35F75 /* Pods_AgelessGrace.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		D41D8CD98F00B204E9800998ECF8427E /* Project object */ = {
+		BFDFE7DC352907FC980B868725387E98 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0930;
 				LastUpgradeCheck = 0930;
 			};
-			buildConfigurationList = 2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */;
+			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 			);
-			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
-			productRefGroup = C49A3506878B7CE43850929E9DBA43B4 /* Products */;
+			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
+			productRefGroup = 0778B5A314DAC90962C908A8D628A9F2 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				320AD47B0C6BA014D301395D3BFC8FB6 /* MarqueeLabel */,
-				CF5FC0657969BCE7C32EDDB54B077176 /* Pods-AgelessGrace */,
+				93560C05B87988775E43AA3CEBFCA82A /* MarqueeLabel */,
+				A8694AAD53633710E134809A99395340 /* Pods-AgelessGrace */,
 			);
 		};
 /* End PBXProject section */
 
-/* Begin PBXSourcesBuildPhase section */
-		6019161ADF6F0C4182994977DFF4E86D /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
+/* Begin PBXResourcesBuildPhase section */
+		1804E8636DC9B911FF327FF7433FAA0C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8118A3F49ED6BB5CF7BC6D8927745BE5 /* Pods-AgelessGrace-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E424089A1B4CDB88E747B5F58F5C64AC /* Sources */ = {
+		CDAE1972CC104AC16BC5BB1FE9EE358A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3B578A0C7D2A8CD94BBE40EDFCB5FEB3 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				81757F684D084AC69DAE797488D314F2 /* MarqueeLabel-dummy.m in Sources */,
-				B812F90DB775AFDF1DFA13480D844916 /* MarqueeLabel.swift in Sources */,
+				865297ECA735286C0D1C5C379BA995CE /* MarqueeLabel-dummy.m in Sources */,
+				333DDF83BF86FBD755EB71DDB5C6FCFD /* MarqueeLabel.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		415C14285DB8F08A2AE8B368690D9310 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				77DAAA414058514B8CD397562A739C45 /* Pods-AgelessGrace-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		27D59032ED64F29C74297A1655CDC6DD /* PBXTargetDependency */ = {
+		EDF40727227496F518EF368C6A1CDD9C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = MarqueeLabel;
-			target = 320AD47B0C6BA014D301395D3BFC8FB6 /* MarqueeLabel */;
-			targetProxy = 2D0BCC14285CBBC3DF3E344A5153BE1F /* PBXContainerItemProxy */;
+			target = 93560C05B87988775E43AA3CEBFCA82A /* MarqueeLabel */;
+			targetProxy = 29075A7A85A526C4530A368A8E6526AC /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		08638A96A528B1EC32DE62F8A728389D /* Release */ = {
+		1193D32C4C28008376BE817ADE805768 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 516F042E70CB16635EC4C23A28C9616E /* Pods-AgelessGrace.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-AgelessGrace/Pods-AgelessGrace-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-AgelessGrace/Pods-AgelessGrace.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		324A6FC3900DD626285CDC7460D18911 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = DB6DEFD55FA73272CFC88F7CD49770C9 /* MarqueeLabel.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/MarqueeLabel/MarqueeLabel-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/MarqueeLabel/MarqueeLabel-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/MarqueeLabel/MarqueeLabel.modulemap";
+				PRODUCT_MODULE_NAME = MarqueeLabel;
+				PRODUCT_NAME = MarqueeLabel;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		4CE281642D6EE9FAB113046B4B6328A0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -325,8 +416,6 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGNING_ALLOWED = NO;
-				CODE_SIGNING_REQUIRED = NO;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -345,150 +434,17 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 4.2;
 				SYMROOT = "${SRCROOT}/../build";
 			};
 			name = Release;
 		};
-		2270737AA24C7166CA6785A58B30355C /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 70C672F1B1B1EB481545ECE700C6691F /* Pods-AgelessGrace.debug.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "Target Support Files/Pods-AgelessGrace/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-AgelessGrace/Pods-AgelessGrace.modulemap";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		37A7EC14CC6AE4E3E916AB72FE663430 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = EC90FF4BFFEE99AA172A10C74828E41B /* Pods-AgelessGrace.release.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "Target Support Files/Pods-AgelessGrace/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-AgelessGrace/Pods-AgelessGrace.modulemap";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		5C726D0DBBFC84747C3169C92C706E53 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = B592B633FCB27A157FB97E4ACABD4B86 /* MarqueeLabel.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/MarqueeLabel/MarqueeLabel-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/MarqueeLabel/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/MarqueeLabel/MarqueeLabel.modulemap";
-				PRODUCT_MODULE_NAME = MarqueeLabel;
-				PRODUCT_NAME = MarqueeLabel;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		951441DA9EC604B9F22FF55D1BF230DD /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = B592B633FCB27A157FB97E4ACABD4B86 /* MarqueeLabel.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/MarqueeLabel/MarqueeLabel-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/MarqueeLabel/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/MarqueeLabel/MarqueeLabel.modulemap";
-				PRODUCT_MODULE_NAME = MarqueeLabel;
-				PRODUCT_NAME = MarqueeLabel;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		9DAE5233986C01ADB6E67169C53A3FD2 /* Debug */ = {
+		6DFA1578582149B7E24AD55CBA30F07A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -520,8 +476,6 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGNING_ALLOWED = NO;
-				CODE_SIGNING_REQUIRED = NO;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -542,46 +496,124 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				MTL_ENABLE_DEBUG_INFO = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.2;
 				SYMROOT = "${SRCROOT}/../build";
 			};
 			name = Debug;
 		};
+		76307968E734E2AED1BE9862DEA30B50 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 49D68236DB4F6AB51B470A2E020B600D /* Pods-AgelessGrace.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-AgelessGrace/Pods-AgelessGrace-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-AgelessGrace/Pods-AgelessGrace.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		FF733531CE3B94627E025B971B22E65A /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = DB6DEFD55FA73272CFC88F7CD49770C9 /* MarqueeLabel.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/MarqueeLabel/MarqueeLabel-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/MarqueeLabel/MarqueeLabel-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/MarqueeLabel/MarqueeLabel.modulemap";
+				PRODUCT_MODULE_NAME = MarqueeLabel;
+				PRODUCT_NAME = MarqueeLabel;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		039F6C4B355B4B6D9CDFEE05E4C6EB5F /* Build configuration list for PBXNativeTarget "Pods-AgelessGrace" */ = {
+		4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				2270737AA24C7166CA6785A58B30355C /* Debug */,
-				37A7EC14CC6AE4E3E916AB72FE663430 /* Release */,
+				6DFA1578582149B7E24AD55CBA30F07A /* Debug */,
+				4CE281642D6EE9FAB113046B4B6328A0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */ = {
+		B1B733E7B9870A7A0D7A1729C0E55156 /* Build configuration list for PBXNativeTarget "MarqueeLabel" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				9DAE5233986C01ADB6E67169C53A3FD2 /* Debug */,
-				08638A96A528B1EC32DE62F8A728389D /* Release */,
+				324A6FC3900DD626285CDC7460D18911 /* Debug */,
+				FF733531CE3B94627E025B971B22E65A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		AB93BA3C12E3426B5019CB531E1C08DC /* Build configuration list for PBXNativeTarget "MarqueeLabel" */ = {
+		C557055F9CC83776B1926190D7138CF6 /* Build configuration list for PBXNativeTarget "Pods-AgelessGrace" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				5C726D0DBBFC84747C3169C92C706E53 /* Debug */,
-				951441DA9EC604B9F22FF55D1BF230DD /* Release */,
+				1193D32C4C28008376BE817ADE805768 /* Debug */,
+				76307968E734E2AED1BE9862DEA30B50 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+	rootObject = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 }
