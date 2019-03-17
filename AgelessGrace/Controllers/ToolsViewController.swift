@@ -344,8 +344,13 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     func updateDisplayList() {
         self.toolsHaveBeenSelected = true
         setUpExistingToolGroups()
-        self.selectedGroup = self.selectedGroups![0]
-        datastore.save("SelectedGroup", value: self.selectedGroup! as NSObject)
+        if self.selectedTools == nil {
+            self.dateOfLastCompletedExercise = nil
+            self.selectedGroups = nil
+        } else {
+            self.selectedGroup = self.selectedGroups![0]
+            datastore.save("SelectedGroup", value: self.selectedGroup! as NSObject)
+        }
         self.selectedPlaylist = nil
         self.theTableView.reloadData()
         let topIndex = IndexPath(row: 0, section: 0)
