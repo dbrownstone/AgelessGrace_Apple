@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 import MediaPlayer
 import MarqueeLabel
 
@@ -108,8 +109,8 @@ class PlayMusicViewController: UIViewController, AVAudioPlayerDelegate {
     @IBAction func startTheSession(_ sender: UIBarButtonItem) {
         startTheTimer()
         audioPlayer.playMusic(selectedPlayList)
-        self.navigationItem.setRightBarButton(UIBarButtonItem(barButtonSystemItem: .pause, target: self, action: #selector(self.pause(_ :))), animated: true)
-//        self.navigationItem.rightBarButtonItem = nil
+        self.navigationItem.rightBarButtonItem = nil
+//        self.navigationItem.setRightBarButton(UIBarButtonItem(barButtonSystemItem: .pause, target: self, action: #selector(self.pause(_ :))), animated: true)
     }
     
     func loadTheToolLabels(_ startingIndex:Int) {
@@ -161,7 +162,8 @@ class PlayMusicViewController: UIViewController, AVAudioPlayerDelegate {
     
     func restartTheTimer() {
         timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(timerAction(_:)), userInfo: nil, repeats: true)
-        self.navigationItem.setRightBarButton(UIBarButtonItem(barButtonSystemItem: .pause, target: self, action: #selector(self.pause(_ :))), animated: true)
+        self.navigationItem.rightBarButtonItem = nil
+//        self.navigationItem.setRightBarButton(UIBarButtonItem(barButtonSystemItem: .pause, target: self, action: #selector(self.pause(_ :))), animated: true)
         audioPlayer.playNextPiece()
     }
     
@@ -220,20 +222,22 @@ class PlayMusicViewController: UIViewController, AVAudioPlayerDelegate {
             UIApplication.shared.isIdleTimerDisabled = false
             self.performSegue(withIdentifier: "returnToMainMenu", sender: self)
         } else {
-            var remainingTime = audioPlayer.setRemainingTime(lastItem)
+            var remainingTime = audioPlayer.setRemainingTime()
 //            self.musicCount(Float(remainingTime))
             print("remaining time = \(remainingTime)")
-//            if toolTimeRemaining > 5 {
-//                audioPlayer.repeatCurrentItem()
-//                remainingTime = toolTimeRemaining
-//            } else
-            if lastItem  && sessionDuration > remainingTime && remainingTime < SESSIONPERIOD {
+            if toolTimeRemaining > (SESSIONPERIOD / 3) {
                 audioPlayer.repeatCurrentItem()
-                remainingTime = audioPlayer.setRemainingTime(lastItem)
-//                self.songTimeRemaining.text = "\(remainingTime)"
+                remainingTime = toolTimeRemaining
+                return
             }
+            
+//            if lastItem  && sessionDuration > remainingTime && remainingTime < SESSIONPERIOD {
+//                audioPlayer.repeatCurrentItem()
+//                remainingTime = audioPlayer.setRemainingTime(lastItem)
+//                self.songTimeRemaining.text = "\(remainingTime)"
+//            }
             self.songTimeRemaining.text = musicCount(Float(remainingTime))
-            print("song time remaining = \(String(describing: self.songTimeRemaining.text))")
+//            print("song time remaining = \(String(describing: self.songTimeRemaining.text))")
         }
     }
     
@@ -314,7 +318,6 @@ class PlayMusicViewController: UIViewController, AVAudioPlayerDelegate {
         audioPlayer.resumeTheMusicPlayer();
         let currentDuration = (songTimeRemaining.text)?.secondFromMinutesAndSecondsString
         toolTimeRemaining = Double(currentDuration!)
-            
         timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(timerAction(_:)), userInfo: nil, repeats: true)
         self.navigationItem.setRightBarButton(UIBarButtonItem(barButtonSystemItem: .pause, target: self, action: #selector(self.pause(_ :))), animated: true)
     }
@@ -333,7 +336,11 @@ class PlayMusicViewController: UIViewController, AVAudioPlayerDelegate {
     }
     
     @IBAction func cancel(_ sender: Any) {
-        showActionSheet()
+//        showActionSheet()
+        if self.timer != nil {
+            self.timer.invalidate()
+            audioPlayer.stopPlayingAudio()
+        }
     }
     
     @objc func showActionSheet() {
@@ -376,6 +383,7 @@ class PlayMusicViewController: UIViewController, AVAudioPlayerDelegate {
             let controller = segue.destination as! ToolsViewController
             controller.toolGroupHasBeenCompleted = true
             controller.returnedFromExercise = true
+            controller.selectedGroup = self.selectedGroup
             controller.completedToolSets?.append(selectedGroup)
             datastore.saveCompletedToolSets(controller.completedToolSets!)
          }

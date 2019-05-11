@@ -140,14 +140,17 @@ class AudioPlayer: NSObject, AVAudioPlayerDelegate {
         return musicPlayer.nowPlayingItem!.value(forProperty: MPMediaItemPropertyPlaybackDuration)! as! NSNumber
     }
     
-    func setRemainingTime(_ lastItem:Bool) -> Double {
+    func setRemainingTime() -> Double {
         let currentItem = musicPlayer.nowPlayingItem
         if currentItem == nil {
             return 0
         }
-        let nowPlayingItemDuration = ((currentItem!.value(forProperty: MPMediaItemPropertyPlaybackDuration))! as AnyObject).doubleValue
+        let nowPlayingItemDuration = (currentItem!.value(forProperty: MPMediaItemPropertyPlaybackDuration))// as AnyObject)
+        if nowPlayingItemDuration == nil {
+            return 0.0
+        }
         let currentTime = musicPlayer.currentPlaybackTime
-        let remainingTime = nowPlayingItemDuration! - currentTime
+        let remainingTime = (nowPlayingItemDuration! as AnyObject).doubleValue - currentTime
         
         return remainingTime
     }

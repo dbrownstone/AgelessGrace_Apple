@@ -36,6 +36,7 @@ class SettingsViewController: UITableViewController {
             datastore.setDates(datePicker.date)
         datastore.setShouldExerciseDaily(self.exerciseSettingSw!.isOn)
         datastore.setNoPauseBetweenTools(self.pauseSettingSw!.isOn)
+        tabBarController?.selectedIndex = 0
     }
 
     // MARK: - Table view data source

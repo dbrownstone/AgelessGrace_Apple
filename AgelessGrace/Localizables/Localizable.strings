@@ -15,6 +15,12 @@
 /*   */
 "Cancel" = " Cancel ";
 
+/* */
+"Day" = "Day %d";
+
+/* */
+"Exercise" = "Exercise %d";
+
 /*   */
 "Congratulations on doing your 10 minutes of Ageless Grace Brain. See you tomorrow!" = "Congratulations on doing your 10 minutes of Ageless Grace Brain. See you tomorrow!";
 
@@ -67,7 +73,10 @@
 "Tool Description" = "Tool Description";
 
 /*   */
-"Touch 'OK' to randomly select %d days worth of 10 minute sessions." = "Touch 'OK' to randomly select %d days worth of 10 minute sessions.";
+"Select 10 minute sessions" = "Touch 'Random' to randomly select %d days worth of 10 minute sessions or 'Select' to manually add more tool groups.";
+
+/*   */
+"Touch 'OK' to randomly select all 7 days worth of 10 minute sessions." = "Touch 'OK' to randomly select all 7 days worth of 10 minute sessions.";
 
 /*   */
 "Ways To Move Them" = "Ways To Move Them";

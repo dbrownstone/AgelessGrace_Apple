@@ -195,6 +195,8 @@ class SharedUserDefaultsDatastore: NSObject, DatastoreProtocol {
         } else {
             if key == "StartingDate" {
                 return Date()
+            } else if key == "DateOfLastExercise" {
+                return Date.distantPast
             } else {
                 //depending on settings
                 return sevenDaysFrom(Date())
