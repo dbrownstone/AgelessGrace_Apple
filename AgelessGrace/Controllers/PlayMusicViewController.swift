@@ -223,19 +223,11 @@ class PlayMusicViewController: UIViewController, AVAudioPlayerDelegate {
             self.performSegue(withIdentifier: "returnToMainMenu", sender: self)
         } else {
             var remainingTime = audioPlayer.setRemainingTime()
-//            self.musicCount(Float(remainingTime))
             print("remaining time = \(remainingTime)")
-            if toolTimeRemaining > (SESSIONPERIOD / 3) {
+            if lastItem  && sessionDuration > remainingTime && remainingTime < SESSIONPERIOD {
                 audioPlayer.repeatCurrentItem()
-                remainingTime = toolTimeRemaining
-                return
+                remainingTime = audioPlayer.setRemainingTime()
             }
-            
-//            if lastItem  && sessionDuration > remainingTime && remainingTime < SESSIONPERIOD {
-//                audioPlayer.repeatCurrentItem()
-//                remainingTime = audioPlayer.setRemainingTime(lastItem)
-//                self.songTimeRemaining.text = "\(remainingTime)"
-//            }
             self.songTimeRemaining.text = musicCount(Float(remainingTime))
 //            print("song time remaining = \(String(describing: self.songTimeRemaining.text))")
         }
