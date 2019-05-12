@@ -333,6 +333,8 @@ class PlayMusicViewController: UIViewController, AVAudioPlayerDelegate {
             self.timer.invalidate()
             audioPlayer.stopPlayingAudio()
         }
+        self.selectedAction = .postponeAction
+        self.performSegue(withIdentifier: "laterPlay", sender: self)
     }
     
     @objc func showActionSheet() {
@@ -371,6 +373,7 @@ class PlayMusicViewController: UIViewController, AVAudioPlayerDelegate {
             self.timer.invalidate()
             audioPlayer.stopPlayingAudio()
         }
+        
         if segue.identifier == "returnToMainMenu" {
             let controller = segue.destination as! ToolsViewController
             controller.toolGroupHasBeenCompleted = true
