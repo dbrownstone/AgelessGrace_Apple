@@ -57,6 +57,7 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     var segmentedControl: UISegmentedControl!
     var connectSegments: UISegmentedControl!
     var refreshSegments: UISegmentedControl!
+    var randomRepeatSegments: UISegmentedControl!
     
     // MARK: - TabBarControllerDelegate
     
@@ -101,9 +102,15 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             }
             self.selectedToolsIds = self.getIds(fromGrouping: self.selectedGroups ?? [])
             self.toolsDescr = appDelegate.getRequiredArray("AGToolNames")
+            self.setTheTitle(0)
             if self.selectedTools!.count % 3 != 0 ||
                 (self.completedToolSets != nil && self.selectedGroups!.count == self.completedToolSets!.count){
-                setRandomButton()
+                if self.exercisingConsecutively! {
+                    setRandomButton()
+                } else {
+                    // allow last exercise to be repeated
+                    setRandomRepeatSegments()
+                }                
             } else {
                 var count = 0
                 if self.completedToolIds != nil {
@@ -111,7 +118,11 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 }
                 if ((self.selectedTools == nil || self.selectedTools!.count == 0) || (self.selectedTools!.count >= count && self.selectedTools!.count % 3 != 0)) {
                     self.setTheTitle(0)
-                    setRandomButton()
+                    if self.exercisingConsecutively! {
+                        setRandomButton()
+                    } else {
+                        setRandomRepeatSegments()
+                    }
                 } else {
                     whichDay += 1
                     self.setConnectSegments()
@@ -235,6 +246,13 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         connectSegments.tintColor = .black
         connectSegments.addTarget(self, action: #selector(self.connectIndexChanged(_:)), for: .valueChanged)
         connectSegments.layer.cornerRadius = 5.0
+        
+        items = [NSLocalizedString("Select", comment: ""),NSLocalizedString("Repeat", comment:"")]
+        randomRepeatSegments = UISegmentedControl(items : items)
+        randomRepeatSegments.backgroundColor = .clear
+        randomRepeatSegments.tintColor = .black
+        randomRepeatSegments.addTarget(self, action: #selector(self.connectIndexChanged(_:)), for: .valueChanged)
+        randomRepeatSegments.layer.cornerRadius = 5.0
     }
     
     func setRandomButton() {
@@ -254,7 +272,31 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func setRefreshSegments() {
         let rightBarRefreshSegmentItem: UIBarButtonItem = UIBarButtonItem(customView: refreshSegments)
-        self.navigationItem.setRightBarButton(rightBarRefreshSegmentItem, animated: false)    }
+        self.navigationItem.setRightBarButton(rightBarRefreshSegmentItem, animated: false)
+    }
+    
+    func setRandomRepeatSegments() {
+        let rightBarRandomRepeatSegmentItem: UIBarButtonItem = UIBarButtonItem(customView: randomRepeatSegments)
+        self.navigationItem.setRightBarButton(rightBarRandomRepeatSegmentItem, animated: false)
+    }
+    
+    @objc func randomRepeatIndexChanged(_ sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex
+        {
+        case 0: //Random
+            print("Random Selected")
+            self.showActionSheet(sender)
+        case 1: //Repeat
+            print("Repeat selected")
+            self.selectedGroup = self.lastCompletedGroup
+            toolsDescr = self.selectedGroup
+            self.setTheTitle(self.completedToolSets!.count)
+            theTableView.reloadData()
+        default:
+            break
+        }
+        sender.selectedSegmentIndex = -1;
+    }
     
     var completedRequirementMessageDisplayed = false
     @objc func refreshTable(_ sender: UISegmentedControl) {
@@ -271,7 +313,8 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 userDefaults.removeObject(forKey:"SelectedGroup")
                 userDefaults.removeObject(forKey:"SelectedGroups")
                 toolsDescr = appDelegate.getRequiredArray("AGToolNames")
-                self.title = NSLocalizedString("Available Tools", comment:"")
+//                self.title = NSLocalizedString("Available Tools", comment:"")
+                self.setTheTitle(0)
                 theTableView.reloadData()
             } else {
                 if datastore.getDaysSinceLastExercise() == 0  {
