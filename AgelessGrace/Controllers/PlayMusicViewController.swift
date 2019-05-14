@@ -380,7 +380,10 @@ class PlayMusicViewController: UIViewController, AVAudioPlayerDelegate {
             controller.returnedFromExercise = true
             controller.selectedGroup = self.selectedGroup
             controller.completedToolSets?.append(selectedGroup)
-            datastore.saveCompletedToolSets(controller.completedToolSets!)
+            if !(controller.repeatingGroup) {
+                datastore.saveCompletedToolSets(controller.completedToolSets!)
+                controller.repeatingGroup = false
+            }
          }
     }
 }

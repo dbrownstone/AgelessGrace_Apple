@@ -45,6 +45,7 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     var toolGroupHasBeenCompleted = false
     var exerciseDay = 0
     var completedNoticeVisible = false
+    var repeatingGroup = false
     
     let selectBtn = UIButton(type:.custom)
     let reSelectBtn = UIButton(type:.custom)
@@ -105,23 +106,23 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             self.setTheTitle(0)
             if self.selectedTools!.count % 3 != 0 ||
                 (self.completedToolSets != nil && self.selectedGroups!.count == self.completedToolSets!.count){
-                if self.exercisingConsecutively! {
+                if self.exercisingConsecutively! || (self.selectedGroups != nil && self.selectedGroups!.count == 0) {
                     setRandomButton()
                 } else {
                     // allow last exercise to be repeated
                     setRandomRepeatSegments()
-                }                
+                }
             } else {
                 var count = 0
                 if self.completedToolIds != nil {
                     count = self.completedToolIds!.count
                 }
-                if ((self.selectedTools == nil || self.selectedTools!.count == 0) || (self.selectedTools!.count >= count && self.selectedTools!.count % 3 != 0)) {
+                if self.selectedTools == nil || count == 0 {
                     self.setTheTitle(0)
                     if self.exercisingConsecutively! {
                         setRandomButton()
-                    } else {
-                        setRandomRepeatSegments()
+                    } else if self.selectedTools!.count % 3 == 0 {
+                        self.setConnectSegments()
                     }
                 } else {
                     whichDay += 1
@@ -211,6 +212,7 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             self.completedToolSets = datastore.getCompletedToolSets()
         }
         self.selectedGroups = datastore.getSelectedGroups()
+        self.setupSelectedTools()
     }
     
     func prepareButtons() {
@@ -251,7 +253,7 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         randomRepeatSegments = UISegmentedControl(items : items)
         randomRepeatSegments.backgroundColor = .clear
         randomRepeatSegments.tintColor = .black
-        randomRepeatSegments.addTarget(self, action: #selector(self.connectIndexChanged(_:)), for: .valueChanged)
+        randomRepeatSegments.addTarget(self, action: #selector(self.randomRepeatIndexChanged(_:)), for: .valueChanged)
         randomRepeatSegments.layer.cornerRadius = 5.0
     }
     
@@ -285,9 +287,15 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         {
         case 0: //Random
             print("Random Selected")
+            let title = sender.titleForSegment(at: 0)
+            if title == NSLocalizedString("Random", comment: "") {
+                self.reselectSelected()
+            }
             self.showActionSheet(sender)
         case 1: //Repeat
             print("Repeat selected")
+            self.repeatingGroup = true
+            reselectWithMusic()
             self.selectedGroup = self.lastCompletedGroup
             toolsDescr = self.selectedGroup
             self.setTheTitle(self.completedToolSets!.count)
@@ -400,6 +408,17 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.navigationItem.setRightBarButton(rightBarSelectButtonItem, animated: false)
     }
     
+    func reselectSelected() {
+        self.reselectButtonTouched = true
+        self.selectedGroups = nil;
+        datastore.clearSelectedGroups()
+        self.selectedGroup = nil;
+        datastore.clearSelectedGroup()
+        self.completedToolSets = nil;
+        datastore.resetCompletedToolSets()
+        self.completedTools = nil;
+    }
+    
     @objc func indexChanged(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex{
         case 0:
@@ -409,14 +428,7 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             
             let title = sender.titleForSegment(at: 0)
             if title == NSLocalizedString("Reselect", comment: "") {
-                self.reselectButtonTouched = true
-                self.selectedGroups = nil;
-                datastore.clearSelectedGroups()
-                self.selectedGroup = nil;
-                datastore.clearSelectedGroup()
-                self.completedToolSets = nil;
-                datastore.resetCompletedToolSets()
-                self.completedTools = nil;
+                self.reselectSelected()
             } else {
                 self.reselectButtonTouched = false
             }
@@ -425,8 +437,7 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             self.selectMusicForGroup()
         default:
             break
-        }
-    }
+        }    }
     
     func setUpExistingToolGroups() {
         selectedGroups = [Array<String>]()
@@ -444,6 +455,17 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 if completedToolSets != nil && completedToolSets!.contains(group) == false {
                     selectedGroup = group
                     break
+                }
+            }
+        }
+    }
+    
+    func setupSelectedTools() {
+        if self.selectedTools == nil && self.selectedGroups != nil {
+            self.selectedTools = [String]()
+            for aGroup in self.selectedGroups! {
+                for i in 0..<3 {
+                    self.selectedTools.append(aGroup[i])
                 }
             }
         }
@@ -468,13 +490,8 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             toolControl.setSelectionType(self.selectionTypeIsManual)
             if self.selectedTools != nil && self.selectedGroups == nil {
                 self.setUpExistingToolGroups()
-            } else if self.selectedTools == nil && self.selectedGroups != nil {
-                self.selectedTools = [String]()
-                for aGroup in self.selectedGroups! {
-                    for i in 0..<3 {
-                        self.selectedTools.append(aGroup[i])
-                    }
-                }
+            } else {
+                self.setupSelectedTools()
             }
             toolControl.randomlySelectRemainingArrayOfTools(self.selectedGroups ?? [], selectedTools:self.selectedTools ?? [])
             self.selectedGroups = datastore.getSelectedGroups()
@@ -569,8 +586,8 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             self.dateOfLastCompletedExercise = nil
             self.selectedGroups = nil
         } else {
-            if completedToolSets != nil {
-                let whichOne = (completedToolSets!.count) - 1
+            if completedToolSets != nil && completedToolSets!.count != 0 {
+                let whichOne = (completedToolSets!.count)// - 1
                 self.selectedGroup = self.selectedGroups![whichOne]
             } else {
                 self.selectedGroup = self.selectedGroups![0]
@@ -579,7 +596,7 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         }
         self.selectedPlaylist = nil
         toolsDescr = self.selectedGroup
-        let whichDay = self.completedToolSets != nil ? self.completedToolSets!.count: 1
+        let whichDay = self.completedToolSets != nil ? (self.completedToolSets!.count + 1): 1
         self.setTheTitle(whichDay)
         replaceButtonWithMusicSelector()
         self.theTableView.reloadData()
@@ -707,7 +724,12 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             }
             toolsDescr = appDelegate.getRequiredArray("AGToolNames")
             self.title = NSLocalizedString("Available Tools", comment:"")
-            setRandomButton()
+            if self.exercisingConsecutively! {
+                setRandomButton()
+            } else {
+                // allow last exercise to be repeated
+                setRandomRepeatSegments()
+            }
             datastore.resetLastCompletedExercisDate()
             datastore.resetCompletedToolSets()
             self.completedToolSets = nil
