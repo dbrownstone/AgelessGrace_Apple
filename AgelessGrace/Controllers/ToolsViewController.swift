@@ -121,7 +121,7 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
                     self.setTheTitle(0)
                     if self.exercisingConsecutively! {
                         setRandomButton()
-                    } else if self.selectedTools!.count % 3 == 0 {
+                    } else if self.selectedTools!.count > 0 && self.selectedTools!.count % 3 == 0 {
                         self.setConnectSegments()
                     }
                 } else {
@@ -510,8 +510,7 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             } else {
                 dayCount = self.completedToolSets!.count + 1
             }
-            self.title =  String(format:NSLocalizedString("Day", comment:""), dayCount)
-            
+            self.setTheTitle(dayCount)
             self.theTableView.reloadData()
         }
         alertController.addAction(randomAction)
