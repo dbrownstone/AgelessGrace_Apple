@@ -13,6 +13,7 @@ class SettingsViewController: UITableViewController {
     var datePicker:UIDatePicker!
     var doneBtn:UIButton!
     
+    var exerciseTitleLine: UILabel!
     var currentStartDate: Date?
     var exerciseSetting: Bool?
     var pauseSetting: Bool?
@@ -82,10 +83,10 @@ class SettingsViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == 0 {
+        if indexPath.section == 0 {
             return 230
         }
-        return 40
+        return 60
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -96,11 +97,20 @@ class SettingsViewController: UITableViewController {
         case 0:
             identifier = "onOff"
             cell = tableView.dequeueReusableCell(withIdentifier: identifier!, for: indexPath)
+            exerciseTitleLine = cell!.viewWithTag(50) as? UILabel
             exerciseSettingSw = cell!.viewWithTag(10) as? UISwitch
             exerciseSettingSw?.isOn = datastore.shouldExerciseDaily()
             datePicker = cell?.viewWithTag(100) as? UIDatePicker
-            self.currentStartDate = datastore.loadDate("StartingDate")
-            datePicker.date = self.currentStartDate!
+            
+            if datastore.shouldExerciseDaily() {
+                datePicker.isHidden = false
+                exerciseTitleLine.isHidden = false
+                self.currentStartDate = datastore.loadDate("StartingDate")
+                datePicker.date = self.currentStartDate!
+            } else {
+                datePicker.isHidden = true
+                exerciseTitleLine.isHidden = true
+            }
             break
         default:
             identifier = "yesNo"
