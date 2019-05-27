@@ -33,7 +33,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.toolInfoPath = Bundle.main.path(forResource: "Localizable", ofType: "plist")
         
         if let tabBarController = self.window!.rootViewController as? UITabBarController {
-            if userDefaults.object(forKey: "StartingDate")  == nil {
+            //Note that if this is the initial use, we will set the settings defaults
+            if userDefaults.object(forKey: "StartingDate")  == nil && datastore.shouldExerciseDaily() {
+                datastore.setShouldExerciseDaily(true)
+                datastore.setPauseBetweenTools(true)
+                datastore.setShouldNotStartExerciseImmediately(true)
                 tabBarController.selectedIndex = 1
             }
         }

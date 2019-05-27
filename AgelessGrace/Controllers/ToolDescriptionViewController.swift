@@ -11,13 +11,19 @@ import UIKit
 class ToolDescriptionViewController: UITableViewController {
     
     var selectedToolIndex: Int!
-    var completedNoticeVisible = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .done, target: self, action: #selector(self.backToToolsView(_ :)))
+
         self.title = (appDelegate.getRequiredArray("AGToolNames"))[selectedToolIndex]
     }
+    
+    @objc func backToToolsView(_ sender: UIBarButtonItem) {
+        self.navigationController?.popToRootViewController(animated: true)
+    }
+    
     // MARK: - Table view data source
     
     override func numberOfSections(in tableView: UITableView) -> Int {

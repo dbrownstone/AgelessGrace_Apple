@@ -99,6 +99,10 @@ class PlayMusicViewController: UIViewController, AVAudioPlayerDelegate {
         sessionDuration *= 60
         totalTimeRemaining.text = baseTimerText
         self.loadTheToolLabels(0)
+        if !datastore.shouldNotStartExerciseImmediately() {
+            startTheSession(self.navigationItem.rightBarButtonItem!)
+            self.navigationItem.rightBarButtonItem = nil
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -198,7 +202,7 @@ class PlayMusicViewController: UIViewController, AVAudioPlayerDelegate {
             audioPlayer.stopPlayingCurrentAudio()
             timer.invalidate()
             selectTheNextTool()
-            if !datastore.noPauseBetweenTools() {
+            if !datastore.pauseBetweenTools() {
                 self.navigationItem.setRightBarButton(
                     UIBarButtonItem(barButtonSystemItem: .play,
                                     target: self, action: #selector(self.restartTheTimer(_ :))),
@@ -223,7 +227,7 @@ class PlayMusicViewController: UIViewController, AVAudioPlayerDelegate {
             self.performSegue(withIdentifier: "returnToMainMenu", sender: self)
         } else {
             var remainingTime = audioPlayer.setRemainingTime()
-            print("remaining time = \(remainingTime)")
+//            print("remaining time = \(remainingTime)")
             if lastItem  && sessionDuration > remainingTime && remainingTime < SESSIONPERIOD {
                 audioPlayer.repeatCurrentItem()
                 remainingTime = audioPlayer.setRemainingTime()
@@ -380,6 +384,7 @@ class PlayMusicViewController: UIViewController, AVAudioPlayerDelegate {
             controller.returnedFromExercise = true
             controller.selectedGroup = self.selectedGroup
             controller.completedToolSets?.append(selectedGroup)
+            controller.lastCompletedGroup = selectedGroup
             if !(controller.repeatingGroup) {
                 datastore.saveCompletedToolSets(controller.completedToolSets!)
                 controller.repeatingGroup = false

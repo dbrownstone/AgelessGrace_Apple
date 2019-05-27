@@ -40,22 +40,24 @@ protocol DatastoreProtocol {
     func resetDates()
     func shouldExerciseDaily() -> Bool
     func setShouldExerciseDaily(_ value: Bool)
-    func setNoPauseBetweenTools(_ value: Bool)
-    func noPauseBetweenTools() -> Bool
+    func setPauseBetweenTools(_ value: Bool)
+    func pauseBetweenTools() -> Bool
     func pauseForPhonecall() -> Bool
+    func setShouldNotStartExerciseImmediately(_ value: Bool)
+    func shouldNotStartExerciseImmediately() -> Bool
     func getDaysSinceLastExercise() -> Int
     func commitToDisk()
 }
 
 class SharedUserDefaultsDatastore: NSObject, DatastoreProtocol {
     
-    func setNoPauseBetweenTools(_ value: Bool) {
+    func setPauseBetweenTools(_ value: Bool) {
         userDefaults.removeObject(forKey: "NoPauseBetweenTools")
         userDefaults.set(value, forKey: "NoPauseBetweenTools")
         self.commitToDisk()
     }
     
-    func noPauseBetweenTools() -> Bool {
+    func pauseBetweenTools() -> Bool {
         if let result = userDefaults.object(forKey: "NoPauseBetweenTools") {
             return result as! Bool
         } else {
@@ -94,6 +96,16 @@ class SharedUserDefaultsDatastore: NSObject, DatastoreProtocol {
     
     func pauseForPhonecall() -> Bool {
         return userDefaults.bool(forKey: "PauseForPhonecall")
+    }
+    
+    func setShouldNotStartExerciseImmediately(_ value: Bool) {
+        userDefaults.removeObject(forKey: "DoNotStartExerciseImmediately")
+        userDefaults.set(value, forKey: "DoNotStartExerciseImmediately")
+        self.commitToDisk()
+    }
+    
+    func shouldNotStartExerciseImmediately() -> Bool {
+        return userDefaults.bool(forKey: "DoNotStartExerciseImmediately")
     }
     
     func getCompletedWeeks() -> Int {

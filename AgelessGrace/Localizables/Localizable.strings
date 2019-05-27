@@ -21,6 +21,9 @@
 /* */
 "Exercise" = "Exercise %d";
 
+/* */
+"Next" = "Next";
+
 /*   */
 "Congratulations on doing your 10 minutes of Ageless Grace Brain. See you tomorrow!" = "Congratulations on doing your 10 minutes of Ageless Grace Brain. See you tomorrow!";
 
@@ -30,8 +33,14 @@
 /*  */
 "Wow! You have done your Ageless Grace Brain Health tools every day for a week now!" = "Wow! You have done your Ageless Grace Brain Health tools every day for a week now!";
 
+/*  */
+"Wow! You have completed all your Ageless Grace Brain Health tools. Time to start over!" = "Wow! You have completed all your Ageless Grace Brain Health tools. Time to start over!";
+
 /*   */
 "You are a champion! Your brain is getting stronger every day -- you did your Ageless Grace tools for 21 days in a row!" = "You are a champion! Your brain is getting stronger every day -- you did your Ageless Grace tools for 21 days in a row!";
+
+/*   */
+"You are a champion! Your brain is getting stronger all the time -- you did all your Ageless Grace tools 3 times!" = "You are a champion! Your brain is getting stronger all the time -- you did all your Ageless Grace tools 3 times!";
 
 /*   */
 "You're done!" = "You're done!";
@@ -73,10 +82,31 @@
 "Tool Description" = "Tool Description";
 
 /*   */
-"Select 10 minute sessions" = "Touch 'Random' to randomly select %d days worth of 10 minute sessions or 'Select' to manually add more tool groups.";
+"Select remaining 10 minute session methods" = "Touch 'Randomly' to randomly select remaining tools or 'Cancel' to manually add more tool groups.";
 
 /*   */
-"Touch 'OK' to randomly select all 7 days worth of 10 minute sessions." = "Touch 'OK' to randomly select all 7 days worth of 10 minute sessions.";
+"Touch 'Random' to randomly select all 7 days worth of 10 minute sessions." = "Touch 'Randomly' to randomly select all 7 days worth of 10 minute sessions.";
+
+/*   */
+"Select Tools Randomly" = "Select Tools Randomly";
+
+/*   */
+"Select All Tools" = "Select All Tools";
+
+/*   */
+"Select More Tools" = "Select More Tools";
+
+/*   */
+"Select the remaining tools randomly" = "Select the remaining tools randomly";
+
+/*   */
+"Select the remaining tools" = "Select the remaining tools";
+
+/*   */
+"Randomly" = "Randomly";
+
+/*   */
+"Individually" = "Individually";
 
 /*   */
 "Ways To Move Them" = "Ways To Move Them";
@@ -128,6 +158,12 @@
 
 /*   */
 "Pause between tool exercises" = "Pause between tool exercises";
+
+/*  */
+"Pause when telephone rings" = "Pause when telephone rings";
+
+/*   */
+"Start exercise session immediately when view appears" = "Start exercise session immediately when view appears";
 
 /*   */
 "Touch 'Reset Start' to change  your 7 day sessions to begin today, or 'Go Ahead' to change your setting to exercise intermittenly." = "Touch 'Reset Start' to change  your 7 day sessions to begin today, or 'Go Ahead' to change your setting to exercise intermittenly.";
