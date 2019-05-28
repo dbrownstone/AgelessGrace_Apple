@@ -431,7 +431,7 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             let title = NSLocalizedString("You're done!", comment: "")
             let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
             let okAction = UIAlertAction(title: "OK", style: .cancel) {(action:UIAlertAction!) in
-                //                        sender.selectedSegmentIndex = -1
+//                        sender.selectedSegmentIndex = -1
             }
             alertController.addAction(okAction)
             present(alertController, animated: true, completion:nil)
@@ -598,9 +598,7 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     @objc func showActionSheet(control: Any, title: String,  message:String, noOfAlertBtns:  Int) {
-        var theTitle = title // = NSLocalizedString("Select Type of Session", comment:"")
-        
-//            message = String( format: NSLocalizedString("Select 10 minute session methods", comment:""),noOfDaysRemaining)
+        var theTitle = title
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let randomAction = UIAlertAction(title: NSLocalizedString("Randomly", comment: ""), style: .default) { (alert: UIAlertAction!) -> Void in
             //assuming 3 tools completed for every 10 minutes

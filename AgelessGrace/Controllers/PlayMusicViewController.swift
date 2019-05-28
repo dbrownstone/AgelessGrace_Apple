@@ -167,7 +167,6 @@ class PlayMusicViewController: UIViewController, AVAudioPlayerDelegate {
     func restartTheTimer() {
         timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(timerAction(_:)), userInfo: nil, repeats: true)
         self.navigationItem.rightBarButtonItem = nil
-//        self.navigationItem.setRightBarButton(UIBarButtonItem(barButtonSystemItem: .pause, target: self, action: #selector(self.pause(_ :))), animated: true)
         audioPlayer.playNextPiece()
     }
     
