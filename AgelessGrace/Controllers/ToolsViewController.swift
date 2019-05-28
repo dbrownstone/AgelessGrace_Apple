@@ -9,7 +9,7 @@
 import UIKit
 import MediaPlayer
 
-var SESSIONPERIOD = 10.00//1.0
+var SESSIONPERIOD = 1.00//10.0
 let toolControl:ToolProtocol = ToolManipulations()
 
 class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MPMediaPickerControllerDelegate, UITabBarControllerDelegate {
@@ -866,6 +866,7 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             selectedGroup = nil
             datastore.clearSelectedGroup()
             selectedGroups = nil
+            datastore.clearSelectedGroups()
         } else  {
             if self.exercisingConsecutively! {
                 message =  NSLocalizedString("Congratulations on doing your 10 minutes of Ageless Grace Brain. See you tomorrow!", comment:"")

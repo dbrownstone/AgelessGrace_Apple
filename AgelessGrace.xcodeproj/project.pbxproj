@@ -45,7 +45,7 @@
 		639B741D21CCD6E3007AFB1E /* SharedUserDefaultsDatastore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedUserDefaultsDatastore.swift; sourceTree = "<group>"; };
 		639B741F21CCD72A007AFB1E /* SwiftActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftActivity.swift; sourceTree = "<group>"; };
 		639B742121CCD82E007AFB1E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		639B742321CCDA24007AFB1E /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
+		639B742321CCDA24007AFB1E /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		63FA4EEC21D4FDF70046D572 /* AboutTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutTableViewController.swift; sourceTree = "<group>"; };
 		63FA4F1A21D564B90046D572 /* AboutTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutTableViewCell.swift; sourceTree = "<group>"; };
 		CB641EEE41F691BDFAD37F40 /* Pods-AgelessGrace.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AgelessGrace.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AgelessGrace/Pods-AgelessGrace.debug.xcconfig"; sourceTree = "<group>"; };

@@ -3,5 +3,5 @@ use_frameworks!
 
 target 'AgelessGrace' do
 
-pod 'MarqueeLabel/Swift'
+pod 'MarqueeLabel'
 end
