@@ -9,7 +9,7 @@
 import UIKit
 import MediaPlayer
 
-var SESSIONPERIOD = 1.00//10.0
+var SESSIONPERIOD = 10.00//1.0
 let toolControl:ToolProtocol = ToolManipulations()
 
 class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MPMediaPickerControllerDelegate, UITabBarControllerDelegate {

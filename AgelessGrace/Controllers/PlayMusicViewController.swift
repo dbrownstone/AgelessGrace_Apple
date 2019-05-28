@@ -228,7 +228,8 @@ class PlayMusicViewController: UIViewController, AVAudioPlayerDelegate {
         } else {
             var remainingTime = audioPlayer.setRemainingTime()
 //            print("remaining time = \(remainingTime)")
-            if lastItem  && sessionDuration > remainingTime && remainingTime < SESSIONPERIOD {
+            if toolTimeRemaining <= 0 {
+//            if lastItem  && sessionDuration > remainingTime && remainingTime < SESSIONPERIOD {
                 audioPlayer.repeatCurrentItem()
                 remainingTime = audioPlayer.setRemainingTime()
             }
