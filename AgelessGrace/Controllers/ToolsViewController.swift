@@ -454,11 +454,11 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
             let okAction = UIAlertAction(title: "OK", style: .cancel) {(action:UIAlertAction!) in
 //                #if targetEnvironment(simulator)
-//                if titleIndex > self.selectedGroups!.count {
-//                    self.selectedGroup = self.selectedGroups![titleIndex]
-//                }
+//                self.selectedGroup = self.selectedGroups![titleIndex]
 //                self.toolsDescr = self.selectedGroup
 //                self.theTableView.reloadData()
+//                self.replaceButtonWithMusicSelector()
+//                self.setTheTitle(titleIndex + 1)
 //                #endif
             }
             alertController.addAction(okAction)
