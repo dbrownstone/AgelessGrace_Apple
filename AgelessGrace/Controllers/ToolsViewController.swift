@@ -89,6 +89,7 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         
         if self.returnedFromExercise {
 //            self.returnedFromExercise = false
+            self.setTheTitle(self.selectedGroups!.index(of: self.lastCompletedGroup!)! + 1)
             endOfSession()
         } else {
             getDatastoreItems()
@@ -147,7 +148,7 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
                     if datastore.shouldExerciseDaily() {
                         if datastore.lastCompletedExerciseWasToday() {
                             self.selectedGroup = completedToolSets!.last
-                            self.setTheTitle(whichOne - 1)
+                            self.setTheTitle(whichOne)
                         } else {
                             self.selectedGroup = self.selectedGroups![whichOne]
                             self.setTheTitle(whichOne + 1)
@@ -452,7 +453,6 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             let title = NSLocalizedString("You're done!", comment: "")
             let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
             let okAction = UIAlertAction(title: "OK", style: .cancel) {(action:UIAlertAction!) in
-//                        sender.selectedSegmentIndex = -1
 //                #if targetEnvironment(simulator)
 //                if titleIndex > self.selectedGroups!.count {
 //                    self.selectedGroup = self.selectedGroups![titleIndex]
@@ -893,6 +893,8 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             datastore.clearSelectedGroup()
             selectedGroups = nil
             datastore.clearSelectedGroups()
+            selectedTools = nil
+            selectedToolsIds = nil
         } else  {
             if self.exercisingConsecutively! {
                 message =  NSLocalizedString("Congratulations on doing your 10 minutes of Ageless Grace Brain. See you tomorrow!", comment:"")
@@ -916,8 +918,6 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     // MARK: - Navigation
     
     @IBAction func unwindToMainMenu(_ sender: UIStoryboardSegue) {
-//        self.selectedGroup = (sender.source as! PlayMusicViewController).selectedGroup!
-//        toolControl.saveLastCompletedGroup(self.selectedGroup)
         self.returnedFromExercise = true
         self.completedToolIds = self.getIds(fromGrouping: self.completedToolSets ?? [])
     }
