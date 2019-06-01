@@ -104,13 +104,11 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.exercisingConsecutively = datastore.shouldExerciseDaily()
         self.startDate = datastore.loadDate("StartingDate")
         self.dateOfLastCompletedExercise = datastore.loadDate("DateOfLastExercise")
-//        if self.dateOfLastCompletedExercise != Date.distantPast {
-            self.lastCompletedGroup = datastore.getLastCompletedGroup()
+        self.lastCompletedGroup = datastore.getLastCompletedGroup()
         print("Last Group Completed: \(self.lastCompletedGroup!)")
-            self.completedToolSets = datastore.getCompletedToolSets()
+        self.completedToolSets = datastore.getCompletedToolSets()
         print("Completed Tool Sets: \(self.completedToolSets!)")
-            self.completedToolIds = self.getIds(fromGrouping: self.completedToolSets ?? [])
-//        }
+        self.completedToolIds = self.getIds(fromGrouping: self.completedToolSets ?? [])
         self.selectedGroups = datastore.getSelectedGroups()
         print("Selected Groups: \(self.selectedGroups!)")
         if self.selectedGroups!.count > 0 {
@@ -205,7 +203,6 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             (self.completedToolSets!.count * 3 == self.selectedToolsIds!.count) {
             if !datastore.shouldExerciseDaily() &&
                 ( self.completedToolSets!.count > 0 && self.completedToolSets!.count * 3 == self.selectedToolsIds!.count) {
-//                setRepeatButton()
                 setReselectRepeatSegments()
                 reselectRepeatSegments.setEnabled(true, forSegmentAt: 1)
             } else {
@@ -714,7 +711,11 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             self.selectedGroups?.append(self.selectedGroup)
             self.selectedGroup = nil
             selectionTypeIsManual = true
-            setConnectSegments()
+            if datastore.shouldExerciseDaily() && datastore.lastCompletedExerciseWasToday() {
+                self.setRefreshButton()
+            } else {
+                setConnectSegments()
+            }
         } else {
             self.navigationItem.rightBarButtonItem = nil
         }
