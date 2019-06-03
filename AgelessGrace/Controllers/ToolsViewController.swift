@@ -76,14 +76,16 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.theTableView.delegate = self
-        self.theTableView.dataSource = self
         self.tabBarController?.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-                prepareButtons()
+        
+        self.theTableView.delegate = self
+        self.theTableView.dataSource = self
+
+        prepareButtons()
         
         self.navigationItem.rightBarButtonItem = nil
         
@@ -96,8 +98,11 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
             self.determineToolsToBeDisplayed()
             self.determineNavButtonDisplay()
-            theTableView.reloadData()
         }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+       super.viewDidAppear(animated)
     }
     
     func getDatastoreItems() {
