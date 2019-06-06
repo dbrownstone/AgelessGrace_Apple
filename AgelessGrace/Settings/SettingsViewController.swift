@@ -31,7 +31,6 @@ class SettingsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         doneBtn = UIButton(type:.custom)
-        doneBtn.addTarget(self, action: #selector(self.saveCurrentSelections(_:)), for: UIControl.Event.touchUpInside)
         let btnTitle = NSLocalizedString("Done", comment:"")
         doneBtn.addTarget(self, action: #selector(self.saveCurrentSelections(_:)), for: UIControl.Event.touchUpInside)
         doneBtn.setTitleColor(UIColor(red: 42/255, green: 22/255, blue: 114/255, alpha: 1), for: UIControl.State())
@@ -47,9 +46,7 @@ class SettingsViewController: UITableViewController {
     }
     
     @IBAction func saveCurrentSelections(_ sender: UIBarButtonItem) {
-            datastore.setDates(datePicker.date)
-//        datastore.setShouldExerciseDaily(self.exerciseSettingSw!.isOn)
-//        datastore.setPauseBetweenTools(self.pauseSettingSw!.isOn)
+        datastore.setDates(datePicker.date)
         tabBarController?.selectedIndex = 0
     }
 
@@ -172,11 +169,4 @@ class SettingsViewController: UITableViewController {
         }
         return cell!
     }
-    
-//        var dateStr = ""
-//        let components = Calendar.current.dateComponents([.year, .month, .day], from: datePicker.date)
-//        if let day = components.day, let month = components.month, let year = components.year {
-//            dateStr = String(format:"%4d-%02d-%02d",year,month,day)
-//            print(dateStr)
-//        }
 }
