@@ -121,7 +121,7 @@ class ToolManipulations: NSObject, ToolProtocol {
         completedTools = getCompletedTools()
         arrayForRandomSelection = appDelegate.getRequiredArray("AGToolNames")
         for tool in completedTools {
-            if let whichOne = arrayForRandomSelection.index(of: tool) {
+            if let whichOne = arrayForRandomSelection.firstIndex(of: tool) {
                 arrayForRandomSelection.remove(at: whichOne)
             }
         }
@@ -139,7 +139,7 @@ class ToolManipulations: NSObject, ToolProtocol {
         var idsToBeRemoved = [Int]()
 //        for toolGroup in selectedGroups {
             for i in 0..<selectedTools.count {
-                idsToBeRemoved.append(arrayForRandomSelection.index(of: selectedTools[i])!)
+                idsToBeRemoved.append(arrayForRandomSelection.firstIndex(of: selectedTools[i])!)
             }
 //        }
         for id in idsToBeRemoved.reversed() {

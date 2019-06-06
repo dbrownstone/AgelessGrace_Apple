@@ -91,7 +91,7 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         
         if self.returnedFromExercise {
 //            self.returnedFromExercise = false
-            self.setTheTitle(self.selectedGroups!.index(of: self.lastCompletedGroup!)! + 1)
+            self.setTheTitle(self.selectedGroups!.firstIndex(of: self.lastCompletedGroup!)! + 1)
             endOfSession()
         } else {
             getDatastoreItems()
@@ -254,7 +254,7 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         let allTools = appDelegate.getRequiredArray("AGToolNames")
         for group in fromGrouping {
             for tool in group {
-                let id = allTools.index(of: tool)! + 1
+                let id = allTools.firstIndex(of: tool)! + 1
                 resultantIdArray.append(id)
             }
         }
@@ -701,9 +701,9 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         sender.setImage(UIImage(named: "manuallySelected"), for: .normal)
         let toolName = toolsDescr[indexPath!.row]
         if self.selectedGroup.contains(toolName) {
-            var indx = self.selectedGroup.index(of: toolName)
+            var indx = self.selectedGroup.firstIndex(of: toolName)
             self.selectedGroup.remove(at:indx!)
-            indx = self.selectedTools.index(of: toolName)
+            indx = self.selectedTools.firstIndex(of: toolName)
             self.selectedTools.remove(at:indx!)
             self.selectedToolsIds.remove(at:indx!)
             sender.setImage(UIImage(named:"selector"), for: .normal)
@@ -766,7 +766,7 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     func getToolNumber(_ tool:String) -> Int {
-        return ((appDelegate.getRequiredArray("AGToolNames")).index(of: tool)! + 1)
+        return ((appDelegate.getRequiredArray("AGToolNames")).firstIndex(of: tool)! + 1)
     }
     
     func updateTheDates() {
@@ -972,7 +972,7 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             let selectedTool = self.toolsDescr[indexPath!.row]
             self.returningFromDescriptionVC = true
 //            controller.completedNoticeVisible = self.completedNoticeVisible
-            controller.selectedToolIndex = (appDelegate.getRequiredArray("AGToolNames")).index(of:selectedTool)
+            controller.selectedToolIndex = (appDelegate.getRequiredArray("AGToolNames")).firstIndex(of:selectedTool)
         }
     }
     

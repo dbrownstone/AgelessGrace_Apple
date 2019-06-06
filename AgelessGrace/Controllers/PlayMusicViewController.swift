@@ -123,7 +123,7 @@ class PlayMusicViewController: UIViewController, AVAudioPlayerDelegate {
                 i = selectedGroup.count - 1
             }
             let title = selectedGroup[i]
-            let idx = (appDelegate.getRequiredArray("AGToolNames")).index(of: title)
+            let idx = (appDelegate.getRequiredArray("AGToolNames")).firstIndex(of: title)
             let partialStr = "\(NSLocalizedString("Tool", comment:""))#" + "\(idx! + 1)" + ": " + title
             switch (i - startingIndex) {
             case 0:
@@ -190,7 +190,7 @@ class PlayMusicViewController: UIViewController, AVAudioPlayerDelegate {
     }
     
     func getToolId(_ toolStr: String) -> Int {
-        return (appDelegate.getRequiredArray("AGToolNames")).index(of: toolStr)!
+        return (appDelegate.getRequiredArray("AGToolNames")).firstIndex(of: toolStr)!
     }
     
     // MARK: - Timer Action
