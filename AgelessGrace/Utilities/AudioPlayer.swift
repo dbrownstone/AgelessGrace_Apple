@@ -99,6 +99,8 @@ class AudioPlayer: NSObject, AVAudioPlayerDelegate {
         case .seekingBackward:
             /* The user is seeking backward in the queue */
             print("Seeking Backward")
+        @unknown default:
+            print("Unknown playbase case!")
         }
     }
     

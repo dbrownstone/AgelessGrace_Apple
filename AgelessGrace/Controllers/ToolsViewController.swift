@@ -712,7 +712,7 @@ class ToolsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             self.selectedTools.append(toolName)
             self.selectedToolsIds.append(indexPath!.row + 1)
         }
-        if self.selectedGroup.count > 0 && self.selectedGroup.count % 3 == 0 {
+        if self.selectedGroup.count > 0 && self.selectedGroup.count.isMultiple(of: 3) {
             self.selectedGroups?.append(self.selectedGroup)
             self.selectedGroup = nil
             selectionTypeIsManual = true
